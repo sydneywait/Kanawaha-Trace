@@ -24,6 +24,7 @@ export default class Explore extends Component {
 
         this.onStartChange = this.onStartChange.bind(this);
         this.onEndChange = this.onEndChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
@@ -34,7 +35,27 @@ export default class Explore extends Component {
     onEndChange(e) {
         this.setState({ end: e.value });
     }
+    handleSubmit() {
 
+
+        // create an object to post to the database
+        const newRoute ={
+            name: `${this.state.start.name} to ${this.state.end.name}`,
+            userId: this.props.activeUser,
+            startId:parseInt(this.state.start.code),
+            endId: parseInt(this.state.end.code),
+            direction: (this.state.start.code<this.state.code?false:true),
+            isComplete: false,
+            timeToComplete: "",
+            dateCompleted:""
+
+        }
+        console.log("new Route", newRoute)
+
+        // post to the database
+
+
+    }
 
 
     render() {
@@ -78,12 +99,12 @@ export default class Explore extends Component {
                         <div className="exp-dd-foot">{this.state.start ? 'Selected start: ' + this.state.start.name : 'No start point selected'}</div>
                         <div className="exp-dd-foot">{this.state.end ? 'Selected end: ' + this.state.end.name : 'No end point selected'}</div>
 
-                        <div><Button className="explore-dd-submit-btn" label="submit" icon="pi pi-check" iconPos="right" /></div>
+                        <div><Button className="explore-dd-submit-btn" label="submit" icon="pi pi-check" iconPos="right" onClick={this.handleSubmit} /></div>
                     </div>
                     <div className="exp-right">
-                        {/* <img src={window.location.origin + "/images/kt_map.jpg"} className="exp-map" /> */}
+                        <img src={window.location.origin + "/images/kt_map.jpg"} className="exp-map" />
 
-                        <GMap options={options} style={{ width: '100%', minHeight: '320px' }} />
+                        {/* <GMap options={options} style={{ width: '100%', minHeight: '320px' }} /> */}
                     </div>
                 </div>
             </div>

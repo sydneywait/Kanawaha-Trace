@@ -20,6 +20,7 @@ import 'primeicons/primeicons.css';
 export default class ApplicationViews extends Component {
 
         state = {
+                activeUser: parseInt(sessionStorage.getItem("credentials")),
                 users: [],
                 maintenance: [],
                 routes: [],
@@ -37,7 +38,8 @@ export default class ApplicationViews extends Component {
                                 }} />
                                 <Route exact path="/explore" render={props => {
                                         if (auth0Client.isAuthenticated()) {
-                                                return <Explore {...props} />
+                                                return <Explore {...props}
+                                                activeUser ={this.state.activeUser} />
                                         }
                                         else {
                                                 auth0Client.signIn();
