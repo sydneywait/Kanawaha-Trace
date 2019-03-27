@@ -1,10 +1,22 @@
 import React, { Component } from "react";
 import NavBar from "./nav/NavBar";
 import ApplicationViews from "./ApplicationViews";
+import {withRouter} from 'react-router-dom';
+import auth0Client from "./authentication/Auth";
 
 
 
-export default class KanawhaTrace extends Component {
+ class KanawhaTrace extends Component {
+
+  async componentDidMount() {
+    if (this.props.location.pathname === '/callback') return;
+    try {
+      await auth0Client.silentAuth();
+      this.forceUpdate();
+    } catch (err) {
+      if (err.error !== 'login_required') console.log(err.error);
+    }
+  }
 render() {
     return (
       <React.Fragment>
@@ -14,3 +26,4 @@ render() {
     );
   }
 }
+export default withRouter(KanawhaTrace)

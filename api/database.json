@@ -1,11 +1,18 @@
 {
   "users": [
     {
-      "name": "Sydney",
-      "username": "sydneyroo",
-      "email": "sydneyroo@yahoo.com",
-      "password": "sydneyroo"
+      "aud": "auth0|5c9b8ebb66cfd8105da24e62",
+      "name": "sydneywait",
+      "isAdmin": true,
+      "id": 1
+    },
+    {
+      "aud": "auth0|5c9b8ffcc0c8791057d50e8a",
+      "name": "sydneyroo",
+      "isAdmin": false,
+      "id": 2
     }
+
   ],
   "routes": [],
   "sections": [],

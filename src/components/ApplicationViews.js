@@ -11,6 +11,8 @@ import Maintenance from "./maintenance/Maintenance"
 import MaintenanceRequest from "./maintenance/MaintenanceRequest"
 import MaintenanceDetails from "./maintenance/MaintenanceDetails"
 import MaintenanceEdit from "./maintenance/MaintenanceEdit"
+import auth0Client from "./authentication/Auth";
+import Callback from "./authentication/Callback"
 
 
 export default class ApplicationViews extends Component {
@@ -27,69 +29,67 @@ export default class ApplicationViews extends Component {
         render() {
                 return (
                         <React.Fragment>
-
-                                <Route
-                                        exact path="/" render={props => {
-
-                                                return <HomePage {...props} />
-
-                                        }} />
-                                <Route
-                                        exact path="/explore" render={props => {
-
+                                <Route exact path="/callback" component={Callback} />
+                                <Route exact path="/" render={props => {
+                                        return <HomePage {...props} />;
+                                }} />
+                                <Route exact path="/explore" render={props => {
+                                        if (auth0Client.isAuthenticated()) {
                                                 return <Explore {...props} />
+                                        }
+                                        else {
+                                                auth0Client.signIn();
+                                                return null;
+                                        }
 
-                                        }} />
-                                <Route
-                                        exact path="/explore/new" render={props => {
-
+                                }} />
+                                <Route exact path="/explore/new" render={props => {
+                                        if (auth0Client.isAuthenticated()) {
                                                 return <NewRoute {...props} />
+                                        }
+                                        else {
+                                                auth0Client.signIn();
+                                                return null;
+                                        }
 
-                                        }} />
-                                <Route
-                                        exact path="/routes" render={props => {
+                                }} />
+                                <Route exact path="/routes" render={props => {
 
-                                                return <Routes {...props} />
+                                        return <Routes {...props} />
 
-                                        }} />
+                                }} />
 
-                                <Route
-                                        exact path="/routes/:routeId(\d+)" render={props => {
+                                <Route exact path="/routes/:routeId(\d+)" render={props => {
 
-                                                return <RouteDetails {...props} />
+                                        return <RouteDetails {...props} />
 
-                                        }} />
-                                <Route
-                                        path="/routes/:routeId(\d+)/edit" render={props => {
+                                }} />
+                                <Route path="/routes/:routeId(\d+)/edit" render={props => {
 
-                                                return <RouteEdit {...props} />
+                                        return <RouteEdit {...props} />
 
-                                        }} />
+                                }} />
 
-                                <Route
-                                        exact path="/maintenance" render={props => {
+                                <Route exact path="/maintenance" render={props => {
 
-                                                return <Maintenance {...props} />
+                                        return <Maintenance {...props} />
 
-                                        }} />
-                                <Route
-                                        exact path="/maintenance/request" render={props => {
+                                }} />
+                                <Route exact path="/maintenance/request" render={props => {
 
-                                                return <MaintenanceRequest {...props} />
+                                        return <MaintenanceRequest {...props} />
 
-                                        }} />
-                                <Route
-                                        exact path="/maintenance/:maintenanceId(\d+)" render={props => {
+                                }} />
+                                <Route exact path="/maintenance/:maintenanceId(\d+)" render={props => {
 
-                                                return <MaintenanceDetails {...props} />
+                                        return <MaintenanceDetails {...props} />
 
-                                        }} />
-                                <Route
-                                        exact path="/maintenance/:maintenanceId(\d+)/edit" render={props => {
+                                }} />
+                                <Route exact path="/maintenance/:maintenanceId(\d+)/edit" render={props => {
 
-                                                return <MaintenanceEdit {...props} />
+                                        return <MaintenanceEdit {...props} />
 
-                                        }} />
+                                }} />
 
                         </React.Fragment>
                 )
