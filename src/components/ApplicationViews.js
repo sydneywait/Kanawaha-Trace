@@ -16,6 +16,7 @@ import Callback from "./authentication/Callback"
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import ResourceAPIManager from "../modules/ResourceAPIManager"
 
 export default class ApplicationViews extends Component {
 
@@ -28,6 +29,30 @@ export default class ApplicationViews extends Component {
 
 
         }
+        componentDidMount() {
+                const newState = {}
+
+                ResourceAPIManager.getAllItems("routes")
+                        .then(routes => newState.routes = routes)
+                        .then(() => this.setState(newState))
+
+        }
+
+        addResource = (resources, resourceObject) => {
+                const newState = {}
+
+                        ResourceAPIManager.addNewItem(resources, resourceObject)
+                                .then(() => ResourceAPIManager.getAllItems(resources))
+                                .then(sss =>{
+                                        newState[resources] = sss
+                                        this.setState(newState)
+                                }
+                                )
+
+
+        }
+
+
 
         render() {
                 return (
@@ -39,7 +64,8 @@ export default class ApplicationViews extends Component {
                                 <Route exact path="/explore" render={props => {
                                         if (auth0Client.isAuthenticated()) {
                                                 return <Explore {...props}
-                                                activeUser ={this.state.activeUser} />
+                                                        activeUser={this.state.activeUser}
+                                                        addRoute={this.addResource} />
                                         }
                                         else {
                                                 auth0Client.signIn();
@@ -59,7 +85,8 @@ export default class ApplicationViews extends Component {
                                 }} />
                                 <Route exact path="/routes" render={props => {
 
-                                        return <Routes {...props} />
+                                        return <Routes {...props}
+                                        />
 
                                 }} />
 

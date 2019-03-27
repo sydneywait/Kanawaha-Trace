@@ -1,16 +1,9 @@
 import React, { Component } from "react";
-// import ReactDOM from 'react-dom';
-// import PropTypes from 'prop-types';
-// import FormHelperText from '@material-ui/core/FormHelperText';
-// import FormControl from '@material-ui/core/FormControl';
-// import NativeSelect from '@material-ui/core/NativeSelect';
-// import InputLabel from '@material-ui/core/InputLabel';
-// import Input from '@material-ui/core/Input';
-// import { withStyles } from '@material-ui/core/styles';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import "./Explore.css"
-import { GMap } from 'primereact/gmap';
+// import { GMap } from 'primereact/gmap';
+
 
 
 export default class Explore extends Component {
@@ -51,6 +44,8 @@ export default class Explore extends Component {
 
         }
         console.log("new Route", newRoute)
+
+        this.props.addRoute("routes", newRoute)
 
         // post to the database
 
