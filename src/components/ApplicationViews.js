@@ -13,7 +13,9 @@ import MaintenanceDetails from "./maintenance/MaintenanceDetails"
 import MaintenanceEdit from "./maintenance/MaintenanceEdit"
 import auth0Client from "./authentication/Auth";
 import Callback from "./authentication/Callback"
-
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 export default class ApplicationViews extends Component {
 

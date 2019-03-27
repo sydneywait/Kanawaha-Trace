@@ -22,4 +22,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 src/components/authentication/AuthConfig.js
+src/components/authentication/APITokens.js
 api/database.json
