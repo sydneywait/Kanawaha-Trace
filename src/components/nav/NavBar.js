@@ -11,6 +11,7 @@ import RouteIcon from '@material-ui/icons/Terrain';
 import ExploreIcon from '@material-ui/icons/Explore';
 import LoginIcon from '@material-ui/icons/LockOpen'
 import LogoutIcon from '@material-ui/icons/PersonOutline'
+import auth0Client from "../authentication/Auth";
 
 
 
@@ -21,7 +22,12 @@ const styles = {
   },
 };
 
-class IconLabelTabs extends React.Component {
+class NavBar extends React.Component {
+  signOut = () => {
+    auth0Client.signOut();
+    sessionStorage.clear()
+    this.props.history.replace("/");
+  };
   state = {
     value: 0,
   };
@@ -42,7 +48,7 @@ class IconLabelTabs extends React.Component {
           textColor="secondary"
         >
         <Tab icon={<HomeIcon />} label="HOME" to="/" component={Link} />
-        <Tab icon={<LoginIcon />} label="LOGIN" to="/login" component={Link} />
+        <Tab icon={<LoginIcon />} label="LOGIN"  onClick={auth0Client.signIn}/>
         </Tabs>
       </React.Fragment>
 
@@ -65,7 +71,7 @@ class IconLabelTabs extends React.Component {
         <Tab icon={<ExploreIcon />} label="EXPLORE" to="/explore" component={Link} />
         <Tab icon={<RouteIcon />} label="ROUTES" to="/routes" component={Link} />
         <Tab icon={<BuildIcon />} label="MAINTENANCE" to="/maintenance" component={Link} />
-        <Tab icon={<LogoutIcon />} label="LOGOUT" />
+        <Tab icon={<LogoutIcon />} label="LOGOUT" onClick={()=>{this.signOut()}} />
         </Tabs>
       </React.Fragment>
     )
@@ -78,7 +84,7 @@ class IconLabelTabs extends React.Component {
     return (
       <Paper square className={classes.root}>
 
-          {this.MainNav()}
+{!auth0Client.isAuthenticated() ? this.initialNav():this.MainNav()}
 
       </Paper>
 
@@ -86,8 +92,8 @@ class IconLabelTabs extends React.Component {
   }
 }
 
-IconLabelTabs.propTypes = {
+NavBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(IconLabelTabs);
+export default withStyles(styles)(NavBar);
