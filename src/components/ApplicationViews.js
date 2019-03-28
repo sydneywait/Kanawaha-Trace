@@ -99,6 +99,7 @@ export default class ApplicationViews extends Component {
                                 <Route exact path="/routes" render={props => {
 
                                         return <Routes {...props}
+                                        routes={this.state.routes}
                                         />
 
                                 }} />

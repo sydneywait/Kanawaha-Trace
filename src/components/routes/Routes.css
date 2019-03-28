@@ -1,0 +1,30 @@
+.route-cont{
+
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+
+.route-img-cont{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+
+}
+
+.route-card-cont{
+    border: 1px solid gray;
+    flex-direction: column;
+    display: flex;
+    width: 300px;
+    height: 400px;
+
+
+}
+
+.route-card-header{
+    display:flex;
+    justify-content: center;
+}
