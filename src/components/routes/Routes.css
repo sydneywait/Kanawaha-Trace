@@ -39,3 +39,17 @@ margin-bottom: auto;
 border: 1px solid gray;
 
 }
+
+.route-name-details-header{
+font-size: 3em;
+padding-left: 15px;
+
+}
+
+.route-text-detail-cont{
+display: flex;
+flex-direction: column;
+justify-content: center;
+border: 1px solid gray;
+
+}
