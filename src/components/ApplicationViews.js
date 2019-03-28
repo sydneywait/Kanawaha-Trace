@@ -39,10 +39,10 @@ export default class ApplicationViews extends Component {
 
         }
 
-        addResource = (resources, resourceObject) => {
+        addResource = (resources, resourceObject, userId) => {
                 const newState = {}
                 ResourceAPIManager.addNewItem(resources, resourceObject)
-                        .then(() => ResourceAPIManager.getAllItems(resources))
+                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)

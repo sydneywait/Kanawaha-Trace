@@ -13,7 +13,8 @@ export default class Explore extends Component {
         this.state = {
             start: null,
             end: null,
-            message: ""
+            message: "",
+            userId: parseInt(sessionStorage.getItem("credentials"))
 
         };
 
@@ -51,7 +52,7 @@ export default class Explore extends Component {
                 // create an object to post to the database
                 const newRoute = {
                     name: `${this.state.start.name} to ${this.state.end.name}`,
-                    userId: parseInt(sessionStorage.getItem("credentials")),
+                    userId: this.state.userId,
                     startId: parseInt(startId),
                     endId: parseInt(endId),
                     direction: (parseInt(startId) < parseInt(endId) ? true : false),
@@ -63,7 +64,7 @@ export default class Explore extends Component {
                 console.log("new Route", newRoute)
                 this.setState({ message: "Your route was created!" })
                 // post to the database
-                this.props.addRoute("routes", newRoute)
+                this.props.addRoute("routes", newRoute, this.state.userId)
             }
             else{
                 this.setState({message: "You must choose different start and end points"})
