@@ -31,26 +31,49 @@ export default class Explore extends Component {
         this.setState({ end: e.value });
     }
     handleSubmit() {
+        let startSelected = false;
+        let endSelected = false;
+
+        this.state.start !== null ? startSelected = true : startSelected = false
+        this.state.end !== null ? endSelected = true : endSelected = false
+        if (startSelected === true && endSelected === true) {
+            const startId = this.state.start.code
+            const endId = this.state.end.code
+            console.log("start id", startId)
+            console.log("end id", startId)
 
 
-        // create an object to post to the database
-        const newRoute ={
-            name: `${this.state.start.name} to ${this.state.end.name}`,
-            userId: parseInt(sessionStorage.getItem("credentials")),
-            startId:parseInt(this.state.start.code),
-            endId: parseInt(this.state.end.code),
-            direction: (parseInt(this.state.start.code)<parseInt(this.state.end.code)?true:false),
-            isComplete: false,
-            timeToComplete: "",
-            dateCompleted:""
+            console.log("startSelected", startSelected)
+            console.log("endSelected", endSelected)
 
+            if (startId !== endId) {
+
+                // create an object to post to the database
+                const newRoute = {
+                    name: `${this.state.start.name} to ${this.state.end.name}`,
+                    userId: parseInt(sessionStorage.getItem("credentials")),
+                    startId: parseInt(startId),
+                    endId: parseInt(endId),
+                    direction: (parseInt(startId) < parseInt(endId) ? true : false),
+                    isComplete: false,
+                    timeToComplete: "",
+                    dateCompleted: ""
+
+                }
+                console.log("new Route", newRoute)
+                this.setState({ message: "Your route was created!" })
+                // post to the database
+                this.props.addRoute("routes", newRoute)
+            }
+            else{
+                this.setState({message: "You must choose different start and end points"})
+            }
         }
-        console.log("new Route", newRoute)
-        this.setState({message:"Your route was created!"})
+        else{
+            this.setState({message: "You must choose a start and end point"})
+        }
 
-        this.props.addRoute("routes", newRoute)
 
-        // post to the database
 
 
     }
@@ -98,7 +121,7 @@ export default class Explore extends Component {
                         <div className="exp-dd-foot">{this.state.end ? 'Selected end: ' + this.state.end.name : 'No end point selected'}</div>
 
                         <div><Button className="explore-dd-submit-btn" label="submit" icon="pi pi-check" iconPos="right" onClick={this.handleSubmit} /></div>
-                    <div className ="exp-msg">{this.state.message}</div>
+                        <div className="exp-msg">{this.state.message}</div>
                     </div>
                     <div className="exp-right">
                         <img src={window.location.origin + "/images/kt_map.jpg"} className="exp-map" />
