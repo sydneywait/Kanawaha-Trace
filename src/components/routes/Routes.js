@@ -7,13 +7,9 @@ import { Calendar } from 'primereact/calendar';
 
 
 
-
-
-
-
 export default class Routes extends Component {
 
-
+    // construct the initial conditions of the state
     constructor() {
         super();
         this.state = {
@@ -34,10 +30,6 @@ export default class Routes extends Component {
         this.setState({ visible: false });
     }
 
-
-
-
-
     completeRoute() {
         const routeId = this.state.currentRoute.id
         const patchObject = {
@@ -49,16 +41,33 @@ export default class Routes extends Component {
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
     }
 
+    reverseRoute(route) {
+        const routeId = route.id
+        const name = route.name
+        console.log("name", name)
+        const splitName = name.split(" to ")
+        const newName = `${splitName[1]} to ${splitName[0]}`
+        console.log("split name and new name", splitName, newName)
+
+        const patchObject = {
+            name: newName,
+            direction: (route.direction===true?route.direction=false:route.direction=true),
+            startId: route.endId,
+            endId: route.startId
+        }
+        console.log("patchObject", patchObject)
+        this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
+
+
+
+    }
+
     buildRouteCards(status) {
-
-        // this.props.map((route)=>console.log("route", route))
-
         return (
             <React.Fragment>
 
                 {
-
-                    this.props.routes.filter((route)=>route.isComplete===status).map((route) =>
+                    this.props.routes.filter((route) => route.isComplete === status).map((route) =>
 
                         <div className="route-card-cont">
                             <div className="route-card-header">
@@ -73,12 +82,16 @@ export default class Routes extends Component {
 
                                 <img src={window.location.origin + "/images/section_map.jpg"} height="100px" className="exp-map" />
                             </div>
-                            <div className="route-text-cont"></div>
-                            <div className="route-btn-cont-top">
-                                <Button label="Details" icon="pi pi-pencil"
-                                    iconPos="right"
-                                    className="p-button-raised p-button-rounded p-button-primary"
-                                    onClick={() => { }} />
+                            <div className="route-text-cont">
+                                Some sample text</div>
+
+                            {(route.isComplete === false ? <div className="route-btn-cont">
+                                <Button label="Reverse"
+                                    icon="pi pi-refresh" iconPos="right"
+                                    className="p-button-raised p-button-rounded p-button-warning"
+                                    onClick={() => {
+                                        this.setState({currentRoute: route})
+                                        this.reverseRoute(route)}} />
 
                                 <Button label="Complete" icon="pi pi-check"
                                     iconPos="right"
@@ -87,13 +100,13 @@ export default class Routes extends Component {
                                         visible: true,
                                         currentRoute: route
                                     })} />
-                            </div>
-                            <div className="route-btn-cont-top">
-                                <Button label="Reverse"
-                                    icon="pi pi-refresh" iconPos="right"
-                                    className="p-button-raised p-button-rounded p-button-warning"
-                                    onClick={() => { }} />
+                            </div> : "")}
+                            <div className="route-btn-cont">
 
+                                <Button label="Details" icon="pi pi-pencil"
+                                    iconPos="right"
+                                    className="p-button-raised p-button-rounded p-button-primary"
+                                    onClick={() => { }} />
                                 <Button label="Delete"
                                     icon="pi pi-trash" iconPos="right"
                                     className="p-button-raised p-button-rounded p-button-danger"
@@ -125,11 +138,11 @@ export default class Routes extends Component {
             <React.Fragment>
 
                 <div className="route-cont">
-                    <div className="plan-route-cont"><h2>Planned Routes</h2>
-                        {this.buildRouteCards(true)}
-                    </div>
-                    <div className="comp-route-cont"><h2>Completed Routes</h2>
+                    <div className="plan-route-cont"><h2 className="route-cont-header">Planned Routes</h2>
                         {this.buildRouteCards(false)}
+                    </div>
+                    <div className="comp-route-cont"><h2 className="route-cont-header">Completed Routes</h2>
+                        {this.buildRouteCards(true)}
                     </div>
 
                 </div>

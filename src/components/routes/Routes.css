@@ -19,12 +19,23 @@
     flex-direction: column;
     display: flex;
     width: 300px;
-    height: 400px;
+    margin-top:10px;
+
 
 
 }
 
-.route-card-header{
+.route-card-header, .route-cont-header{
     display:flex;
     justify-content: center;
+}
+
+.route-btn-cont {
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+padding-top:10px;
+margin-bottom: auto;
+border: 1px solid gray;
+
 }
