@@ -11,6 +11,10 @@ import { Button } from 'primereact/button';
 
 export default class Routes extends Component {
 
+    state ={
+        activeUser: parseInt(sessionStorage.getItem("credentials"))
+    }
+
     buildRouteCards() {
 
         return (
@@ -38,7 +42,12 @@ export default class Routes extends Component {
                             </div>
                             <div className="route-btn-cont-top">
                                 <Button label="Reverse" icon="pi pi-refresh" iconPos="right" className="p-button-raised p-button-rounded p-button-warning" />
-                                <Button label="Delete" icon="pi pi-trash" iconPos="right" className="p-button-raised p-button-rounded p-button-danger" />
+                                <Button label="Delete"
+                                icon="pi pi-trash" iconPos="right"
+                                className="p-button-raised p-button-rounded p-button-danger"
+                                onClick={()=>{
+                                    this.props.deleteRoute("routes", route.id, this.state.activeUser )
+                                    this.props.history.push("/routes")}}/>
 
                             </div>
 

@@ -52,8 +52,18 @@ export default class ApplicationViews extends Component {
 
         updateResource = (resources, userId) => {
                 const newState = {}
-                newState.activeUser=userId
+                newState.activeUser = userId
                 ResourceAPIManager.getAllItemsbyUser(resources, userId)
+                        .then(sss => {
+                                newState[resources] = sss
+                                this.setState(newState)
+                        }
+                        )
+        }
+        deleteResource = (resources, resourceId, userId) => {
+                const newState = {}
+                ResourceAPIManager.deleteItem(resources, resourceId)
+                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
@@ -68,7 +78,7 @@ export default class ApplicationViews extends Component {
                         <React.Fragment>
                                 <Route exact path="/callback" render={props => {
                                         return <Callback {...props}
-                                        updateResource={this.updateResource} />
+                                                updateResource={this.updateResource} />
                                 }} />
 
                                 <Route exact path="/" render={props => {
@@ -99,7 +109,8 @@ export default class ApplicationViews extends Component {
                                 <Route exact path="/routes" render={props => {
 
                                         return <Routes {...props}
-                                        routes={this.state.routes}
+                                                routes={this.state.routes}
+                                                deleteRoute={this.deleteResource}
                                         />
 
                                 }} />
