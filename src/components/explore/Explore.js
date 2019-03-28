@@ -24,6 +24,7 @@ export default class Explore extends Component {
 
     }
 
+    // these functions are called as the dropdown select changes
     onStartChange(e) {
         this.setState({ start: e.value });
     }
@@ -31,22 +32,19 @@ export default class Explore extends Component {
     onEndChange(e) {
         this.setState({ end: e.value });
     }
+
+    // this function is called when the submit button is clicked
     handleSubmit() {
         let startSelected = false;
         let endSelected = false;
-
+        // First, make sure they have selected a start and end point
         this.state.start !== null ? startSelected = true : startSelected = false
         this.state.end !== null ? endSelected = true : endSelected = false
+        // Next, set constants for working with the function
         if (startSelected === true && endSelected === true) {
             const startId = this.state.start.code
             const endId = this.state.end.code
-            console.log("start id", startId)
-            console.log("end id", startId)
-
-
-            console.log("startSelected", startSelected)
-            console.log("endSelected", endSelected)
-
+            //  check to see that the start point and the end point are not the same
             if (startId !== endId) {
 
                 // create an object to post to the database
@@ -61,33 +59,25 @@ export default class Explore extends Component {
                     dateCompleted: ""
 
                 }
-                console.log("new Route", newRoute)
+                // set a success message to state
                 this.setState({ message: "Your route was created!" })
                 // post to the database
                 this.props.addRoute("routes", newRoute, this.state.userId)
             }
-            else{
-                this.setState({message: "You must choose different start and end points"})
+            // set an error message to state
+            else {
+                this.setState({ message: "You must choose different start and end points" })
             }
         }
-        else{
-            this.setState({message: "You must choose a start and end point"})
+        // set an error message to state
+        else {
+            this.setState({ message: "You must choose a start and end point" })
         }
-
-
-
-
     }
 
 
     render() {
-        const options = {
-            center: { lat: 36.890257, lng: 30.707417 },
-            zoom: 12
-        };
-
-
-
+        // These are used as options in the dropdown select
         // Eventually these constants will be populated with info from the database
         const start = [
             { name: 'Wildcat Hollow', code: '1' },
