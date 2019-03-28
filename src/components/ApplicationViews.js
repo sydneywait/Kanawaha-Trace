@@ -13,11 +13,15 @@ import MaintenanceDetails from "./maintenance/MaintenanceDetails"
 import MaintenanceEdit from "./maintenance/MaintenanceEdit"
 import auth0Client from "./authentication/Auth";
 import Callback from "./authentication/Callback"
-
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import ResourceAPIManager from "../modules/ResourceAPIManager"
 
 export default class ApplicationViews extends Component {
 
         state = {
+                activeUser: parseInt(sessionStorage.getItem("credentials")),
                 users: [],
                 maintenance: [],
                 routes: [],
@@ -25,17 +29,56 @@ export default class ApplicationViews extends Component {
 
 
         }
+        componentDidMount() {
+                const newState = {}
+                newState.activeUser = parseInt(sessionStorage.getItem("credentials"))
+
+                ResourceAPIManager.getAllItemsbyUser("routes", newState.activeUser)
+                        .then(routes => newState.routes = routes)
+                        .then(() => this.setState(newState))
+
+        }
+
+        addResource = (resources, resourceObject, userId) => {
+                const newState = {}
+                ResourceAPIManager.addNewItem(resources, resourceObject)
+                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
+                        .then(sss => {
+                                newState[resources] = sss
+                                this.setState(newState)
+                        }
+                        )
+        }
+
+        updateResource = (resources, userId) => {
+                const newState = {}
+                newState.activeUser=userId
+                ResourceAPIManager.getAllItemsbyUser(resources, userId)
+                        .then(sss => {
+                                newState[resources] = sss
+                                this.setState(newState)
+                        }
+                        )
+        }
+
+
 
         render() {
                 return (
                         <React.Fragment>
-                                <Route exact path="/callback" component={Callback} />
+                                <Route exact path="/callback" render={props => {
+                                        return <Callback {...props}
+                                        updateResource={this.updateResource} />
+                                }} />
+
                                 <Route exact path="/" render={props => {
                                         return <HomePage {...props} />;
                                 }} />
                                 <Route exact path="/explore" render={props => {
                                         if (auth0Client.isAuthenticated()) {
-                                                return <Explore {...props} />
+                                                return <Explore {...props}
+                                                        activeUser={this.state.activeUser}
+                                                        addRoute={this.addResource} />
                                         }
                                         else {
                                                 auth0Client.signIn();
@@ -55,7 +98,8 @@ export default class ApplicationViews extends Component {
                                 }} />
                                 <Route exact path="/routes" render={props => {
 
-                                        return <Routes {...props} />
+                                        return <Routes {...props}
+                                        />
 
                                 }} />
 

@@ -1,0 +1,39 @@
+.exp-dd-cont{
+
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.exp-dd{
+margin-top: 20px;
+
+}
+
+.exp-dd-foot{
+    margin-top: 20px;
+
+
+}
+
+.exp-cont{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+}
+
+.exp-left, .exp-right{
+    border: 1px solid black
+}
+
+.exp-left{
+margin: 0 20px 0 20px;
+}
+
+.exp-msg{
+    color: red;
+    font-weight: bold;
+
+}

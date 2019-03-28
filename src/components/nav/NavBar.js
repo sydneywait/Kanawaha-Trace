@@ -69,7 +69,7 @@ class NavBar extends React.Component {
         >
         <Tab icon={<HomeIcon />} label="HOME" to="/" component={Link} />
         <Tab icon={<ExploreIcon />} label="EXPLORE" to="/explore" component={Link} />
-        <Tab icon={<RouteIcon />} label="ROUTES" to="/routes" component={Link} />
+        <Tab icon={<RouteIcon />} label="MY ROUTES" to="/routes" component={Link} />
         <Tab icon={<BuildIcon />} label="MAINTENANCE" to="/maintenance" component={Link} />
         <Tab icon={<LogoutIcon />} label="LOGOUT" onClick={()=>{this.signOut()}} />
         </Tabs>

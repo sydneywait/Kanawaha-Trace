@@ -40,6 +40,8 @@ class Callback extends Component {
                 parsedUser
               );
               sessionStorage.setItem("credentials", parsedUser.id);
+              this.props.updateResource("routes", parsedUser.id)
+
             });
         } else {
           // If something DOES come back from the fetch call (i.e. the array has a user in it), that means the user already exists in our db and we just need to log them in
@@ -48,9 +50,12 @@ class Callback extends Component {
             matchingUser[0].id
           );
           sessionStorage.setItem("credentials", matchingUser[0].id);
+          this.props.updateResource("routes", matchingUser[0].id)
+
         }
       });
     this.props.history.replace("/");
+    this.props.updateResource("routes", sessionStorage.getItem("credentials"))
   }
 
   render() {
