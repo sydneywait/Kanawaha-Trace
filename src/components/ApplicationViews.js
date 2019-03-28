@@ -72,6 +72,18 @@ export default class ApplicationViews extends Component {
         }
 
 
+        patchResource = (resources, resourceId, patchObject, userId) => {
+                const newState = {}
+                ResourceAPIManager.patchItem(resources, resourceId, patchObject)
+                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
+                        .then(sss => {
+                                newState[resources] = sss
+                                this.setState(newState)
+                        }
+                        )
+        }
+
+
 
         render() {
                 return (
@@ -96,7 +108,7 @@ export default class ApplicationViews extends Component {
                                         }
 
                                 }} />
-                                <Route exact path="/explore/new" render={props => {
+                                {/* <Route exact path="/explore/new" render={props => {
                                         if (auth0Client.isAuthenticated()) {
                                                 return <NewRoute {...props} />
                                         }
@@ -105,13 +117,15 @@ export default class ApplicationViews extends Component {
                                                 return null;
                                         }
 
-                                }} />
+                                }} /> */}
                                 <Route exact path="/routes" render={props => {
 
-                                        return <Routes {...props}
-                                                routes={this.state.routes}
-                                                deleteRoute={this.deleteResource}
-                                        />
+                                                return <Routes {...props}
+                                                        routes={this.state.routes}
+                                                        deleteRoute={this.deleteResource}
+                                                        patchRoute={this.patchResource}
+                                                />
+
 
                                 }} />
 
