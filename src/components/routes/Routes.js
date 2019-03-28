@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Moment from 'react-moment';
 import "./Routes.css"
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
@@ -44,22 +45,18 @@ export default class Routes extends Component {
     reverseRoute(route) {
         const routeId = route.id
         const name = route.name
-        console.log("name", name)
+        // split the name to reverse which trailhead name comes first
         const splitName = name.split(" to ")
         const newName = `${splitName[1]} to ${splitName[0]}`
-        console.log("split name and new name", splitName, newName)
 
+        // build the patch object with reversed start and end points and reversed name
         const patchObject = {
             name: newName,
-            direction: (route.direction===true?route.direction=false:route.direction=true),
+            direction: (route.direction === true ? route.direction = false : route.direction = true),
             startId: route.endId,
             endId: route.startId
         }
-        console.log("patchObject", patchObject)
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
-
-
-
     }
 
     buildRouteCards(status) {
@@ -71,7 +68,7 @@ export default class Routes extends Component {
 
                         <div className="route-card-cont">
                             <div className="route-card-header">
-                                <h3>{route.name}</h3>
+                                <h4 className="route-name-header">{route.name}</h4>
                             </div>
                             <div className="route-img-cont">
 
@@ -82,16 +79,22 @@ export default class Routes extends Component {
 
                                 <img src={window.location.origin + "/images/section_map.jpg"} height="100px" className="exp-map" />
                             </div>
-                            <div className="route-text-cont">
-                                Some sample text</div>
+                            {(route.isComplete === true ?
+                                <div className="route-text-cont">
+                                    <div className="date-time">Date Completed: {<Moment format="MM/DD/YY">
+                                    {route.dateCompleted}</Moment>}</div>
+                                    <div className="date-time">Time to Complete: {route.timeToComplete}</div></div>
+                                :
+                                <div className="route-text-cont">
+                                    Some sample text</div>)}
 
                             {(route.isComplete === false ? <div className="route-btn-cont">
                                 <Button label="Reverse"
                                     icon="pi pi-refresh" iconPos="right"
                                     className="p-button-raised p-button-rounded p-button-warning"
                                     onClick={() => {
-                                        this.setState({currentRoute: route})
-                                        this.reverseRoute(route)}} />
+                                        this.reverseRoute(route)
+                                    }} />
 
                                 <Button label="Complete" icon="pi pi-check"
                                     iconPos="right"
@@ -112,7 +115,6 @@ export default class Routes extends Component {
                                     className="p-button-raised p-button-rounded p-button-danger"
                                     onClick={() => {
                                         this.props.deleteRoute("routes", route.id, this.state.activeUser)
-                                        this.props.history.push("/routes")
                                     }} />
                             </div>
                         </div>
