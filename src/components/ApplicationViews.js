@@ -82,7 +82,16 @@ export default class ApplicationViews extends Component {
                         }
                         )
         }
-
+        editResource = (resources, editedObject, userId) => {
+                const newState = {}
+                ResourceAPIManager.editItem(resources, editedObject)
+                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
+                        .then(sss => {
+                                newState[resources] = sss
+                                this.setState(newState)
+                        }
+                        )
+        }
 
 
         render() {
@@ -120,18 +129,20 @@ export default class ApplicationViews extends Component {
                                 }} /> */}
                                 <Route exact path="/routes" render={props => {
 
-                                                return <Routes {...props}
-                                                        routes={this.state.routes}
-                                                        deleteRoute={this.deleteResource}
-                                                        patchRoute={this.patchResource}
-                                                />
+                                        return <Routes {...props}
+                                                routes={this.state.routes}
+                                                deleteRoute={this.deleteResource}
+                                                patchRoute={this.patchResource}
+                                        />
 
 
                                 }} />
 
                                 <Route exact path="/routes/:routeId(\d+)" render={props => {
 
-                                        return <RouteDetails {...props} />
+                                        return <RouteDetails {...props}
+                                                routes={this.state.routes}
+                                                editRoute={this.editResource} />
 
                                 }} />
                                 <Route path="/routes/:routeId(\d+)/edit" render={props => {

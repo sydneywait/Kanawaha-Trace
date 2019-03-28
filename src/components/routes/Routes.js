@@ -109,7 +109,7 @@ export default class Routes extends Component {
                                 <Button label="Details" icon="pi pi-pencil"
                                     iconPos="right"
                                     className="p-button-raised p-button-rounded p-button-primary"
-                                    onClick={() => { }} />
+                                    onClick={() => { this.props.history.push(`/routes/${route.id}`)}} />
                                 <Button label="Delete"
                                     icon="pi pi-trash" iconPos="right"
                                     className="p-button-raised p-button-rounded p-button-danger"
