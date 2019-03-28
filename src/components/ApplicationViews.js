@@ -31,8 +31,9 @@ export default class ApplicationViews extends Component {
         }
         componentDidMount() {
                 const newState = {}
+                newState.activeUser = parseInt(sessionStorage.getItem("credentials"))
 
-                ResourceAPIManager.getAllItems("routes")
+                ResourceAPIManager.getAllItemsbyUser("routes", newState.activeUser)
                         .then(routes => newState.routes = routes)
                         .then(() => this.setState(newState))
 
@@ -40,7 +41,6 @@ export default class ApplicationViews extends Component {
 
         addResource = (resources, resourceObject) => {
                 const newState = {}
-
                 ResourceAPIManager.addNewItem(resources, resourceObject)
                         .then(() => ResourceAPIManager.getAllItems(resources))
                         .then(sss => {
@@ -48,8 +48,17 @@ export default class ApplicationViews extends Component {
                                 this.setState(newState)
                         }
                         )
+        }
 
-
+        updateResource = (resources, userId) => {
+                const newState = {}
+                newState.activeUser=userId
+                ResourceAPIManager.getAllItemsbyUser(resources, userId)
+                        .then(sss => {
+                                newState[resources] = sss
+                                this.setState(newState)
+                        }
+                        )
         }
 
 
@@ -57,7 +66,11 @@ export default class ApplicationViews extends Component {
         render() {
                 return (
                         <React.Fragment>
-                                <Route exact path="/callback" component={Callback} />
+                                <Route exact path="/callback" render={props => {
+                                        return <Callback {...props}
+                                        updateResource={this.updateResource} />
+                                }} />
+
                                 <Route exact path="/" render={props => {
                                         return <HomePage {...props} />;
                                 }} />
