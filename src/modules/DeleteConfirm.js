@@ -2,14 +2,14 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import React from "react";
 
-const deleteConfirmation =(path, id, state, hide, deleteFunction, history)=> {
+const deleteConfirmation =(path, id, userId, visible, hide, deleteFunction, history)=> {
 
     const footer = (
         <div>
             <Button label="yes" className="p-button-danger" icon="pi pi-check"
                 onClick={() => {
                     hide()
-                    deleteFunction(path, id, state.userId)
+                    deleteFunction(path, id, userId)
                     history.push("/routes")
 
                 }}
@@ -24,7 +24,7 @@ const deleteConfirmation =(path, id, state, hide, deleteFunction, history)=> {
     return(
     <React.Fragment>
 
-            <Dialog header="Are you sure?" visible={state.visible} style={{ width: '50vw' }} footer={footer} onHide={hide} >
+            <Dialog header="Are you sure?" visible={visible} style={{ width: '50vw' }} footer={footer} onHide={hide} >
             This action cannot be undone.
             </Dialog>
 

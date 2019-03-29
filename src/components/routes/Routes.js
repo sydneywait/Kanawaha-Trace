@@ -7,6 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import CompleteRoutePatch from "./CompleteRoutePatch"
 import ReverseRoutePatch from "./ReverseRoutePatch"
+import deleteConfirm from "../../modules/DeleteConfirm"
 
 
 
@@ -20,7 +21,8 @@ export default class Routes extends Component {
             activeUser: parseInt(sessionStorage.getItem("credentials")),
             date: "",
             time: "",
-            currentRoute: {}
+            currentRoute: {},
+            target: ""
         };
         this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
@@ -41,8 +43,21 @@ export default class Routes extends Component {
 
     reverseRoute(route) {
         const routeId = route.id
-        const patchObject=ReverseRoutePatch(route)
+        const patchObject = ReverseRoutePatch(route)
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
+    }
+
+    completeRouteFragment(footer) {
+        return (
+            <Dialog header="Route Completed" visible={this.state.visible} style={{ width: '50vw' }} footer={footer} onHide={this.onHide} >
+                <div>Date Completed:
+                    <Calendar value={this.state.date} monthNavigator={true} onChange={(e) => this.setState({ date: e.value })} placeholder="MM/DD/YY"></Calendar>                    </div>
+                <div>
+                    Time to Complete:
+                <InputText value={this.state.time} onChange={(e) => this.setState({ time: e.target.value })} placeholder="HH:MM:SS" />
+                </div>
+            </Dialog>
+        )
     }
 
     buildRouteCards(status) {
@@ -68,40 +83,45 @@ export default class Routes extends Component {
                             {(route.isComplete === true ?
                                 <div className="route-text-cont">
                                     <div className="date-time">Date Completed: {<Moment format="MM/DD/YY">
-                                    {route.dateCompleted}</Moment>}</div>
+                                        {route.dateCompleted}</Moment>}</div>
                                     <div className="date-time">Time to Complete: {route.timeToComplete}</div></div>
                                 :
                                 <div className="route-text-cont">
                                     Some sample text</div>)}
 
                             {(route.isComplete === false ?
-                            <div className="route-btn-cont">
-                                <Button label="Reverse"
-                                    icon="pi pi-refresh" iconPos="right"
-                                    className="p-button-raised p-button-rounded p-button-warning"
-                                    onClick={() => {
-                                        this.reverseRoute(route)
-                                    }} />
+                                <div className="route-btn-cont">
+                                    <Button label="Reverse"
+                                        icon="pi pi-refresh" iconPos="right"
+                                        className="p-button-raised p-button-rounded p-button-warning"
+                                        onClick={() => {
+                                            this.reverseRoute(route)
+                                        }} />
 
-                                <Button label="Complete" icon="pi pi-check"
-                                    iconPos="right"
-                                    className="p-button-raised p-button-rounded p-button-success"
-                                    onClick={(e) => this.setState({
-                                        visible: true,
-                                        currentRoute: route
-                                    })} />
-                            </div> : "")}
+                                    <Button label="Complete" icon="pi pi-check"
+                                        id="complete-route"
+                                        iconPos="right"
+                                        className="p-button-raised p-button-rounded p-button-success"
+                                        onClick={(e) => this.setState({
+                                            visible: true,
+                                            currentRoute: route,
+                                            target: e.currentTarget.id
+                                        })} />
+                                </div> : "")}
                             <div className="route-btn-cont">
                                 <Button label="Details" icon="pi pi-pencil"
                                     iconPos="right"
                                     className="p-button-raised p-button-rounded p-button-primary"
-                                    onClick={() => { this.props.history.push(`/routes/${route.id}`)}} />
+                                    onClick={() => { this.props.history.push(`/routes/${route.id}`) }} />
                                 <Button label="Delete"
+                                    id="delete-route"
                                     icon="pi pi-trash" iconPos="right"
                                     className="p-button-raised p-button-rounded p-button-danger"
-                                    onClick={() => {
-                                        this.props.deleteRoute("routes", route.id, this.state.activeUser)
-                                    }} />
+                                    onClick={(e) => this.setState({
+                                        visible: true,
+                                        currentRoute: route,
+                                        target: e.currentTarget.id
+                                    })} />
                             </div>
                         </div>
                     )}
@@ -134,14 +154,12 @@ export default class Routes extends Component {
                     </div>
 
                 </div>
-                <Dialog header="Route Completed" visible={this.state.visible} style={{ width: '50vw' }} footer={footer} onHide={this.onHide} >
-                    <div>Date Completed:
-                    <Calendar value={this.state.date} monthNavigator={true} onChange={(e) => this.setState({ date: e.value })} placeholder="MM/DD/YY"></Calendar>                    </div>
-                    <div>
-                        Time to Complete:
-                <InputText value={this.state.time} onChange={(e) => this.setState({ time: e.target.value })} placeholder="HH:MM:SS" />
-                    </div>
-                </Dialog>
+                {(this.state.target === "delete-route" ?
+                    deleteConfirm("routes", this.state.currentRoute.id, this.state.currentRoute.userId, this.state.visible, this.onHide, this.props.deleteRoute, this.props.history) : "")}
+
+                {(this.state.target === "complete-route" ?
+                    this.completeRouteFragment(footer) : "")}
+
             </React.Fragment>
 
         )

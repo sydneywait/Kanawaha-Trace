@@ -231,7 +231,7 @@ export default class RouteDetails extends Component {
                 this.editRouteFragment(footer) : "")}
 
             {(this.state.target === "delete-route" ?
-                deleteConfirm("routes", this.state.id, this.state, this.onHide, this.props.deleteRoute, this.props.history) : "")}
+                deleteConfirm("routes", this.state.id, this.state.userId, this.state.visible, this.onHide, this.props.deleteRoute, this.props.history) : "")}
 
 
 
