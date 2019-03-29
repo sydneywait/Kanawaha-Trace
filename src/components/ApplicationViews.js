@@ -117,16 +117,7 @@ export default class ApplicationViews extends Component {
                                         }
 
                                 }} />
-                                {/* <Route exact path="/explore/new" render={props => {
-                                        if (auth0Client.isAuthenticated()) {
-                                                return <NewRoute {...props} />
-                                        }
-                                        else {
-                                                auth0Client.signIn();
-                                                return null;
-                                        }
 
-                                }} /> */}
                                 <Route exact path="/routes" render={props => {
 
                                         return <Routes {...props}
@@ -143,7 +134,8 @@ export default class ApplicationViews extends Component {
                                         return <RouteDetails {...props}
                                                 routes={this.state.routes}
                                                 editRoute={this.editResource}
-                                                patchRoute={this.patchResource}/>
+                                                patchRoute={this.patchResource}
+                                                deleteRoute={this.deleteResource}/>
 
                                 }} />
                                 <Route path="/routes/:routeId(\d+)/edit" render={props => {

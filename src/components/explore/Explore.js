@@ -4,6 +4,7 @@ import { Button } from 'primereact/button';
 import "./Explore.css"
 // import { GMap } from 'primereact/gmap';
 // import Snackbar from '@material-ui/core/Snackbar';
+import MakeNewRoute from "../routes/MakeNewRoute"
 
 
 
@@ -35,44 +36,52 @@ export default class Explore extends Component {
 
     // this function is called when the submit button is clicked
     handleSubmit() {
-        let startSelected = false;
-        let endSelected = false;
-        // First, make sure they have selected a start and end point
-        this.state.start !== null ? startSelected = true : startSelected = false
-        this.state.end !== null ? endSelected = true : endSelected = false
-        // Next, set constants for working with the function
-        if (startSelected === true && endSelected === true) {
-            const startId = this.state.start.code
-            const endId = this.state.end.code
-            //  check to see that the start point and the end point are not the same
-            if (startId !== endId) {
+        // let startSelected = false;
+        // let endSelected = false;
+        // // First, make sure they have selected a start and end point
+        // this.state.start !== null ? startSelected = true : startSelected = false
+        // this.state.end !== null ? endSelected = true : endSelected = false
+        // // Next, set constants for working with the function
+        // if (startSelected === true && endSelected === true) {
+        //     const startId = this.state.start.code
+        //     const endId = this.state.end.code
+        //     //  check to see that the start point and the end point are not the same
+        //     if (startId !== endId) {
 
-                // create an object to post to the database
-                const newRoute = {
-                    name: `${this.state.start.name} to ${this.state.end.name}`,
-                    userId: this.state.userId,
-                    startId: parseInt(startId),
-                    endId: parseInt(endId),
-                    direction: (parseInt(startId) < parseInt(endId) ? true : false),
-                    isComplete: false,
-                    timeToComplete: "",
-                    dateCompleted: ""
+        //         // create an object to post to the database
+        //         const newRoute = {
+        //             name: `${this.state.start.name} to ${this.state.end.name}`,
+        //             userId: this.state.userId,
+        //             startId: parseInt(startId),
+        //             endId: parseInt(endId),
+        //             direction: (parseInt(startId) < parseInt(endId) ? true : false),
+        //             isComplete: false,
+        //             timeToComplete: "",
+        //             dateCompleted: ""
 
-                }
-                // set a success message to state
-                this.setState({ message: "Your route was created!" })
-                // post to the database
-                this.props.addRoute("routes", newRoute, this.state.userId)
-            }
-            // set an error message to state
-            else {
-                this.setState({ message: "You must choose different start and end points" })
-            }
-        }
-        // set an error message to state
-        else {
-            this.setState({ message: "You must choose a start and end point" })
-        }
+        //         }
+        //         // set a success message to state
+        //         this.setState({ message: "Your route was created!" })
+        //         // post to the database
+        //     }
+        //     // set an error message to state
+        //     else {
+        //         this.setState({ message: "You must choose different start and end points" })
+        //     }
+        // }
+        // // set an error message to state
+        // else {
+        //     this.setState({ message: "You must choose a start and end point" })
+        // }
+
+        const newRoute = MakeNewRoute(this.state)
+        this.setState({message:newRoute[0]})
+        newRoute[1].name?this.props.addRoute("routes", newRoute[1], this.state.userId): console.log("no route")
+
+
+
+        // this.props.addRoute("routes", newRoute, this.state.userId)
+
     }
 
 

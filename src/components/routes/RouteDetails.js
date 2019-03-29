@@ -13,20 +13,20 @@ export default class RouteDetails extends Component {
 
     componentDidMount() {
         ResourceManager.getSingleItem("routes", this.props.match.params.routeId)
-        .then(route => {
-          this.setState({
-            name: route.name,
-            userId: route.userId,
-            startId: route.startId,
-            endId: route.endId,
-            direction: route.direction,
-            isComplete: route.isComplete,
-            timeToComplete: route.timeToComplete,
-            dateCompleted: route.dateCompleted,
-            id: route.id
-          });
-        });
-      }
+            .then(route => {
+                this.setState({
+                    name: route.name,
+                    userId: route.userId,
+                    startId: route.startId,
+                    endId: route.endId,
+                    direction: route.direction,
+                    isComplete: route.isComplete,
+                    timeToComplete: route.timeToComplete,
+                    dateCompleted: route.dateCompleted,
+                    id: route.id
+                });
+            });
+    }
 
     constructor() {
         super();
@@ -35,13 +35,28 @@ export default class RouteDetails extends Component {
             activeUser: parseInt(sessionStorage.getItem("credentials")),
             date: "",
             time: "",
-            start:"",
-            end:"",
-            target: ""
+            start: null,
+            end: null,
+            target: "",
+            message: ""
         };
         this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
+        this.onStartChange = this.onStartChange.bind(this);
+        this.onEndChange = this.onEndChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    // these functions are called as the dropdown select changes
+    onStartChange(e) {
+        this.setState({ start: e.value });
+    }
+
+    onEndChange(e) {
+        this.setState({ end: e.value });
+    }
+    // these functions are called to hide and unhide modals
+
     onClick(event) {
         this.setState({ visible: true });
     }
@@ -59,14 +74,14 @@ export default class RouteDetails extends Component {
     footer() {
         return (
             <React.Fragment>
-            <div>
-                <Button label="Submit" className="p-button-success" icon="pi pi-check"
-                    onClick={() => {
-                        this.onHide()
-                        this.completeRoute()
-                    }}
-                />
-            </div>
+                <div>
+                    <Button label="Submit" className="p-button-success" icon="pi pi-check"
+                        onClick={() => {
+                            this.onHide()
+                            this.completeRoute()
+                        }}
+                    />
+                </div>
             </React.Fragment>
         )
     }
@@ -192,23 +207,23 @@ export default class RouteDetails extends Component {
                             visible: true,
                             target: e.currentTarget.id,
                         })
-                    } />:""}
-                    <Button label="Delete"
-                        icon="pi pi-trash" iconPos="right"
-                        className="p-button-raised p-button-rounded p-button-danger"
-                        onClick={() => {
-                            this.props.deleteRoute("routes", route.id, this.state.userId)
-                        }} />
+                    } /> : ""}
+                <Button label="Delete"
+                    icon="pi pi-trash" iconPos="right"
+                    className="p-button-raised p-button-rounded p-button-danger"
+                    onClick={() => {
+                        this.props.deleteRoute("routes", route.id, this.state.userId)
+                    }} />
             </div>
 
 
 
 
-                {(this.state.target === "complete-route"?
-                    this.completeRouteFragment(footer) : "")}
+            {(this.state.target === "complete-route" ?
+                this.completeRouteFragment(footer) : "")}
 
-                {(this.state.target === "edit-route-detail" ?
-                    this.editRouteFragment(footer) : "")}
+            {(this.state.target === "edit-route-detail" ?
+                this.editRouteFragment(footer) : "")}
 
 
 
@@ -219,7 +234,7 @@ export default class RouteDetails extends Component {
 
 
 
-            }
-        }
+    }
+}
 
 
