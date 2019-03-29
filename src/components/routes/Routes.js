@@ -5,6 +5,8 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
+import CompleteRoutePatch from "./CompleteRoutePatch"
+import ReverseRoutePatch from "./ReverseRoutePatch"
 
 
 
@@ -33,29 +35,13 @@ export default class Routes extends Component {
 
     completeRoute() {
         const routeId = this.state.currentRoute.id
-        const patchObject = {
-            isComplete: true,
-            timeToComplete: this.state.time,
-            dateCompleted: this.state.date
-        }
-
+        const patchObject = CompleteRoutePatch(this.state)
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
     }
 
     reverseRoute(route) {
         const routeId = route.id
-        const name = route.name
-        // split the name to reverse which trailhead name comes first
-        const splitName = name.split(" to ")
-        const newName = `${splitName[1]} to ${splitName[0]}`
-
-        // build the patch object with reversed start and end points and reversed name
-        const patchObject = {
-            name: newName,
-            direction: (route.direction === true ? route.direction = false : route.direction = true),
-            startId: route.endId,
-            endId: route.startId
-        }
+        const patchObject=ReverseRoutePatch(route)
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
     }
 
@@ -88,7 +74,8 @@ export default class Routes extends Component {
                                 <div className="route-text-cont">
                                     Some sample text</div>)}
 
-                            {(route.isComplete === false ? <div className="route-btn-cont">
+                            {(route.isComplete === false ?
+                            <div className="route-btn-cont">
                                 <Button label="Reverse"
                                     icon="pi pi-refresh" iconPos="right"
                                     className="p-button-raised p-button-rounded p-button-warning"
@@ -105,7 +92,6 @@ export default class Routes extends Component {
                                     })} />
                             </div> : "")}
                             <div className="route-btn-cont">
-
                                 <Button label="Details" icon="pi pi-pencil"
                                     iconPos="right"
                                     className="p-button-raised p-button-rounded p-button-primary"
@@ -127,7 +113,7 @@ export default class Routes extends Component {
     render() {
         const footer = (
             <div>
-                <Button label="Record" className="p-button-success" icon="pi pi-check"
+                <Button label="Submit" className="p-button-success" icon="pi pi-check"
                     onClick={() => {
                         this.onHide()
                         this.completeRoute()
@@ -150,7 +136,7 @@ export default class Routes extends Component {
                 </div>
                 <Dialog header="Route Completed" visible={this.state.visible} style={{ width: '50vw' }} footer={footer} onHide={this.onHide} >
                     <div>Date Completed:
-                    <Calendar value={this.state.date} onChange={(e) => this.setState({ date: e.value })} placeholder="MM/DD/YY"></Calendar>                    </div>
+                    <Calendar value={this.state.date} monthNavigator={true} onChange={(e) => this.setState({ date: e.value })} placeholder="MM/DD/YY"></Calendar>                    </div>
                     <div>
                         Time to Complete:
                 <InputText value={this.state.time} onChange={(e) => this.setState({ time: e.target.value })} placeholder="HH:MM:SS" />

@@ -142,7 +142,8 @@ export default class ApplicationViews extends Component {
 
                                         return <RouteDetails {...props}
                                                 routes={this.state.routes}
-                                                editRoute={this.editResource} />
+                                                editRoute={this.editResource}
+                                                patchRoute={this.patchResource}/>
 
                                 }} />
                                 <Route path="/routes/:routeId(\d+)/edit" render={props => {
