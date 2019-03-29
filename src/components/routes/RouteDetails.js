@@ -8,6 +8,8 @@ import { Calendar } from 'primereact/calendar';
 import CompleteRoutePatch from "./CompleteRoutePatch"
 import { Dropdown } from 'primereact/dropdown';
 import ResourceManager from "../../modules/ResourceAPIManager"
+import MakeNewRoute from "./MakeNewRoute"
+import deleteConfirm from "../../modules/DeleteConfirm"
 
 export default class RouteDetails extends Component {
 
@@ -70,21 +72,18 @@ export default class RouteDetails extends Component {
         const patchObject = CompleteRoutePatch(this.state)
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
     }
+    handleSubmit() {
+        const thingReturned = MakeNewRoute(this.state)
+        const message = thingReturned[0]
+        const newRoute = thingReturned[1]
+        newRoute.id = this.state.id
 
-    footer() {
-        return (
-            <React.Fragment>
-                <div>
-                    <Button label="Submit" className="p-button-success" icon="pi pi-check"
-                        onClick={() => {
-                            this.onHide()
-                            this.completeRoute()
-                        }}
-                    />
-                </div>
-            </React.Fragment>
-        )
+        console.log(newRoute)
+        this.setState({ message: message })
+        newRoute.name ? this.props.editRoute("routes", newRoute, this.state.userId) : console.log("no route")
     }
+
+
 
     completeRouteFragment(footer) {
         return (
@@ -101,6 +100,8 @@ export default class RouteDetails extends Component {
             </React.Fragment >
         )
     }
+
+
 
     editRouteFragment(footer) {
         const start = [
@@ -140,11 +141,12 @@ export default class RouteDetails extends Component {
                 <Button label="Submit" className="p-button-success" icon="pi pi-check"
                     onClick={() => {
                         this.onHide()
-                        this.completeRoute()
+                        this.state.target === "complete-route" ? this.completeRoute() : this.handleSubmit()
                     }}
                 />
             </div>
         )
+
 
 
         /*
@@ -209,11 +211,14 @@ export default class RouteDetails extends Component {
                         })
                     } /> : ""}
                 <Button label="Delete"
+                    id="delete-route"
                     icon="pi pi-trash" iconPos="right"
                     className="p-button-raised p-button-rounded p-button-danger"
-                    onClick={() => {
-                        this.props.deleteRoute("routes", route.id, this.state.userId)
-                    }} />
+                    onClick={(e) => {
+                        this.setState({
+                            visible: true,
+                            target: e.currentTarget.id,
+                        })}} />
             </div>
 
 
@@ -224,6 +229,9 @@ export default class RouteDetails extends Component {
 
             {(this.state.target === "edit-route-detail" ?
                 this.editRouteFragment(footer) : "")}
+
+            {(this.state.target === "delete-route" ?
+                deleteConfirm("routes", this.state.id, this.state, this.onHide, this.props.deleteRoute, this.props.history) : "")}
 
 
 
