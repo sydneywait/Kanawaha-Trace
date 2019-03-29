@@ -7,8 +7,26 @@ import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import CompleteRoutePatch from "./CompleteRoutePatch"
 import { Dropdown } from 'primereact/dropdown';
+import ResourceManager from "../../modules/ResourceAPIManager"
 
 export default class RouteDetails extends Component {
+
+    componentDidMount() {
+        ResourceManager.getSingleItem("routes", this.props.match.params.routeId)
+        .then(route => {
+          this.setState({
+            name: route.name,
+            userId: route.userId,
+            startId: route.startId,
+            endId: route.endId,
+            direction: route.direction,
+            isComplete: route.isComplete,
+            timeToComplete: route.timeToComplete,
+            dateCompleted: route.dateCompleted,
+            id: route.id
+          });
+        });
+      }
 
     constructor() {
         super();
@@ -17,7 +35,8 @@ export default class RouteDetails extends Component {
             activeUser: parseInt(sessionStorage.getItem("credentials")),
             date: "",
             time: "",
-            currentRoute: {},
+            start:"",
+            end:"",
             target: ""
         };
         this.onClick = this.onClick.bind(this);
@@ -32,7 +51,7 @@ export default class RouteDetails extends Component {
     }
 
     completeRoute() {
-        const routeId = this.state.currentRoute.id
+        const routeId = this.state.id
         const patchObject = CompleteRoutePatch(this.state)
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
     }
@@ -161,7 +180,6 @@ export default class RouteDetails extends Component {
                     onClick={(e) => this.setState({
                         visible: true,
                         target: e.currentTarget.id,
-                        currentRoute: route
                     })} />
 
 
@@ -173,25 +191,24 @@ export default class RouteDetails extends Component {
                         this.setState({
                             visible: true,
                             target: e.currentTarget.id,
-                            currentRoute: route
                         })
                     } />:""}
                     <Button label="Delete"
                         icon="pi pi-trash" iconPos="right"
                         className="p-button-raised p-button-rounded p-button-danger"
                         onClick={() => {
-                            this.props.deleteRoute("routes", route.id, this.state.activeUser)
+                            this.props.deleteRoute("routes", route.id, this.state.userId)
                         }} />
             </div>
 
 
 
 
-                {(route.isComplete === false ?
+                {(this.state.target === "complete-route"?
                     this.completeRouteFragment(footer) : "")}
 
-                {(route.isComplete === false && this.state.target === "complete-route" ?
-                    this.completeRouteFragment(footer) : this.editRouteFragment(footer))}
+                {(this.state.target === "edit-route-detail" ?
+                    this.editRouteFragment(footer) : "")}
 
 
 
