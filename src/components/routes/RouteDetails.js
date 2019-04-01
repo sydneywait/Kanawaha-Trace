@@ -3,7 +3,6 @@ import Moment from 'react-moment';
 import "./Routes.css"
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import CompleteRoutePatch from "./CompleteRoutePatch"
 import { Dropdown } from 'primereact/dropdown';
@@ -11,6 +10,7 @@ import ResourceManager from "../../modules/ResourceAPIManager"
 import MakeNewRoute from "./MakeNewRoute"
 import deleteConfirm from "../../modules/DeleteConfirm"
 import {InputMask} from 'primereact/inputmask';
+import CompleteRouteFragment from "./CompleteRouteForm"
 
 export default class RouteDetails extends Component {
 
@@ -45,6 +45,7 @@ export default class RouteDetails extends Component {
         };
         this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
+        this.onChange=this.onChange.bind(this);
         this.onStartChange = this.onStartChange.bind(this);
         this.onEndChange = this.onEndChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -91,25 +92,6 @@ export default class RouteDetails extends Component {
         this.setState({ message: message })
         newRoute.name ? this.props.editRoute("routes", newRoute, this.state.userId) : console.log("no route")
     }
-
-
-
-    completeRouteFragment(footer) {
-        return (
-            <React.Fragment>
-                <Dialog header="Route Completed:" visible={this.state.visible} style={{ width: '50vw' }} footer={footer} onHide={this.onHide} >
-                    <div>Date Completed:
-                <Calendar value={this.state.date} onChange={(e)=>this.onChange("date", e)} placeholder="mm/dd/yy"></Calendar>
-                    </div>
-                    <div>Time to Complete:
-                <InputMask required true mask = "99:99:99" value={this.state.time} onChange={(e) => this.onChange( "time", e)} placeholder="hh:mm:ss"  />
-                    </div>
-                </Dialog>
-
-            </React.Fragment >
-        )
-    }
-
 
 
     editRouteFragment(footer) {
@@ -236,7 +218,7 @@ export default class RouteDetails extends Component {
 
 
             {(this.state.target === "complete-route" ?
-                this.completeRouteFragment(footer) : "")}
+                CompleteRouteFragment(footer, this.state, this.onChange, this.onHide ) : "")}
 
             {(this.state.target === "edit-route-detail" ?
                 this.editRouteFragment(footer) : "")}

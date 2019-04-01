@@ -6,6 +6,7 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import CompleteRoutePatch from "./CompleteRoutePatch"
+import CompleteRouteFragment from "./CompleteRouteForm"
 import ReverseRoutePatch from "./ReverseRoutePatch"
 import deleteConfirm from "../../modules/DeleteConfirm"
 
@@ -35,6 +36,10 @@ export default class Routes extends Component {
         this.setState({ visible: false });
     }
 
+    // this function is called to set the date and time completed
+    onChange = (dateOrTime, e)=>
+    { this.setState({ [dateOrTime]: e.target.value })}
+
     completeRoute() {
         const routeId = this.state.currentRoute.id
         const patchObject = CompleteRoutePatch(this.state)
@@ -47,18 +52,6 @@ export default class Routes extends Component {
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
     }
 
-    completeRouteFragment(footer) {
-        return (
-            <Dialog header="Route Completed" visible={this.state.visible} style={{ width: '50vw' }} footer={footer} onHide={this.onHide} >
-                <div>Date Completed:
-                    <Calendar value={this.state.date} monthNavigator={true} onChange={(e) => this.setState({ date: e.value })} placeholder="MM/DD/YY"></Calendar>                    </div>
-                <div>
-                    Time to Complete:
-                <InputText value={this.state.time} onChange={(e) => this.setState({ time: e.target.value })} placeholder="HH:MM:SS" />
-                </div>
-            </Dialog>
-        )
-    }
 
     buildRouteCards(status) {
         return (
@@ -158,7 +151,7 @@ export default class Routes extends Component {
                     deleteConfirm("routes", this.state.currentRoute.id, this.state.currentRoute.userId, this.state.visible, this.onHide, this.props.deleteRoute, this.props.history) : "")}
 
                 {(this.state.target === "complete-route" ?
-                    this.completeRouteFragment(footer) : "")}
+                    CompleteRouteFragment(footer, this.state, this.onChange, this.onHide) : "")}
 
             </React.Fragment>
 
