@@ -18,8 +18,7 @@ export default {
     return fetch(`http://localhost:5002/${items}/${id}`, {
       method: "DELETE"
     })
-      .then(() => fetch(`http://localhost:5002/${items}`))
-      .then(e => e.json())
+
   },
   addNewItem(items, newItem) {
     return fetch(`http://localhost:5002/${items}`, {

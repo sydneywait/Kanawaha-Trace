@@ -52,8 +52,18 @@ export default class ApplicationViews extends Component {
 
         updateResource = (resources, userId) => {
                 const newState = {}
-                newState.activeUser=userId
+                newState.activeUser = userId
                 ResourceAPIManager.getAllItemsbyUser(resources, userId)
+                        .then(sss => {
+                                newState[resources] = sss
+                                this.setState(newState)
+                        }
+                        )
+        }
+        deleteResource = (resources, resourceId, userId) => {
+                const newState = {}
+                ResourceAPIManager.deleteItem(resources, resourceId)
+                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
@@ -62,13 +72,34 @@ export default class ApplicationViews extends Component {
         }
 
 
+        patchResource = (resources, resourceId, patchObject, userId) => {
+                const newState = {}
+                ResourceAPIManager.patchItem(resources, resourceId, patchObject)
+                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
+                        .then(sss => {
+                                newState[resources] = sss
+                                this.setState(newState)
+                        }
+                        )
+        }
+        editResource = (resources, editedObject, userId) => {
+                const newState = {}
+                ResourceAPIManager.editItem(resources, editedObject)
+                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
+                        .then(sss => {
+                                newState[resources] = sss
+                                this.setState(newState)
+                        }
+                        )
+        }
+
 
         render() {
                 return (
                         <React.Fragment>
                                 <Route exact path="/callback" render={props => {
                                         return <Callback {...props}
-                                        updateResource={this.updateResource} />
+                                                updateResource={this.updateResource} />
                                 }} />
 
                                 <Route exact path="/" render={props => {
@@ -86,26 +117,25 @@ export default class ApplicationViews extends Component {
                                         }
 
                                 }} />
-                                <Route exact path="/explore/new" render={props => {
-                                        if (auth0Client.isAuthenticated()) {
-                                                return <NewRoute {...props} />
-                                        }
-                                        else {
-                                                auth0Client.signIn();
-                                                return null;
-                                        }
 
-                                }} />
                                 <Route exact path="/routes" render={props => {
 
                                         return <Routes {...props}
+                                                routes={this.state.routes}
+                                                deleteRoute={this.deleteResource}
+                                                patchRoute={this.patchResource}
                                         />
+
 
                                 }} />
 
                                 <Route exact path="/routes/:routeId(\d+)" render={props => {
 
-                                        return <RouteDetails {...props} />
+                                        return <RouteDetails {...props}
+                                                routes={this.state.routes}
+                                                editRoute={this.editResource}
+                                                patchRoute={this.patchResource}
+                                                deleteRoute={this.deleteResource}/>
 
                                 }} />
                                 <Route path="/routes/:routeId(\d+)/edit" render={props => {

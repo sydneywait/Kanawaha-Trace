@@ -1,0 +1,98 @@
+.route-cont{
+
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+
+.route-img-cont{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+
+}
+
+.route-card-cont{
+    border: 1px solid gray;
+    flex-direction: column;
+    display: flex;
+    width: 300px;
+    margin-top:10px;
+
+
+
+}
+
+.route-card-header, .route-cont-header{
+    display:flex;
+    justify-content: center;
+}
+
+.route-btn-cont {
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+padding-top:10px;
+margin-bottom: auto;
+border: 1px solid gray;
+
+}
+
+.route-name-details-header{
+font-size: 3em;
+padding-left: 15px;
+
+}
+
+.route-text-detail-cont{
+display: flex;
+flex-direction: column;
+justify-content: center;
+border: 1px solid gray;
+
+}
+
+.details-body-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-self: center;
+    margin-top: 10px;
+}
+
+.route-text-detail-cont{
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    width: 250px;
+    padding-left: 10px;
+}
+
+.route-card-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 1px solid gray;
+
+}
+
+.route-marker{
+    align-self: center;
+
+}
+
+.route-details-img-cont{
+
+}
+
+.route-details-btn-cont{
+    display:flex;
+    justify-content: center;
+    margin-top: 15px;
+
+
+
+}
