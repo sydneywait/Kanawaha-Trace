@@ -30,13 +30,17 @@ export default class ApplicationViews extends Component {
         componentDidMount() {
                 const newState = {}
                 newState.activeUser = parseInt(sessionStorage.getItem("credentials"))
-
-                ResourceAPIManager.getAllItemsbyUser("routes", newState.activeUser)
+                ResourceAPIManager.getAllItems("hazards")
+                        .then(hazards => newState.hazards = hazards)
+                        .then(ResourceAPIManager.getAllItems("features"))
+                        .then(features => newState.features = features)
+                        .then(ResourceAPIManager.getAllItemsbyUser("routes", newState.activeUser))
                         .then(routes => newState.routes = routes)
-                        .then(()=>ResourceAPIManager.getSingleItem("users", newState.activeUser))
+                        .then(() => ResourceAPIManager.getSingleItem("users", newState.activeUser))
                         .then(user => {
                                 newState.user = user
-                                console.log("newstate user", newState.user)})
+                                console.log("newstate user", newState.user)
+                        })
                         .then(() => this.setState(newState))
 
         }
@@ -60,7 +64,7 @@ export default class ApplicationViews extends Component {
                                 newState[resources] = sss
 
                         })
-                        .then(()=>ResourceAPIManager.getSingleItem("users", userId))
+                        .then(() => ResourceAPIManager.getSingleItem("users", userId))
                         .then(user => {
                                 newState.user = user
                                 this.setState(newState)
@@ -152,7 +156,8 @@ export default class ApplicationViews extends Component {
                                 <Route exact path="/maintenance" render={props => {
 
                                         return <Maintenance {...props}
-                                                user={this.state.user} />
+                                                user={this.state.user}
+                                                hazards={this.state.hazards}/>
 
                                 }} />
                                 <Route exact path="/maintenance/request" render={props => {
