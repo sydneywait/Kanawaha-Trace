@@ -20,7 +20,7 @@ export default class ApplicationViews extends Component {
 
         state = {
                 activeUser: parseInt(sessionStorage.getItem("credentials")),
-                users: [],
+                user: {},
                 maintenance: [],
                 routes: [],
                 waypoints: [],
@@ -33,6 +33,10 @@ export default class ApplicationViews extends Component {
 
                 ResourceAPIManager.getAllItemsbyUser("routes", newState.activeUser)
                         .then(routes => newState.routes = routes)
+                        .then(()=>ResourceAPIManager.getSingleItem("users", newState.activeUser))
+                        .then(user => {
+                                newState.user = user
+                                console.log("newstate user", newState.user)})
                         .then(() => this.setState(newState))
 
         }
@@ -54,10 +58,17 @@ export default class ApplicationViews extends Component {
                 ResourceAPIManager.getAllItemsbyUser(resources, userId)
                         .then(sss => {
                                 newState[resources] = sss
+
+                        })
+                        .then(()=>ResourceAPIManager.getSingleItem("users", userId))
+                        .then(user => {
+                                newState.user = user
                                 this.setState(newState)
-                        }
-                        )
+                        })
+
+
         }
+
         deleteResource = (resources, resourceId, userId) => {
                 const newState = {}
                 ResourceAPIManager.deleteItem(resources, resourceId)
@@ -133,14 +144,15 @@ export default class ApplicationViews extends Component {
                                                 routes={this.state.routes}
                                                 editRoute={this.editResource}
                                                 patchRoute={this.patchResource}
-                                                deleteRoute={this.deleteResource}/>
+                                                deleteRoute={this.deleteResource} />
 
                                 }} />
 
 
                                 <Route exact path="/maintenance" render={props => {
 
-                                        return <Maintenance {...props} />
+                                        return <Maintenance {...props}
+                                                user={this.state.user} />
 
                                 }} />
                                 <Route exact path="/maintenance/request" render={props => {
