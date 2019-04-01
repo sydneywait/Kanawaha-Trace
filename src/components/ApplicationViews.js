@@ -157,7 +157,9 @@ export default class ApplicationViews extends Component {
 
                                         return <Maintenance {...props}
                                                 user={this.state.user}
-                                                hazards={this.state.hazards}/>
+                                                hazards={this.state.hazards}
+                                                addMaint={this.addResource}
+                                                />
 
                                 }} />
                                 <Route exact path="/maintenance/request" render={props => {

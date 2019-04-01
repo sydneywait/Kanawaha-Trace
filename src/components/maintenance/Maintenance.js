@@ -21,7 +21,7 @@ export default class Maintenance extends Component {
             phone: ""
         };
         this.onChange = this.onChange.bind(this);
-        this.handleSubmit=this.handleSubmit.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
         // this.onHide = this.onHide.bind(this);
     }
 
@@ -31,15 +31,26 @@ export default class Maintenance extends Component {
         this.setState(stateToChange)
     }
 
-    handleSubmit(){
-// create an object representing the request
+    handleSubmit() {
+        // create an object representing the request
+
+        const maintObject = {
+            mile: this.state.location,
+            hazardId: this.state.hazard.id,
+            submittedBy: this.state.activeUser,
+            isComplete: false,
+            userId: "",
+            okToContact: this.state.checked,
+            phone: this.state.phone
+
+        }
 
 
-// post it to the database
-
-
+        // post it to the database
+        this.props.addMaint("maintenance-requests", maintObject, this.state.activeUser)
 
     }
+
     basicUser() {
         return (
             <React.Fragment>
@@ -54,7 +65,7 @@ export default class Maintenance extends Component {
 
                         <div >
                             <Dropdown
-                                className="haz-dd" value={this.state.hazardId}
+                                className="haz-dd" value={this.state.hazard}
                                 name="hazard"
                                 options={this.props.hazards.map(h => h)}
                                 onChange={this.onChange}
@@ -77,7 +88,7 @@ export default class Maintenance extends Component {
                             <Checkbox id="contact-check"
                                 name="checked"
                                 value={this.state.checked}
-                                onChange={e => this.setState({checked: e.checked})} checked={this.state.checked}>
+                                onChange={e => this.setState({ checked: e.checked })} checked={this.state.checked}>
                             </Checkbox>
                             <label htmlFor="contact-check">
                                 Is it ok to follow up with you about this issue if more information is needed?</label>
@@ -98,9 +109,9 @@ export default class Maintenance extends Component {
                             className="p-button-raised p-button-rounded p-button-success"
                             type="submit"
                             onClick={this.handleSubmit}
-                            >
+                        >
 
-                            </Button>
+                        </Button>
                         </div>
 
                     </div>
