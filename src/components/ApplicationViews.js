@@ -32,11 +32,13 @@ export default class ApplicationViews extends Component {
                 newState.activeUser = parseInt(sessionStorage.getItem("credentials"))
                 ResourceAPIManager.getAllItems("hazards")
                         .then(hazards => newState.hazards = hazards)
-                        .then(ResourceAPIManager.getAllItems("features"))
+                        .then(()=>ResourceAPIManager.getAllItems("features"))
                         .then(features => newState.features = features)
-                        .then(ResourceAPIManager.getAllItemsbyUser("routes", newState.activeUser))
+                        .then(()=>ResourceAPIManager.getAllItems("maintenance-requests"))
+                        .then(maintenance => newState.maintenance = maintenance)
+                        .then(()=>ResourceAPIManager.getAllItemsbyUser("routes", newState.activeUser))
                         .then(routes => newState.routes = routes)
-                        .then(() => ResourceAPIManager.getSingleItem("users", newState.activeUser))
+                        .then(()=>ResourceAPIManager.getSingleItem("users", newState.activeUser))
                         .then(user => {
                                 newState.user = user
                                 console.log("newstate user", newState.user)
@@ -158,8 +160,10 @@ export default class ApplicationViews extends Component {
                                         return <Maintenance {...props}
                                                 user={this.state.user}
                                                 hazards={this.state.hazards}
+                                                maintenance={this.state.maintenance}
                                                 addMaint={this.addResource}
-                                                />
+
+                                        />
 
                                 }} />
                                 <Route exact path="/maintenance/request" render={props => {

@@ -6,8 +6,34 @@ import { Checkbox } from "primereact/checkbox";
 import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputMask } from 'primereact/inputmask'
+import ResourceManager from "../../modules/ResourceAPIManager"
+
 
 export default class Maintenance extends Component {
+
+    componentDidMount() {
+
+        let newState = {}
+
+        ResourceManager.getAllItems("maintenance-requests")
+            .then((m) => {
+                newState.maintenance = m
+                this.setState(newState)
+            })
+
+    }
+
+    addMaint(maintObject){
+
+        ResourceManager.addNewItem("maintenance-requests", maintObject)
+        .then(()=>ResourceManager.getAllItems("maintenance-requests"))
+        .then(maint=>this.setState({maintenance:maint}))
+    }
+
+
+    state = {
+        maintenance: []
+    }
 
     constructor() {
         super();
@@ -41,14 +67,16 @@ export default class Maintenance extends Component {
             isComplete: false,
             userId: "",
             okToContact: this.state.checked,
-            phone: this.state.phone
+            phone: this.state.phone,
+            description: this.state.description
 
         }
+        console.log(maintObject)
 
 
         // post it to the database
-        this.props.addMaint("maintenance-requests", maintObject, this.state.activeUser)
-
+        this.addMaint("maintenance-requests", maintObject, this.state.activeUser)
+        this.props.history.push("/maintenance")
     }
 
     basicUser() {
@@ -56,7 +84,9 @@ export default class Maintenance extends Component {
             <React.Fragment>
 
                 <div className="maint-cont">
+
                     <div className="maint-req-form">
+                        <h2 className="maint-req-header">Report a Maintenance or Trail Issue</h2>
                         <div>
                             <InputText value={this.state.location} onChange={(e) => this.setState({ location: e.target.value })}
                                 placeholder="Enter approx. mile mark">
@@ -90,7 +120,7 @@ export default class Maintenance extends Component {
                                 value={this.state.checked}
                                 onChange={e => this.setState({ checked: e.checked })} checked={this.state.checked}>
                             </Checkbox>
-                            <label htmlFor="contact-check">
+                            <label htmlFor="contact-check" style={{ wordBreak: "break-word" }} >
                                 Is it ok to follow up with you about this issue if more information is needed?</label>
                         </div>
 
@@ -115,8 +145,14 @@ export default class Maintenance extends Component {
                         </div>
 
                     </div>
-                    <div className="maint-req-list">
-                        list
+                    <div>
+                        <div className="maint-req-list">
+                            <h2 className="maint-req-header">Ongoing Maintenance</h2>
+                            {this.props.maintenance.map(m =>
+                                <p>mile {m.mile}--{m.description}</p>
+
+                            )}
+                        </div>
                     </div>
                 </div>
 
@@ -150,7 +186,7 @@ export default class Maintenance extends Component {
     render() {
         return (
             <React.Fragment>
-                <h2>Report a Maintenance or Trail Issue</h2>
+
                 {this.props.user.isAdmin === false ? this.basicUser() : this.adminUser()}
 
 

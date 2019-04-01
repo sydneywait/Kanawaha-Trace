@@ -7,10 +7,18 @@
 }
 
 .maint-req-form{
+    width: 30%;
+    border: 1px solid gray;
+
 
 }
 
 .maint-req-list{
+    border: 1px solid gray;
 
+}
 
+.maint-req-header{
+
+    border: 1px solid gray;
 }
