@@ -3,13 +3,12 @@ import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 import "./Routes.css"
 import { Button } from 'primereact/button';
-import { Dialog } from 'primereact/dialog';
 import CompleteRoutePatch from "./CompleteRoutePatch"
-import { Dropdown } from 'primereact/dropdown';
 import ResourceManager from "../../modules/ResourceAPIManager"
 import MakeNewRoute from "./MakeNewRoute"
 import deleteConfirm from "../../modules/DeleteConfirm"
 import CompleteRouteFragment from "./CompleteRouteForm"
+import SelectRoutePoints from "./SelectRoutePoints"
 
 export default class RouteDetails extends Component {
 
@@ -92,37 +91,6 @@ export default class RouteDetails extends Component {
     }
 
 
-    editRouteFragment(footer) {
-        const start = [
-            { name: 'Wildcat Hollow', code: '1' },
-            { name: 'Blue Sulphur Rd', code: '2' },
-            { name: 'Camp Arrowhead', code: '3' },
-            { name: 'Howells Mill', code: '4' },
-            { name: 'Canaan Lands', code: '5' }
-        ];
-
-        const end = [
-            { name: 'Wildcat Hollow', code: '1' },
-            { name: 'Blue Sulphur Rd', code: '2' },
-            { name: 'Camp Arrowhead', code: '3' },
-            { name: 'Howells Mill', code: '4' },
-            { name: 'Canaan Lands', code: '5' }
-        ];
-
-        return (
-            <React.Fragment>
-                <Dialog header="Edit Start and End Points" visible={this.state.visible} style={{ width: '50vw' }} footer={footer} onHide={this.onHide} >
-
-                    <div className="exp-dd-cont">
-                        <Dropdown className="exp-dd" value={this.state.start} options={start} onChange={this.onStartChange} style={{ width: '200px' }} placeholder="Select a Start Point" optionLabel="name" />
-                        <Dropdown className="exp-dd" value={this.state.end} options={end} onChange={this.onEndChange} style={{ width: '200px' }} placeholder="Select an End Point" optionLabel="name" />
-                    </div>
-                </Dialog>
-
-
-            </React.Fragment>
-        )
-    }
 
     render() {
         const footer = (
@@ -223,7 +191,7 @@ export default class RouteDetails extends Component {
                 CompleteRouteFragment(footer, this.state, this.onChange, this.onHide) : "")}
 
             {(this.state.target === "edit-route-detail" ?
-                this.editRouteFragment(footer) : "")}
+                SelectRoutePoints(footer, this.state, this.onStartChange, this.onEndChange, this.onHide ) : "")}
 
             {(this.state.target === "delete-route" ?
                 deleteConfirm("routes", this.state.id, this.state.userId, this.state.visible, this.onHide, this.props.deleteRoute, this.props.history) : "")}

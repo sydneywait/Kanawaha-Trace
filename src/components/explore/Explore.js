@@ -5,7 +5,7 @@ import "./Explore.css"
 // import { GMap } from 'primereact/gmap';
 // import Snackbar from '@material-ui/core/Snackbar';
 import MakeNewRoute from "../routes/MakeNewRoute"
-
+import SelectRoutePoints from "../routes/SelectRoutePoints"
 
 
 export default class Explore extends Component {

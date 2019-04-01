@@ -2,11 +2,9 @@
 import { Route, Redirect } from "react-router-dom";
 import React, { Component } from "react";
 import Explore from "./explore/Explore"
-import NewRoute from "./explore/NewRoute"
 import HomePage from "./HomePage"
 import Routes from "./routes/Routes"
 import RouteDetails from "./routes/RouteDetails"
-import RouteEdit from "./routes/RouteEdit"
 import Maintenance from "./maintenance/Maintenance"
 import MaintenanceRequest from "./maintenance/MaintenanceRequest"
 import MaintenanceDetails from "./maintenance/MaintenanceDetails"
@@ -138,11 +136,7 @@ export default class ApplicationViews extends Component {
                                                 deleteRoute={this.deleteResource}/>
 
                                 }} />
-                                <Route path="/routes/:routeId(\d+)/edit" render={props => {
 
-                                        return <RouteEdit {...props} />
-
-                                }} />
 
                                 <Route exact path="/maintenance" render={props => {
 
