@@ -1,15 +1,14 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 import "./Routes.css"
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import { Calendar } from 'primereact/calendar';
 import CompleteRoutePatch from "./CompleteRoutePatch"
 import { Dropdown } from 'primereact/dropdown';
 import ResourceManager from "../../modules/ResourceAPIManager"
 import MakeNewRoute from "./MakeNewRoute"
 import deleteConfirm from "../../modules/DeleteConfirm"
-import {InputMask} from 'primereact/inputmask';
 import CompleteRouteFragment from "./CompleteRouteForm"
 
 export default class RouteDetails extends Component {
@@ -27,7 +26,7 @@ export default class RouteDetails extends Component {
                     timeToComplete: route.timeToComplete,
                     dateCompleted: route.dateCompleted,
                     id: route.id,
-                    date: route.isComplete===true?new Date(route.dateCompleted):"",
+                    date: route.isComplete === true ? new Date(route.dateCompleted) : "",
                     time: route.timeToComplete
                 });
             });
@@ -45,7 +44,7 @@ export default class RouteDetails extends Component {
         };
         this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
-        this.onChange=this.onChange.bind(this);
+        this.onChange = this.onChange.bind(this);
         this.onStartChange = this.onStartChange.bind(this);
         this.onEndChange = this.onEndChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -72,8 +71,7 @@ export default class RouteDetails extends Component {
     }
 
     // this function is called to set the date and time completed
-    onChange = (dateOrTime, e)=>
-    { this.setState({ [dateOrTime]: e.target.value })}
+    onChange = (dateOrTime, e) => { this.setState({ [dateOrTime]: e.target.value }) }
 
     completeRoute() {
         const routeId = this.state.id
@@ -129,7 +127,7 @@ export default class RouteDetails extends Component {
     render() {
         const footer = (
             <div>
-                <Button type = "submit" label="Submit" className="p-button-success" icon="pi pi-check"
+                <Button type="submit" label="Submit" className="p-button-success" icon="pi pi-check"
                     onClick={() => {
 
                         this.onHide()
@@ -214,11 +212,15 @@ export default class RouteDetails extends Component {
                     }} />
             </div>
 
+            <i class="pi pi-chevron-left"></i>
+
+            <Link className="back-to-routes" to={"/routes"}>Back to Route List</Link>
+
 
 
 
             {(this.state.target === "complete-route" ?
-                CompleteRouteFragment(footer, this.state, this.onChange, this.onHide ) : "")}
+                CompleteRouteFragment(footer, this.state, this.onChange, this.onHide) : "")}
 
             {(this.state.target === "edit-route-detail" ?
                 this.editRouteFragment(footer) : "")}
