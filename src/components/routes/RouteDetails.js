@@ -10,6 +10,7 @@ import { Dropdown } from 'primereact/dropdown';
 import ResourceManager from "../../modules/ResourceAPIManager"
 import MakeNewRoute from "./MakeNewRoute"
 import deleteConfirm from "../../modules/DeleteConfirm"
+import {InputMask} from 'primereact/inputmask';
 
 export default class RouteDetails extends Component {
 
@@ -25,7 +26,9 @@ export default class RouteDetails extends Component {
                     isComplete: route.isComplete,
                     timeToComplete: route.timeToComplete,
                     dateCompleted: route.dateCompleted,
-                    id: route.id
+                    id: route.id,
+                    date: route.isComplete===true?new Date(route.dateCompleted):"",
+                    time: route.timeToComplete
                 });
             });
     }
@@ -35,8 +38,6 @@ export default class RouteDetails extends Component {
         this.state = {
             visible: false,
             activeUser: parseInt(sessionStorage.getItem("credentials")),
-            date: "",
-            time: "",
             start: null,
             end: null,
             target: "",
@@ -57,6 +58,8 @@ export default class RouteDetails extends Component {
     onEndChange(e) {
         this.setState({ end: e.value });
     }
+
+
     // these functions are called to hide and unhide modals
 
     onClick(event) {
@@ -67,11 +70,17 @@ export default class RouteDetails extends Component {
         this.setState({ visible: false });
     }
 
+    // this function is called to set the date and time completed
+    onChange = (dateOrTime, e)=>
+    { this.setState({ [dateOrTime]: e.target.value })}
+
     completeRoute() {
         const routeId = this.state.id
         const patchObject = CompleteRoutePatch(this.state)
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
     }
+
+    // this function is called to make a new route
     handleSubmit() {
         const thingReturned = MakeNewRoute(this.state)
         const message = thingReturned[0]
@@ -88,12 +97,12 @@ export default class RouteDetails extends Component {
     completeRouteFragment(footer) {
         return (
             <React.Fragment>
-                <Dialog header="Route Completed" visible={this.state.visible} style={{ width: '50vw' }} footer={footer} onHide={this.onHide} >
+                <Dialog header="Route Completed:" visible={this.state.visible} style={{ width: '50vw' }} footer={footer} onHide={this.onHide} >
                     <div>Date Completed:
-                <Calendar value={this.state.date} onChange={(e) => this.setState({ date: e.value })} ></Calendar>
+                <Calendar value={this.state.date} onChange={(e)=>this.onChange("date", e)} placeholder="mm/dd/yy"></Calendar>
                     </div>
                     <div>Time to Complete:
-                <InputText value={this.state.time} onChange={(e) => this.setState({ time: e.target.value })} />
+                <InputMask required true mask = "99:99:99" value={this.state.time} onChange={(e) => this.onChange( "time", e)} placeholder="hh:mm:ss"  />
                     </div>
                 </Dialog>
 
@@ -138,8 +147,9 @@ export default class RouteDetails extends Component {
     render() {
         const footer = (
             <div>
-                <Button label="Submit" className="p-button-success" icon="pi pi-check"
+                <Button type = "submit" label="Submit" className="p-button-success" icon="pi pi-check"
                     onClick={() => {
+
                         this.onHide()
                         this.state.target === "complete-route" ? this.completeRoute() : this.handleSubmit()
                     }}
@@ -218,7 +228,8 @@ export default class RouteDetails extends Component {
                         this.setState({
                             visible: true,
                             target: e.currentTarget.id,
-                        })}} />
+                        })
+                    }} />
             </div>
 
 

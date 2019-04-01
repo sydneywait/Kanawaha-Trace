@@ -3,7 +3,7 @@ const completeRoutePatch=(state)=> {
     const patchObject = {
         isComplete: true,
         timeToComplete: state.time,
-        dateCompleted: state.date
+        dateCompleted: new Date (state.date)
     }
 
     return patchObject;
