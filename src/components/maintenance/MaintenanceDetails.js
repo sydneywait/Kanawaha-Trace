@@ -4,7 +4,9 @@ import { Button } from 'primereact/button';
 import CompleteMaintenance from "./CompleteMaintenance"
 import CompleteMaintenanceFragment from "./CompleteMaintenanceForm"
 import AssignMaintenanceFragment from "./AssignMaintenanceForm"
+import EditMaintenanceFragment from "./EditMaintenanceForm"
 import Moment from 'react-moment';
+
 
 export default class MaintenanceDetails extends Component {
 
@@ -51,7 +53,8 @@ export default class MaintenanceDetails extends Component {
             dateCompleted: "",
             updatedDescription: "",
             target: "",
-            assigned: ""
+            assigned: "",
+            hazard:""
 
         };
         this.onChange = this.onChange.bind(this);
@@ -120,7 +123,7 @@ export default class MaintenanceDetails extends Component {
 
                             icon="pi pi-user-plus" iconPos="right"
                             id="maint-assign-btn"
-                            className="p-button-raised p-button-rounded"
+                            className="p-button-raised p-button-rounded p-button-warning"
                             onClick={(e) => {
                                 console.log("you clicked", e.currentTarget.id)
                                 this.setState({ visible: true, target: e.currentTarget.id })
@@ -138,6 +141,19 @@ export default class MaintenanceDetails extends Component {
                             }}
                         >
                         </Button> : ""}
+
+                        {this.state.isComplete === false ? <Button label="Edit"
+                            icon="pi pi-pencil" iconPos="right"
+                            id="maint-edit-btn"
+                            className="p-button-raised p-button-rounded p-button-primary"
+                            onClick={(e) => {
+
+                                console.log("you clicked", e.currentTarget.id)
+                                this.setState({ visible: true, target: e.currentTarget.id })
+
+                            }}
+                        >
+                        </Button> : ""}
                     </div>
 
                 </div>
@@ -146,6 +162,8 @@ export default class MaintenanceDetails extends Component {
                         CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide) : ""}
                     {this.state.target === "maint-assign-btn" ?
                         AssignMaintenanceFragment(footer, this.state, this.props.admins, this.onChange, this.onHide) : ""}
+                        {this.state.target === "maint-edit-btn" ?
+                        EditMaintenanceFragment(footer, this.state, this.props.admins, this.props.hazards, this.onChange, this.onHide) : ""}
                 </div>
             </React.Fragment>
         )
