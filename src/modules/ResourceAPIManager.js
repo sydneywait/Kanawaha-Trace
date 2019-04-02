@@ -6,6 +6,10 @@ export default {
     return fetch(`http://localhost:5002/${items}${fetchString}`)
       .then(r => r.json())
   },
+  getAdmins: ()=>{
+    return fetch(`http://localhost:5002/users/?isAdmin=true`)
+    .then(r => r.json())
+  },
   getSingleItem: (items, id) => {
     return fetch(`http://localhost:5002/${items}/${id}`)
       .then(r => r.json())
