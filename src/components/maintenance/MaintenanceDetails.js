@@ -26,7 +26,8 @@ export default class MaintenanceDetails extends Component {
                     phone: request.phone,
                     description: request.description,
                     id: request.id,
-                    updatedDescription: (request.isComplete === true ? request.updatedDescription : "")
+                    updatedDescription: (request.isComplete === true ? request.updatedDescription : ""),
+                    dateCompleted:(request.isComplete === true ? request.dateCompleted : "")
                 })
             )
             .then(() => ResourceManager.getSingleItem("users", newState.userId))
@@ -44,9 +45,9 @@ export default class MaintenanceDetails extends Component {
         this.state = {
             visible: false,
             activeUser: parseInt(sessionStorage.getItem("credentials")),
-            date: "",
+            dateCompleted: "",
             updatedDescription: "",
-            target:""
+            target: ""
         };
         this.onChange = this.onChange.bind(this);
         this.completeMaint = this.completeMaint.bind(this)
@@ -67,14 +68,14 @@ export default class MaintenanceDetails extends Component {
         // get the id of the target maintenance_request object
         const maintId = this.state.id
         // create a patch object from info in popup
-        const maintObject = CompleteMaintenance(this.state.updatedDescription, this.state.date)
+        const maintObject = CompleteMaintenance(this.state.updatedDescription, this.state.dateCompleted)
         // patch the maintenance_request with the submitted information
         this.props.patchMaint("maintenance_requests", maintId, maintObject)
 
 
     }
 
-    assignMaint(){
+    assignMaint() {
 
         console.log("inside assign maint")
     }
@@ -85,7 +86,7 @@ export default class MaintenanceDetails extends Component {
                 <Button label="Submit" className="p-button-success" icon="pi pi-check"
                     onClick={() => {
                         this.onHide()
-                        this.state.target==="maint-complete-btn"?this.completeMaint():this.assignMaint()
+                        this.state.target === "maint-complete-btn" ? this.completeMaint() : this.assignMaint()
                     }}
                 />
             </div>
@@ -96,44 +97,48 @@ export default class MaintenanceDetails extends Component {
 
         return (
             <React.Fragment>
-            <div><h1>this is the maintenance details page</h1>
-                <p>mile: {" " + this.state.mile}</p>
+                <h2>Request Details</h2>
+                <div className={this.state.isComplete ? "request-details-complete" : "request-details"}>
 
-                {this.state.isComplete === true ? <p>{this.state.updatedDescription}</p> : ""}
-                {this.state.okToContact === true ? <p>Submitted by:{" " + this.state.submitName}<br></br>
-                    Contact phone:{" " + this.state.phone}</p> : ""}
-                <p>Description of Problem:{" " + this.state.description}</p>
+                    <p>mile: {" " + this.state.mile}</p>
 
-                {this.state.userId ? <p>Assigned to: {this.state.adminName}</p> : <p>unassigned</p>}
-                <div>
-                    <Button label="Assign"
-                        icon="pi pi-user-plus" iconPos="right"
-                        id="maint-assign-btn"
-                        className="p-button-raised p-button-rounded"
-                        onClick={(e)=>{
-                            console.log("you clicked",e.currentTarget.id)
-                            this.setState({visible:true, target:e.currentTarget.id})
+                    {this.state.okToContact === true ? <p>Submitted by:{" " + this.state.submitName}<br></br>
+                        Contact phone:{" " + this.state.phone}</p> : ""}
+                    <p>Description of Problem:{" " + this.state.description}</p>
+                    {this.state.isComplete === true ? <p>Resolution:{" " + this.state.updatedDescription}</p> : ""}
+
+                    {this.state.userId ? <p>Assigned to: {this.state.adminName}</p> : <p>unassigned</p>}
+                    {this.state.isComplete?<h3>Completed{" "+this.state.date} </h3>:""}
+                    <div>
+                        <Button label={this.state.userId ? "Reassign" : "Assign"}
+
+                            icon="pi pi-user-plus" iconPos="right"
+                            id="maint-assign-btn"
+                            className="p-button-raised p-button-rounded"
+                            onClick={(e) => {
+                                console.log("you clicked", e.currentTarget.id)
+                                this.setState({ visible: true, target: e.currentTarget.id })
                             }}>
-                    </Button>
-                    <Button label="Complete"
-                        icon="pi pi-check" iconPos="right"
-                        id="maint-complete-btn"
-                        className="p-button-raised p-button-rounded p-button-success"
-                        onClick={(e)=>{
+                        </Button>
+                        {this.state.isComplete === false ? <Button label="Complete"
+                            icon="pi pi-check" iconPos="right"
+                            id="maint-complete-btn"
+                            className="p-button-raised p-button-rounded p-button-success"
+                            onClick={(e) => {
 
-                            console.log("you clicked",e.currentTarget.id)
-                            this.setState({visible:true, target:e.currentTarget.id})
+                                console.log("you clicked", e.currentTarget.id)
+                                this.setState({ visible: true, target: e.currentTarget.id })
 
-                        }}
+                            }}
                         >
-                    </Button>
-                </div>
+                        </Button> : ""}
+                    </div>
 
-            </div>
-            <div>
-                {this.state.target==="maint-complete-btn"?
-                CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide):""}
-            </div>
+                </div>
+                <div>
+                    {this.state.target === "maint-complete-btn" ?
+                        CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide) : ""}
+                </div>
             </React.Fragment>
         )
 

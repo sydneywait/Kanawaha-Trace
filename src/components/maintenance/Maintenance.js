@@ -82,7 +82,8 @@ export default class Maintenance extends Component {
             userId: "",
             okToContact: this.state.checked,
             phone: this.state.phone,
-            description: this.state.description
+            description: this.state.description,
+            dateSubmitted: new Date()
 
         }
         console.log(maintObject)
@@ -115,7 +116,9 @@ export default class Maintenance extends Component {
                         <h2 className="maint-req-header">Report a Maintenance or Trail Issue</h2>
                         <div>
                             <InputText value={this.state.location} onChange={this.onChange}
+                                name="location"
                                 placeholder="Enter approx. mile mark">
+
                             </InputText>
                         </div>
 
