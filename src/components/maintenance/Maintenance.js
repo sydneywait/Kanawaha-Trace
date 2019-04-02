@@ -8,6 +8,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { InputMask } from 'primereact/inputmask'
 import ResourceManager from "../../modules/ResourceAPIManager"
 import CompleteMaintenance from "./CompleteMaintenance"
+import CompleteMaintenanceFragment from "./CompleteMaintenanceForm"
 
 
 export default class Maintenance extends Component {
@@ -43,14 +44,25 @@ export default class Maintenance extends Component {
             activeUser: parseInt(sessionStorage.getItem("credentials")),
             location: "",
             description: "",
+            date: "",
+            updatedDescription: "",
             hazard: "",
             checked: false,
-            phone: ""
+            phone: "",
+            maintId:""
         };
         this.onChange = this.onChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.onComplete = this.onComplete.bind(this)
-        // this.onHide = this.onHide.bind(this);
+        this.completeMaint = this.completeMaint.bind(this)
+        this.onClick = this.onClick.bind(this)
+        this.onHide = this.onHide.bind(this);
+    }
+    onClick(event) {
+        this.setState({ visible: true });
+    }
+
+    onHide(event) {
+        this.setState({ visible: false });
     }
 
     onChange(e) {
@@ -82,7 +94,13 @@ export default class Maintenance extends Component {
     }
 
 
-    onComplete(){
+    completeMaint() {
+        // get the id of the target maintenance_request object
+        const maintId = parseInt(this.state.maintId.split("-")[1])
+        // create a patch object from info in popup
+        const maintObject = CompleteMaintenance(this.state.description, this.state.date)
+        // patch the maintenance_request with the submitted information
+        this.props.patchMaint("maintenance_requests", maintId, maintObject)
 
 
     }
@@ -96,7 +114,7 @@ export default class Maintenance extends Component {
                     <div className="maint-req-form">
                         <h2 className="maint-req-header">Report a Maintenance or Trail Issue</h2>
                         <div>
-                            <InputText value={this.state.location} onChange={(e) => this.setState({ location: e.target.value })}
+                            <InputText value={this.state.location} onChange={this.onChange}
                                 placeholder="Enter approx. mile mark">
                             </InputText>
                         </div>
@@ -175,26 +193,26 @@ export default class Maintenance extends Component {
                 <div className="maint-cont">
                     <div className="maint-assigned">
                         <h2>assigned to me</h2>
-                        {this.props.maintenance_requests.filter((request) => request.isComplete === false&&request.userId===this.props.activeUser).map(m =>
+                        {this.props.maintenance_requests.filter((request) => request.isComplete === false && request.userId === this.props.activeUser).map(m =>
 
-                                <div><Checkbox checked="" onChange={()=>this.onComplete}></Checkbox>
-                                <a href ={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
+                            <div><Checkbox id={`checkbox-${m.id}`}  onChange={(e) => this.setState({ visible: true, maintId:e.target.id })}></Checkbox>
+                                <a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
 
-                            )}
+                        )}
                     </div>
                     <div className="maint-unassigned">
-                    <h2>unassigned/assigned to others</h2>
-                        {this.props.maintenance_requests.filter((request) => request.isComplete === false&&request.userId!==this.props.activeUser).map(m =>
-                            <div><a href ={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
+                        <h2>unassigned/assigned to others</h2>
+                        {this.props.maintenance_requests.filter((request) => request.isComplete === false && request.userId !== this.props.activeUser).map(m =>
+                            <div><a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
                         )}
-                        </div>
+                    </div>
                     <div className="maint-complete">
                         <h2>complete</h2>
                         {this.props.maintenance_requests.filter((request) => request.isComplete === true).map(m =>
-                                <div><Checkbox checked="checked"></Checkbox>
-                                <a href ={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
+                            <div><Checkbox checked="checked"></Checkbox>
+                                <a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
 
-                            )}
+                        )}
                     </div>
                 </div>
 
@@ -206,11 +224,21 @@ export default class Maintenance extends Component {
 
 
     render() {
+        const footer = (
+            <div>
+                <Button label="Submit" className="p-button-success" icon="pi pi-check"
+                    onClick={() => {
+                        this.onHide()
+                        this.completeMaint()
+                    }}
+                />
+            </div>
+        )
         return (
             <React.Fragment>
 
                 {this.props.user.isAdmin === false ? this.basicUser() : this.adminUser()}
-
+                {CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide)}
 
             </React.Fragment>
         )

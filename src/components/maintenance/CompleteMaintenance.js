@@ -1,8 +1,9 @@
-const CompleteMaintenance = (description) => {
+const CompleteMaintenance = (description, date) => {
 
     const PatchObject = {
         isComplete: true,
-        updatedDescription: description
+        updatedDescription: description,
+        date: date
     }
     return PatchObject
 }

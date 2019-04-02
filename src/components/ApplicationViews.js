@@ -198,7 +198,8 @@ render() {
 
                                 return <MaintenanceDetails {...props}
                                         maintenance_requests={this.state.maintenance_requests}
-                                        admins={this.state.admins} />
+                                        admins={this.state.admins}
+                                        patchMaint={this.patchResource}/>
 
                         }} />
 
