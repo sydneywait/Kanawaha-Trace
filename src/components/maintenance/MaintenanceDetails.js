@@ -51,6 +51,7 @@ export default class MaintenanceDetails extends Component {
             dateCompleted: "",
             updatedDescription: "",
             target: ""
+
         };
         this.onChange = this.onChange.bind(this);
         this.completeMaint = this.completeMaint.bind(this)
@@ -144,7 +145,7 @@ export default class MaintenanceDetails extends Component {
                     {this.state.target === "maint-complete-btn" ?
                         CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide) : ""}
                         {this.state.target === "maint-assign-btn" ?
-                        AssignMaintenanceFragment(footer, this.state, this.onChange, this.onHide) : ""}
+                        AssignMaintenanceFragment(footer, this.state, this.props.admins, this.onChange, this.onHide) : ""}
                 </div>
             </React.Fragment>
         )

@@ -1,35 +1,24 @@
 import React from "react";
 import { Dialog } from 'primereact/dialog';
-import {InputTextarea} from 'primereact/inputtextarea';
+import { Dropdown} from 'primereact/dropdown';
 
-import { Calendar } from 'primereact/calendar';
+const AssignMaintFragment = (footer, state, admins, onChange, hide)=> {
 
-const AssignMaintFragment = (footer, state, onChange, hide)=> {
     return (
         <React.Fragment>
-            <Dialog header="Maintenance Request Completed:"
+            <Dialog header="Assign an Admin to this Request:"
             visible={state.visible} style={{ width: '50vw' }}
              footer={footer} onHide={hide} >
-                <div>Date Completed:
-            <Calendar value={state.date}
-            required
-            monthNavigator={true}
-            name="date"
-            onChange={onChange}
-            placeholder="mm/dd/yy"></Calendar>
-                </div>
-                <div>Description of work:
-            <InputTextarea required
-            value={state.updatedDescription}
-
-            onChange={onChange}
-            name="updatedDescription"
-            placeholder="describe the work completed and any pertinent details or future recommendations"  />
+                <div>Assign:
+                <Dropdown
+                  options={admins.map(m=>m)}
+                  onChange={onChange}
+                  optionLabel="name"
+                   placeholder="Select a Person"/>
                 </div>
             </Dialog>
 
         </React.Fragment >
     )
 }
-
 export default AssignMaintFragment
