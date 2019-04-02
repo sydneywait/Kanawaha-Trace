@@ -3,6 +3,8 @@ import ResourceManager from "../../modules/ResourceAPIManager"
 import { Button } from 'primereact/button';
 import CompleteMaintenance from "./CompleteMaintenance"
 import CompleteMaintenanceFragment from "./CompleteMaintenanceForm"
+import AssignMaintenanceFragment from "./AssignMaintenanceForm"
+import Moment from 'react-moment';
 
 export default class MaintenanceDetails extends Component {
 
@@ -25,9 +27,10 @@ export default class MaintenanceDetails extends Component {
                     okToContact: request.okToContact,
                     phone: request.phone,
                     description: request.description,
+                    dateSubmitted: request.dateSubmitted,
                     id: request.id,
                     updatedDescription: (request.isComplete === true ? request.updatedDescription : ""),
-                    dateCompleted:(request.isComplete === true ? request.dateCompleted : "")
+                    dateCompleted: (request.isComplete === true ? request.dateCompleted : "")
                 })
             )
             .then(() => ResourceManager.getSingleItem("users", newState.userId))
@@ -71,6 +74,7 @@ export default class MaintenanceDetails extends Component {
         const maintObject = CompleteMaintenance(this.state.updatedDescription, this.state.dateCompleted)
         // patch the maintenance_request with the submitted information
         this.props.patchMaint("maintenance_requests", maintId, maintObject)
+        this.props.history.push("/maintenance")
 
 
     }
@@ -101,14 +105,15 @@ export default class MaintenanceDetails extends Component {
                 <div className={this.state.isComplete ? "request-details-complete" : "request-details"}>
 
                     <p>mile: {" " + this.state.mile}</p>
-
+                    <p> Submitted:{" "} <Moment format="MM/DD/YY">{this.state.dateSubmitted}</Moment></p>
                     {this.state.okToContact === true ? <p>Submitted by:{" " + this.state.submitName}<br></br>
                         Contact phone:{" " + this.state.phone}</p> : ""}
                     <p>Description of Problem:{" " + this.state.description}</p>
+
                     {this.state.isComplete === true ? <p>Resolution:{" " + this.state.updatedDescription}</p> : ""}
 
                     {this.state.userId ? <p>Assigned to: {this.state.adminName}</p> : <p>unassigned</p>}
-                    {this.state.isComplete?<h3>Completed{" "+this.state.date} </h3>:""}
+                    {this.state.isComplete ? <h3>Completed:{" "}<Moment format="MM/DD/YY">{this.state.dateCompleted}</Moment> </h3> : ""}
                     <div>
                         <Button label={this.state.userId ? "Reassign" : "Assign"}
 
@@ -138,6 +143,8 @@ export default class MaintenanceDetails extends Component {
                 <div>
                     {this.state.target === "maint-complete-btn" ?
                         CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide) : ""}
+                        {this.state.target === "maint-assign-btn" ?
+                        AssignMaintenanceFragment(footer, this.state, this.onChange, this.onHide) : ""}
                 </div>
             </React.Fragment>
         )
