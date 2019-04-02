@@ -14,7 +14,6 @@ export default {
     return fetch(`http://localhost:5002/${items}/${id}`, {
       method: "DELETE"
     })
-
   },
   addNewItem(items, newItem) {
     return fetch(`http://localhost:5002/${items}`, {

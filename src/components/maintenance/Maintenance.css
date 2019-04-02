@@ -1,4 +1,4 @@
-.maint-cont{
+.maint-cont {
 
     display: flex;
     flex-direction: row;
@@ -6,19 +6,25 @@
 
 }
 
-.maint-req-form{
+.maint-req-form {
     width: 30%;
     border: 1px solid gray;
 
 
 }
 
-.maint-req-list{
+.maint-req-list {
     border: 1px solid gray;
 
 }
 
-.maint-req-header{
+.maint-req-header {
 
     border: 1px solid gray;
+}
+
+
+.assign-maint-btn {
+    padding: 100px;
+    background-color: red;
 }

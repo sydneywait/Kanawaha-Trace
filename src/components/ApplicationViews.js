@@ -186,6 +186,7 @@ export default class ApplicationViews extends Component {
                                                 maintenance_requests={this.state.maintenance_requests}
                                                 addMaint={this.addResource}
                                                 activeUser={this.state.activeUser}
+                                                patchMaint={this.patchResource}
 
                                         />
 

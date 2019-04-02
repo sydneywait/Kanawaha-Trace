@@ -7,6 +7,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputMask } from 'primereact/inputmask'
 import ResourceManager from "../../modules/ResourceAPIManager"
+import CompleteMaintenance from "./CompleteMaintenance"
 
 
 export default class Maintenance extends Component {
@@ -48,6 +49,7 @@ export default class Maintenance extends Component {
         };
         this.onChange = this.onChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.onComplete = this.onComplete.bind(this)
         // this.onHide = this.onHide.bind(this);
     }
 
@@ -77,6 +79,12 @@ export default class Maintenance extends Component {
         // post it to the database
         this.props.addMaint("maintenance_requests", maintObject)
         this.props.history.push("/maintenance")
+    }
+
+
+    onComplete(){
+
+
     }
 
     basicUser() {
@@ -166,22 +174,25 @@ export default class Maintenance extends Component {
 
                 <div className="maint-cont">
                     <div className="maint-assigned">
-                        <h2>assigned</h2>
+                        <h2>assigned to me</h2>
                         {this.props.maintenance_requests.filter((request) => request.isComplete === false&&request.userId===this.props.activeUser).map(m =>
-                                <p>mile {m.mile}--{m.description}</p>
+
+                                <div><Checkbox checked="" onChange={()=>this.onComplete}></Checkbox>
+                                <a href ={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
 
                             )}
                     </div>
                     <div className="maint-unassigned">
-                    <h2>unassigned</h2>
+                    <h2>unassigned/assigned to others</h2>
                         {this.props.maintenance_requests.filter((request) => request.isComplete === false&&request.userId!==this.props.activeUser).map(m =>
-                            <p>mile {m.mile}--{m.description}</p>
-
-                        )}                    </div>
+                            <div><a href ={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
+                        )}
+                        </div>
                     <div className="maint-complete">
                         <h2>complete</h2>
                         {this.props.maintenance_requests.filter((request) => request.isComplete === true).map(m =>
-                                <p>mile {m.mile}--{m.description}</p>
+                                <div><Checkbox checked="checked"></Checkbox>
+                                <a href ={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
 
                             )}
                     </div>
