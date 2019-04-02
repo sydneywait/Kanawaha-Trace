@@ -50,7 +50,8 @@ export default class MaintenanceDetails extends Component {
             activeUser: parseInt(sessionStorage.getItem("credentials")),
             dateCompleted: "",
             updatedDescription: "",
-            target: ""
+            target: "",
+            assigned: ""
 
         };
         this.onChange = this.onChange.bind(this);
@@ -81,8 +82,10 @@ export default class MaintenanceDetails extends Component {
     }
 
     assignMaint() {
+        this.props.patchMaint("maintenance_requests", this.state.id, { userId: this.state.assigned.id })
+        this.props.history.push("/maintenance")
 
-        console.log("inside assign maint")
+
     }
 
     render() {
@@ -96,9 +99,6 @@ export default class MaintenanceDetails extends Component {
                 />
             </div>
         )
-
-
-
 
         return (
             <React.Fragment>
@@ -144,7 +144,7 @@ export default class MaintenanceDetails extends Component {
                 <div>
                     {this.state.target === "maint-complete-btn" ?
                         CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide) : ""}
-                        {this.state.target === "maint-assign-btn" ?
+                    {this.state.target === "maint-assign-btn" ?
                         AssignMaintenanceFragment(footer, this.state, this.props.admins, this.onChange, this.onHide) : ""}
                 </div>
             </React.Fragment>
