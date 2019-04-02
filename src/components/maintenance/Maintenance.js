@@ -15,7 +15,7 @@ export default class Maintenance extends Component {
 
         let newState = {}
 
-        ResourceManager.getAllItems("maintenance-requests")
+        ResourceManager.getAllItems("maintenance_requests")
             .then((m) => {
                 newState.maintenance = m
                 this.setState(newState)
@@ -23,11 +23,11 @@ export default class Maintenance extends Component {
 
     }
 
-    addMaint(maintObject){
+    addMaint(maintObject) {
 
-        ResourceManager.addNewItem("maintenance-requests", maintObject)
-        .then(()=>ResourceManager.getAllItems("maintenance-requests"))
-        .then(maint=>this.setState({maintenance:maint}))
+        ResourceManager.addNewItem("maintenance_requests", maintObject)
+            .then(() => ResourceManager.getAllItems("maintenance_requests"))
+            .then(maint => this.setState({ maintenance: maint }))
     }
 
 
@@ -75,7 +75,7 @@ export default class Maintenance extends Component {
 
 
         // post it to the database
-        this.addMaint("maintenance-requests", maintObject, this.state.activeUser)
+        this.props.addMaint("maintenance_requests", maintObject)
         this.props.history.push("/maintenance")
     }
 
@@ -148,7 +148,7 @@ export default class Maintenance extends Component {
                     <div>
                         <div className="maint-req-list">
                             <h2 className="maint-req-header">Ongoing Maintenance</h2>
-                            {this.props.maintenance.map(m =>
+                            {this.props.maintenance_requests.map(m =>
                                 <p>mile {m.mile}--{m.description}</p>
 
                             )}
@@ -166,13 +166,24 @@ export default class Maintenance extends Component {
 
                 <div className="maint-cont">
                     <div className="maint-assigned">
-                        assigned
+                        <h2>assigned</h2>
+                        {this.props.maintenance_requests.filter((request) => request.isComplete === false&&request.userId===this.props.activeUser).map(m =>
+                                <p>mile {m.mile}--{m.description}</p>
+
+                            )}
                     </div>
                     <div className="maint-unassigned">
-                        list
-                    </div>
+                    <h2>unassigned</h2>
+                        {this.props.maintenance_requests.filter((request) => request.isComplete === false&&request.userId!==this.props.activeUser).map(m =>
+                            <p>mile {m.mile}--{m.description}</p>
+
+                        )}                    </div>
                     <div className="maint-complete">
-                        complete
+                        <h2>complete</h2>
+                        {this.props.maintenance_requests.filter((request) => request.isComplete === true).map(m =>
+                                <p>mile {m.mile}--{m.description}</p>
+
+                            )}
                     </div>
                 </div>
 

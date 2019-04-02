@@ -21,7 +21,7 @@ export default class ApplicationViews extends Component {
         state = {
                 activeUser: parseInt(sessionStorage.getItem("credentials")),
                 user: {},
-                maintenance: [],
+                maintenance_requests: [],
                 routes: [],
                 waypoints: [],
 
@@ -32,13 +32,13 @@ export default class ApplicationViews extends Component {
                 newState.activeUser = parseInt(sessionStorage.getItem("credentials"))
                 ResourceAPIManager.getAllItems("hazards")
                         .then(hazards => newState.hazards = hazards)
-                        .then(()=>ResourceAPIManager.getAllItems("features"))
+                        .then(() => ResourceAPIManager.getAllItems("features"))
                         .then(features => newState.features = features)
-                        .then(()=>ResourceAPIManager.getAllItems("maintenance-requests"))
-                        .then(maintenance => newState.maintenance = maintenance)
-                        .then(()=>ResourceAPIManager.getAllItemsbyUser("routes", newState.activeUser))
+                        .then(() => ResourceAPIManager.getAllItems("maintenance_requests"))
+                        .then(maintenance => newState.maintenance_requests = maintenance)
+                        .then(() => ResourceAPIManager.getAllItems("routes", newState.activeUser))
                         .then(routes => newState.routes = routes)
-                        .then(()=>ResourceAPIManager.getSingleItem("users", newState.activeUser))
+                        .then(() => ResourceAPIManager.getSingleItem("users", newState.activeUser))
                         .then(user => {
                                 newState.user = user
                                 console.log("newstate user", newState.user)
@@ -47,10 +47,29 @@ export default class ApplicationViews extends Component {
 
         }
 
+        updateResource = (resources, userId) => {
+                const newState = {}
+                newState.activeUser = userId
+                ResourceAPIManager.getAllItems(resources, userId)
+                        .then(sss => {
+                                newState[resources] = sss
+                                this.setState(newState)
+
+                        })
+        }
+        setUser =(users, userId)=>{
+                const newState={}
+                ResourceAPIManager.getSingleItem(users, userId)
+                .then(user => {
+                        newState.user = user
+                        this.setState(newState)
+                })
+        }
+
         addResource = (resources, resourceObject, userId) => {
                 const newState = {}
                 ResourceAPIManager.addNewItem(resources, resourceObject)
-                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
+                        .then(() => ResourceAPIManager.getAllItems(resources, userId))
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
@@ -58,27 +77,25 @@ export default class ApplicationViews extends Component {
                         )
         }
 
-        updateResource = (resources, userId) => {
+        addResource2 = (resources, resourceObject) => {
                 const newState = {}
-                newState.activeUser = userId
-                ResourceAPIManager.getAllItemsbyUser(resources, userId)
+                ResourceAPIManager.addNewItem(resources, resourceObject)
+                        .then(() => ResourceAPIManager.getAllItems(resources))
                         .then(sss => {
+                                console.log("sss", sss)
                                 newState[resources] = sss
-
-                        })
-                        .then(() => ResourceAPIManager.getSingleItem("users", userId))
-                        .then(user => {
-                                newState.user = user
                                 this.setState(newState)
-                        })
-
-
+                        }
+                        )
         }
+
+
+
 
         deleteResource = (resources, resourceId, userId) => {
                 const newState = {}
                 ResourceAPIManager.deleteItem(resources, resourceId)
-                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
+                        .then(() => ResourceAPIManager.getAllItems(resources, userId))
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
@@ -90,7 +107,7 @@ export default class ApplicationViews extends Component {
         patchResource = (resources, resourceId, patchObject, userId) => {
                 const newState = {}
                 ResourceAPIManager.patchItem(resources, resourceId, patchObject)
-                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
+                        .then(() => ResourceAPIManager.getAllItems(resources, userId))
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
@@ -100,7 +117,7 @@ export default class ApplicationViews extends Component {
         editResource = (resources, editedObject, userId) => {
                 const newState = {}
                 ResourceAPIManager.editItem(resources, editedObject)
-                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
+                        .then(() => ResourceAPIManager.getAllItems(resources, userId))
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
@@ -114,7 +131,8 @@ export default class ApplicationViews extends Component {
                         <React.Fragment>
                                 <Route exact path="/callback" render={props => {
                                         return <Callback {...props}
-                                                updateResource={this.updateResource} />
+                                                updateResource={this.updateResource}
+                                                setUser={this.setUser} />
                                 }} />
 
                                 <Route exact path="/" render={props => {
@@ -134,12 +152,17 @@ export default class ApplicationViews extends Component {
                                 }} />
 
                                 <Route exact path="/routes" render={props => {
-
-                                        return <Routes {...props}
-                                                routes={this.state.routes}
-                                                deleteRoute={this.deleteResource}
-                                                patchRoute={this.patchResource}
-                                        />
+                                        if (auth0Client.isAuthenticated()) {
+                                                return <Routes {...props}
+                                                        routes={this.state.routes}
+                                                        deleteRoute={this.deleteResource}
+                                                        patchRoute={this.patchResource}
+                                                />
+                                        }
+                                        else {
+                                                auth0Client.signIn();
+                                                return null;
+                                        }
 
 
                                 }} />
@@ -160,8 +183,9 @@ export default class ApplicationViews extends Component {
                                         return <Maintenance {...props}
                                                 user={this.state.user}
                                                 hazards={this.state.hazards}
-                                                maintenance={this.state.maintenance}
+                                                maintenance_requests={this.state.maintenance_requests}
                                                 addMaint={this.addResource}
+                                                activeUser={this.state.activeUser}
 
                                         />
 

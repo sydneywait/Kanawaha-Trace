@@ -1,13 +1,9 @@
 
 
 export default {
-
-  getAllItems: (items) => {
-    return fetch(`http://localhost:5002/${items}`)
-      .then(r => r.json())
-  },
-  getAllItemsbyUser: (items, userId) => {
-    return fetch(`http://localhost:5002/${items}?userId=${userId}`)
+  getAllItems: (items, userId) => {
+    const fetchString =(userId?`?userId=${userId}`:"")
+    return fetch(`http://localhost:5002/${items}${fetchString}`)
       .then(r => r.json())
   },
   getSingleItem: (items, id) => {
