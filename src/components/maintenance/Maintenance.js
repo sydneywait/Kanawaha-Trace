@@ -15,27 +15,18 @@ export default class Maintenance extends Component {
 
     componentDidMount() {
 
-        let newState = {}
-
-        ResourceManager.getAllItems("maintenance_requests")
-            .then((m) => {
-                newState.maintenance = m
-                this.setState(newState)
-            })
 
     }
 
     addMaint(maintObject) {
 
-        ResourceManager.addNewItem("maintenance_requests", maintObject)
-            .then(() => ResourceManager.getAllItems("maintenance_requests"))
+        ResourceManager.addNewItem("maintenance, maintObject")
+            .then(() => ResourceManager.getAllItems("maintenance"))
             .then(maint => this.setState({ maintenance: maint }))
     }
 
 
-    state = {
-        maintenance: []
-    }
+
 
     constructor() {
         super();
@@ -86,11 +77,10 @@ export default class Maintenance extends Component {
             dateSubmitted: new Date()
 
         }
-        console.log(maintObject)
 
 
         // post it to the database
-        this.props.addMaint("maintenance_requests", maintObject)
+        this.props.addMaint("maintenance", maintObject)
         this.props.history.push("/maintenance")
     }
 
@@ -101,7 +91,7 @@ export default class Maintenance extends Component {
         // create a patch object from info in popup
         const maintObject = CompleteMaintenance(this.state.description, this.state.date)
         // patch the maintenance_request with the submitted information
-        this.props.patchMaint("maintenance_requests", maintId, maintObject)
+        this.props.patchMaint("maintenance", maintId, maintObject)
 
 
     }
@@ -124,7 +114,7 @@ export default class Maintenance extends Component {
 
                         <div >
                             <Dropdown
-                                className="haz-dd" value={this.state.hazard}
+                                className="haz-dd" value={this.state.hazard.id}
                                 name="hazard"
                                 options={this.props.hazards.map(h => h)}
                                 onChange={this.onChange}
@@ -177,7 +167,7 @@ export default class Maintenance extends Component {
                     <div>
                         <div className="maint-req-list">
                             <h2 className="maint-req-header">Ongoing Maintenance</h2>
-                            {this.props.maintenance_requests.map(m =>
+                            {this.props.maintenance.map(m =>
                                 <p>mile {m.mile}--{m.description}</p>
 
                             )}
@@ -196,7 +186,7 @@ export default class Maintenance extends Component {
                 <div className="maint-cont">
                     <div className="maint-assigned">
                         <h2>assigned to me</h2>
-                        {this.props.maintenance_requests.filter((request) => request.isComplete === false && request.userId === this.props.activeUser).map(m =>
+                        {this.props.maintenance.filter((request) => request.isComplete === false && request.userId === this.props.activeUser).map(m =>
 
                             <div><Checkbox id={`checkbox-${m.id}`}  onChange={(e) => this.setState({ visible: true, maintId:e.target.id })}></Checkbox>
                                 <a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
@@ -205,13 +195,13 @@ export default class Maintenance extends Component {
                     </div>
                     <div className="maint-unassigned">
                         <h2>unassigned/assigned to others</h2>
-                        {this.props.maintenance_requests.filter((request) => request.isComplete === false && request.userId !== this.props.activeUser).map(m =>
+                        {this.props.maintenance.filter((request) => request.isComplete === false && request.userId !== this.props.activeUser).map(m =>
                             <div><a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
                         )}
                     </div>
                     <div className="maint-complete">
                         <h2>complete</h2>
-                        {this.props.maintenance_requests.filter((request) => request.isComplete === true).map(m =>
+                        {this.props.maintenance.filter((request) => request.isComplete === true).map(m =>
                             <div><Checkbox checked="checked"></Checkbox>
                                 <a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
 

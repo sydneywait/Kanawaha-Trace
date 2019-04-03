@@ -7,16 +7,6 @@ import {InputTextarea} from 'primereact/inputtextarea'
 
 const EditMaintFragment = (footer, state, admins, hazards, onChange, hide) => {
 
-    const hazardList=hazards.map((h)=> {
-
-        //  somehow rename id to code in object key???? return array
-        // https://stackoverflow.com/questions/4647817/javascript-object-rename-key
-    }
-
-    )
-
-    console.log(hazardList)
-
 
     return (
         <React.Fragment>

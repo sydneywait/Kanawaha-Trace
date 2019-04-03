@@ -6,6 +6,7 @@ import CompleteMaintenanceFragment from "./CompleteMaintenanceForm"
 import AssignMaintenanceFragment from "./AssignMaintenanceForm"
 import EditMaintenanceFragment from "./EditMaintenanceForm"
 import Moment from 'react-moment';
+import DeleteConfirm from "../../modules/DeleteConfirm"
 
 
 export default class MaintenanceDetails extends Component {
@@ -17,7 +18,7 @@ export default class MaintenanceDetails extends Component {
 
     componentDidMount() {
         let newState = {}
-        ResourceManager.getSingleItem("maintenance_requests", this.props.match.params.maintenanceId)
+        ResourceManager.getSingleItem("maintenance", this.props.match.params.maintenanceId)
             .then((request =>
 
                 newState = {
@@ -35,6 +36,10 @@ export default class MaintenanceDetails extends Component {
                     dateCompleted: (request.isComplete === true ? request.dateCompleted : "")
                 })
             )
+            .then(() => ResourceManager.getSingleItem("hazards", newState.hazardId))
+            .then((hazard) => newState.hazard = hazard)
+            .then(() => ResourceManager.getSingleItem("users", newState.userId))
+            .then((assigned) => newState.assigned = assigned)
             .then(() => ResourceManager.getSingleItem("users", newState.userId))
             .then((user) => newState.adminName = user.name)
             .then(() => ResourceManager.getSingleItem("users", newState.submittedBy))
@@ -52,9 +57,8 @@ export default class MaintenanceDetails extends Component {
             activeUser: parseInt(sessionStorage.getItem("credentials")),
             dateCompleted: "",
             updatedDescription: "",
-            target: "",
-            assigned: "",
-            hazard:""
+            target: ""
+
 
         };
         this.onChange = this.onChange.bind(this);
@@ -62,7 +66,7 @@ export default class MaintenanceDetails extends Component {
         this.onHide = this.onHide.bind(this);
     }
 
-    onHide(event) {
+    onHide() {
         this.setState({ visible: false });
     }
 
@@ -78,18 +82,35 @@ export default class MaintenanceDetails extends Component {
         // create a patch object from info in popup
         const maintObject = CompleteMaintenance(this.state.updatedDescription, this.state.dateCompleted)
         // patch the maintenance_request with the submitted information
-        this.props.patchMaint("maintenance_requests", maintId, maintObject)
+        this.props.patchMaint("maintenance", maintId, maintObject)
         this.props.history.push("/maintenance")
 
 
     }
 
     assignMaint() {
-        this.props.patchMaint("maintenance_requests", this.state.id, { userId: this.state.assigned.id })
+        this.props.patchMaint("maintenance", this.state.id, { userId: this.state.assigned.id })
         this.props.history.push("/maintenance")
 
 
     }
+    editMaint() {
+        // create an object based on the edited fields
+        const editedObject = {
+
+            mile: this.state.mile,
+            hazardId: this.state.hazard.id,
+            description: this.state.description,
+            userId: this.state.userId ? this.state.assigned.id : ""
+        }
+        // post the patch to the database
+
+        this.props.patchMaint("maintenance", this.state.id, editedObject)
+        this.props.history.push(`/maintenance/${this.state.id}`)
+
+
+    }
+
 
     render() {
         const footer = (
@@ -97,7 +118,11 @@ export default class MaintenanceDetails extends Component {
                 <Button label="Submit" className="p-button-success" icon="pi pi-check"
                     onClick={() => {
                         this.onHide()
-                        this.state.target === "maint-complete-btn" ? this.completeMaint() : this.assignMaint()
+
+                        this.state.target === "maint-complete-btn" ? this.completeMaint() : this.onHide()
+                        this.state.target === "maint-edit-btn" ? this.editMaint() : this.onHide()
+                        this.state.target === "maint-del-btn" ? this.deleteMaint() : this.onHide()
+                        this.state.target === "maint-assign-btn" ? this.assignMaint() : this.onHide()
                     }}
                 />
             </div>
@@ -154,6 +179,20 @@ export default class MaintenanceDetails extends Component {
                             }}
                         >
                         </Button> : ""}
+
+
+                        <Button label="Delete"
+                            icon="pi pi-times" iconPos="right"
+                            id="maint-delete-btn"
+                            className="p-button-raised p-button-rounded p-button-danger"
+                            onClick={(e) => {
+
+                                console.log("you clicked", e.currentTarget.id)
+                                this.setState({ visible: true, target: e.currentTarget.id })
+
+                            }}
+                        >
+                        </Button>
                     </div>
 
                 </div>
@@ -162,8 +201,10 @@ export default class MaintenanceDetails extends Component {
                         CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide) : ""}
                     {this.state.target === "maint-assign-btn" ?
                         AssignMaintenanceFragment(footer, this.state, this.props.admins, this.onChange, this.onHide) : ""}
-                        {this.state.target === "maint-edit-btn" ?
+                    {this.state.target === "maint-edit-btn" ?
                         EditMaintenanceFragment(footer, this.state, this.props.admins, this.props.hazards, this.onChange, this.onHide) : ""}
+                    {this.state.target === "maint-delete-btn" ?
+                        DeleteConfirm("maintenance", this.state.id, "", this.state.visible, this.onHide, this.props.deleteMaint, this.props.history) : ""}
                 </div>
             </React.Fragment>
         )
