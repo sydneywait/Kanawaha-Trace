@@ -13,7 +13,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) =
         <React.Fragment>
 
 
-                <h2 className="maint-req-header">Report a Maintenance or Trail Issue</h2>
+                <h2 className="maint-req-header">{props.user.isAdmin===true?"Create a new Ticket":"Report a Maintenance or Trail Issue"}</h2>
                 <div>
                     <InputText value={state.location} onChange={onChange}
                         name="location"
@@ -42,7 +42,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) =
                         autoResize={true}>
                     </InputTextarea>
                 </div>
-
+{props.user.isAdmin===false?
                 <div>
                     <Checkbox id="contact-check"
                         name="checked"
@@ -51,7 +51,8 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) =
                     </Checkbox>
                     <label htmlFor="contact-check" style={{ wordBreak: "break-word" }} >
                         Is it ok to follow up with you about this issue if more information is needed?</label>
-                </div>
+                </div>:""}
+
 
                 {state.checked === true ?
                     <div><InputMask mask="999-999-9999"

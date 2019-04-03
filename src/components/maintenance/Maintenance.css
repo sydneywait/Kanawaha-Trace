@@ -33,3 +33,20 @@
 
     color: red;
 }
+
+.maint-assigned, .maint-unassigned, .maint-complete{
+border: 1px solid gray;
+width: 30%;
+padding: 10px;
+overflow-wrap: break-word;
+}
+
+
+
+.maint-lists-cont{
+
+    display: flex;
+    flex-direction: row;
+    width:70%;
+
+}

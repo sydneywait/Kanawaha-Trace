@@ -13,8 +13,10 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, onClick) => {
         <React.Fragment>
 
             <div className="maint-cont">
-                <div className="maint-req-form">{MaintenanceRequestForm(state, props, onChange, onCheck, handleSubmit)}
+                <div className="maint-req-form">
+                {MaintenanceRequestForm(state, props, onChange, onCheck, handleSubmit)}
                 </div>
+                <div className="maint-lists-cont">
                 <div className="maint-assigned">
                     <h2>assigned to me</h2>
                     {props.maintenance.filter((request) => request.isComplete === false && request.userId === props.activeUser).map(m =>
@@ -26,7 +28,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, onClick) => {
                     )}
                 </div>
                 <div className="maint-unassigned">
-                    <h2>unassigned/assigned to others</h2>
+                    <h2>assigned to others</h2>
                     {props.maintenance.filter((request) => request.isComplete === false && request.userId !== props.activeUser).map(m =>
                         <div><Link to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
                     )}
@@ -39,6 +41,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, onClick) => {
                             <Link to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
 
                     )}
+                    </div>
                 </div>
             </div>
 

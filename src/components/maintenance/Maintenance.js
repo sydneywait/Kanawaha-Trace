@@ -1,15 +1,9 @@
 import React, { Component } from "react";
 import "./Maintenance.css"
-import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { Checkbox } from "primereact/checkbox";
-import { Dropdown } from 'primereact/dropdown';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { InputMask } from 'primereact/inputmask'
 import ResourceManager from "../../modules/ResourceAPIManager"
 import CompleteMaintenance from "./CompleteMaintenance"
 import CompleteMaintenanceFragment from "./CompleteMaintenanceForm"
-
 import basicUser from "./BasicUserPage"
 import adminUser from "./AdminUserPage"
 
@@ -124,8 +118,8 @@ export default class Maintenance extends Component {
             <React.Fragment>
 
                 {this.props.user.isAdmin === false ?
-                    basicUser(this.state, this.onChange, this.props, this.onCheck, this.handleSubmit)
-                    :adminUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit, this.onClick)}
+                    basicUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit)
+                    : adminUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit, this.onClick)}
 
                 {CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide)}
 
