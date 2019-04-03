@@ -1,5 +1,5 @@
 
-import { Route, Redirect } from "react-router-dom";
+import { Route} from "react-router-dom";
 import React, { Component } from "react";
 import Explore from "./explore/Explore"
 import HomePage from "./HomePage"
@@ -186,7 +186,7 @@ export default class ApplicationViews extends Component {
 
 
                                 <Route exact path="/maintenance" render={props => {
-
+                                        if (auth0Client.isAuthenticated()) {
                                                 return <Maintenance {...props}
                                                         user={this.state.user}
                                                         hazards={this.state.hazards}
@@ -196,12 +196,17 @@ export default class ApplicationViews extends Component {
                                                         patchMaint={this.patchResource}
                                                         admins={this.state.admins}
                                                 />
+                                        }
+                                        else {
+                                                auth0Client.signIn();
+                                                return null;
+                                        }
 
 
                                 }} />
 
                                 <Route exact path="/maintenance/:maintenanceId(\d+)" render={props => {
-
+                                        if (auth0Client.isAuthenticated()) {
                                                 return <MaintenanceDetails {...props}
                                                         maintenance={this.state.maintenance}
                                                         admins={this.state.admins}
@@ -209,7 +214,11 @@ export default class ApplicationViews extends Component {
                                                         hazards={this.state.hazards}
                                                         deleteMaint={this.deleteResource} />
 
-
+                                        }
+                                        else {
+                                                auth0Client.signIn();
+                                                return null;
+                                        }
 
 
                                 }} />
