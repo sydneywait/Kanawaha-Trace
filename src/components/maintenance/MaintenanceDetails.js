@@ -148,6 +148,8 @@ export default class MaintenanceDetails extends Component {
                     {!Array.isArray(this.state.assigned) ? <p>Assigned to: {this.state.assigned.name}</p> : <p>unassigned</p>}
                     {this.state.isComplete ? <h3>Completed:{" "}<Moment format="MM/DD/YY">{this.state.dateCompleted}</Moment> </h3> : ""}
                     <div>
+
+                        {this.state.isComplete?"":
                         <Button label={Array.isArray(this.state.assigned) ? "Assign" : "Reassign"}
 
                             icon="pi pi-user-plus" iconPos="right"
@@ -158,6 +160,7 @@ export default class MaintenanceDetails extends Component {
                                 this.setState({ visible: true, target: e.currentTarget.id })
                             }}>
                         </Button>
+                        }
                         {this.state.isComplete === false ? <Button label="Complete"
                             icon="pi pi-check" iconPos="right"
                             id="maint-complete-btn"
