@@ -10,7 +10,7 @@ const deleteConfirmation =(path, id, userId, visible, hide, deleteFunction, hist
                 onClick={() => {
                     hide()
                     deleteFunction(path, id, userId)
-                    history.push("/routes")
+                    history.push(`/${path}`)
 
                 }}
             />

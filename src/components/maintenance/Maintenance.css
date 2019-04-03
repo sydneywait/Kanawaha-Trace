@@ -1,0 +1,52 @@
+.maint-cont {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+
+.maint-req-form {
+    width: 300px;
+    border: 1px solid gray;
+
+
+}
+
+.maint-req-list {
+    border: 1px solid gray;
+
+}
+
+.maint-req-header {
+
+    border: 1px solid gray;
+}
+
+
+.assign-maint-btn {
+    padding: 100px;
+    background-color: red;
+}
+
+.request-details-complete{
+
+    color: red;
+}
+
+.maint-assigned, .maint-unassigned, .maint-complete{
+border: 1px solid gray;
+width: 30%;
+padding: 10px;
+overflow-wrap: break-word;
+}
+
+
+
+.maint-lists-cont{
+
+    display: flex;
+    flex-direction: row;
+    width:70%;
+
+}

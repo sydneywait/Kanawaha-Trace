@@ -1,16 +1,12 @@
 
-import { Route, Redirect } from "react-router-dom";
+import { Route} from "react-router-dom";
 import React, { Component } from "react";
 import Explore from "./explore/Explore"
-import NewRoute from "./explore/NewRoute"
 import HomePage from "./HomePage"
 import Routes from "./routes/Routes"
 import RouteDetails from "./routes/RouteDetails"
-import RouteEdit from "./routes/RouteEdit"
 import Maintenance from "./maintenance/Maintenance"
-import MaintenanceRequest from "./maintenance/MaintenanceRequest"
 import MaintenanceDetails from "./maintenance/MaintenanceDetails"
-import MaintenanceEdit from "./maintenance/MaintenanceEdit"
 import auth0Client from "./authentication/Auth";
 import Callback from "./authentication/Callback"
 import 'primereact/resources/themes/nova-light/theme.css';
@@ -22,48 +18,86 @@ export default class ApplicationViews extends Component {
 
         state = {
                 activeUser: parseInt(sessionStorage.getItem("credentials")),
-                users: [],
+                user: {},
                 maintenance: [],
                 routes: [],
                 waypoints: [],
+                admins: []
 
 
         }
         componentDidMount() {
                 const newState = {}
                 newState.activeUser = parseInt(sessionStorage.getItem("credentials"))
-
-                ResourceAPIManager.getAllItemsbyUser("routes", newState.activeUser)
+                ResourceAPIManager.getAdmins()
+                        .then(admins => newState.admins = admins)
+                        .then(() => ResourceAPIManager.getAllItems("hazards"))
+                        .then(hazards => newState.hazards = hazards)
+                        .then(() => ResourceAPIManager.getAllItems("features"))
+                        .then(features => newState.features = features)
+                        .then(() => ResourceAPIManager.getAllItems("maintenance"))
+                        .then(maintenance => newState.maintenance = maintenance)
+                        .then(() => ResourceAPIManager.getAllItems("routes", newState.activeUser))
                         .then(routes => newState.routes = routes)
-                        .then(() => this.setState(newState))
+                        .then(() => ResourceAPIManager.getSingleItem("users", newState.activeUser))
+                        .then(user => {
 
-        }
-
-        addResource = (resources, resourceObject, userId) => {
-                const newState = {}
-                ResourceAPIManager.addNewItem(resources, resourceObject)
-                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
-                        .then(sss => {
-                                newState[resources] = sss
+                                newState.user = user
                                 this.setState(newState)
-                        }
-                        )
+
+                        })
+
         }
 
         updateResource = (resources, userId) => {
                 const newState = {}
                 newState.activeUser = userId
-                ResourceAPIManager.getAllItemsbyUser(resources, userId)
+                ResourceAPIManager.getAllItems(resources, userId)
+                        .then(sss => {
+                                newState[resources] = sss
+                                this.setState(newState)
+
+                        })
+        }
+        setUser = (users, userId) => {
+                const newState = {}
+                ResourceAPIManager.getSingleItem(users, userId)
+                        .then(user => {
+                                newState.user = user
+                                this.setState(newState)
+                        })
+        }
+
+        addResource = (resources, resourceObject, userId) => {
+                const newState = {}
+                ResourceAPIManager.addNewItem(resources, resourceObject)
+                        .then(() => ResourceAPIManager.getAllItems(resources, userId))
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
                         }
                         )
         }
+
+        addResource2 = (resources, resourceObject) => {
+                const newState = {}
+                ResourceAPIManager.addNewItem(resources, resourceObject)
+                        .then(() => ResourceAPIManager.getAllItems(resources))
+                        .then(sss => {
+                                console.log("sss", sss)
+                                newState[resources] = sss
+                                this.setState(newState)
+                        }
+                        )
+        }
+
+
+
+
         deleteResource = (resources, resourceId, userId) => {
                 const newState = {}
                 ResourceAPIManager.deleteItem(resources, resourceId)
-                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
+                        .then(() => ResourceAPIManager.getAllItems(resources, userId))
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
@@ -75,7 +109,7 @@ export default class ApplicationViews extends Component {
         patchResource = (resources, resourceId, patchObject, userId) => {
                 const newState = {}
                 ResourceAPIManager.patchItem(resources, resourceId, patchObject)
-                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
+                        .then(() => ResourceAPIManager.getAllItems(resources, userId))
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
@@ -85,7 +119,7 @@ export default class ApplicationViews extends Component {
         editResource = (resources, editedObject, userId) => {
                 const newState = {}
                 ResourceAPIManager.editItem(resources, editedObject)
-                        .then(() => ResourceAPIManager.getAllItemsbyUser(resources, userId))
+                        .then(() => ResourceAPIManager.getAllItems(resources, userId))
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
@@ -99,7 +133,8 @@ export default class ApplicationViews extends Component {
                         <React.Fragment>
                                 <Route exact path="/callback" render={props => {
                                         return <Callback {...props}
-                                                updateResource={this.updateResource} />
+                                                updateResource={this.updateResource}
+                                                setUser={this.setUser} />
                                 }} />
 
                                 <Route exact path="/" render={props => {
@@ -119,51 +154,75 @@ export default class ApplicationViews extends Component {
                                 }} />
 
                                 <Route exact path="/routes" render={props => {
-
-                                        return <Routes {...props}
-                                                routes={this.state.routes}
-                                                deleteRoute={this.deleteResource}
-                                                patchRoute={this.patchResource}
-                                        />
+                                        if (auth0Client.isAuthenticated()) {
+                                                return <Routes {...props}
+                                                        routes={this.state.routes}
+                                                        deleteRoute={this.deleteResource}
+                                                        patchRoute={this.patchResource}
+                                                />
+                                        }
+                                        else {
+                                                auth0Client.signIn();
+                                                return null;
+                                        }
 
 
                                 }} />
 
                                 <Route exact path="/routes/:routeId(\d+)" render={props => {
-
-                                        return <RouteDetails {...props}
-                                                routes={this.state.routes}
-                                                editRoute={this.editResource}
-                                                patchRoute={this.patchResource}
-                                                deleteRoute={this.deleteResource}/>
+                                        if (auth0Client.isAuthenticated()) {
+                                                return <RouteDetails {...props}
+                                                        routes={this.state.routes}
+                                                        editRoute={this.editResource}
+                                                        patchRoute={this.patchResource}
+                                                        deleteRoute={this.deleteResource} />
+                                        }
+                                        else {
+                                                auth0Client.signIn();
+                                                return null;
+                                        }
 
                                 }} />
-                                <Route path="/routes/:routeId(\d+)/edit" render={props => {
 
-                                        return <RouteEdit {...props} />
-
-                                }} />
 
                                 <Route exact path="/maintenance" render={props => {
+                                        if (auth0Client.isAuthenticated()) {
+                                                return <Maintenance {...props}
+                                                        user={this.state.user}
+                                                        hazards={this.state.hazards}
+                                                        maintenance={this.state.maintenance}
+                                                        addMaint={this.addResource}
+                                                        activeUser={this.state.activeUser}
+                                                        patchMaint={this.patchResource}
+                                                        admins={this.state.admins}
+                                                />
+                                        }
+                                        else {
+                                                auth0Client.signIn();
+                                                return null;
+                                        }
 
-                                        return <Maintenance {...props} />
 
                                 }} />
-                                <Route exact path="/maintenance/request" render={props => {
 
-                                        return <MaintenanceRequest {...props} />
-
-                                }} />
                                 <Route exact path="/maintenance/:maintenanceId(\d+)" render={props => {
+                                        if (auth0Client.isAuthenticated()) {
+                                                return <MaintenanceDetails {...props}
+                                                        maintenance={this.state.maintenance}
+                                                        admins={this.state.admins}
+                                                        patchMaint={this.patchResource}
+                                                        hazards={this.state.hazards}
+                                                        deleteMaint={this.deleteResource} />
 
-                                        return <MaintenanceDetails {...props} />
+                                        }
+                                        else {
+                                                auth0Client.signIn();
+                                                return null;
+                                        }
+
 
                                 }} />
-                                <Route exact path="/maintenance/:maintenanceId(\d+)/edit" render={props => {
 
-                                        return <MaintenanceEdit {...props} />
-
-                                }} />
 
                         </React.Fragment>
                 )

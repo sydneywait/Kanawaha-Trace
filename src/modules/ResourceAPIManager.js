@@ -1,14 +1,14 @@
 
 
 export default {
-
-  getAllItems: (items) => {
-    return fetch(`http://localhost:5002/${items}`)
+  getAllItems: (items, userId) => {
+    const fetchString =(userId?`?userId=${userId}`:"")
+    return fetch(`http://localhost:5002/${items}${fetchString}`)
       .then(r => r.json())
   },
-  getAllItemsbyUser: (items, userId) => {
-    return fetch(`http://localhost:5002/${items}?userId=${userId}`)
-      .then(r => r.json())
+  getAdmins: ()=>{
+    return fetch(`http://localhost:5002/users/?isAdmin=true`)
+    .then(r => r.json())
   },
   getSingleItem: (items, id) => {
     return fetch(`http://localhost:5002/${items}/${id}`)
@@ -18,7 +18,6 @@ export default {
     return fetch(`http://localhost:5002/${items}/${id}`, {
       method: "DELETE"
     })
-
   },
   addNewItem(items, newItem) {
     return fetch(`http://localhost:5002/${items}`, {
