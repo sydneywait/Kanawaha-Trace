@@ -38,8 +38,10 @@ export default class MaintenanceDetails extends Component {
             )
             .then(() => ResourceManager.getSingleItem("hazards", newState.hazardId))
             .then((hazard) => newState.hazard = hazard)
+
             .then(() => ResourceManager.getSingleItem("users", newState.userId))
             .then((assigned) => newState.assigned = assigned)
+
             .then(() => ResourceManager.getSingleItem("users", newState.submittedBy))
             .then((user) => {
                 newState.submitName = user.name
@@ -56,7 +58,8 @@ export default class MaintenanceDetails extends Component {
             dateCompleted: "",
             updatedDescription: "",
             target: "",
-            hazard:{type:"", id:""}
+            hazard: { type: "", id: "" },
+            assigned: []
 
 
         };
@@ -100,11 +103,12 @@ export default class MaintenanceDetails extends Component {
             mile: this.state.mile,
             hazardId: this.state.hazard.id,
             description: this.state.description,
-            userId: this.state.userId ? this.state.assigned.id : ""
+            userId: !Array.isArray(this.state.assigned) ? this.state.assigned.id : ""
         }
         // post the patch to the database
 
         this.props.patchMaint("maintenance", this.state.id, editedObject)
+        this.onHide()
         this.props.history.push(`/maintenance/${this.state.id}`)
 
 
@@ -141,10 +145,10 @@ export default class MaintenanceDetails extends Component {
 
                     {this.state.isComplete === true ? <p>Resolution:{" " + this.state.updatedDescription}</p> : ""}
 
-                    {this.state.userId ? <p>Assigned to: {this.state.assigned.name}</p> : <p>unassigned</p>}
+                    {!Array.isArray(this.state.assigned) ? <p>Assigned to: {this.state.assigned.name}</p> : <p>unassigned</p>}
                     {this.state.isComplete ? <h3>Completed:{" "}<Moment format="MM/DD/YY">{this.state.dateCompleted}</Moment> </h3> : ""}
                     <div>
-                        <Button label={this.state.userId ? "Reassign" : "Assign"}
+                        <Button label={Array.isArray(this.state.assigned) ? "Assign" : "Reassign"}
 
                             icon="pi pi-user-plus" iconPos="right"
                             id="maint-assign-btn"

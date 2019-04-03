@@ -11,6 +11,7 @@ import CompleteMaintenance from "./CompleteMaintenance"
 import CompleteMaintenanceFragment from "./CompleteMaintenanceForm"
 
 import basicUser from "./BasicUserPage"
+import adminUser from "./AdminUserPage"
 
 
 export default class Maintenance extends Component {
@@ -106,41 +107,41 @@ export default class Maintenance extends Component {
     }
 
 
-    adminUser() {
+    // adminUser() {
 
-        return (
-            <React.Fragment>
+    //     return (
+    //         <React.Fragment>
 
-                <div className="maint-cont">
-                    <div className="maint-assigned">
-                        <h2>assigned to me</h2>
-                        {this.props.maintenance.filter((request) => request.isComplete === false && request.userId === this.props.activeUser).map(m =>
+    //             <div className="maint-cont">
+    //                 <div className="maint-assigned">
+    //                     <h2>assigned to me</h2>
+    //                     {this.props.maintenance.filter((request) => request.isComplete === false && request.userId === this.props.activeUser).map(m =>
 
-                            <div><Checkbox id={`checkbox-${m.id}`} onChange={(e) => this.onClick(e)}></Checkbox>
-                                <a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
+    //                         <div><Checkbox id={`checkbox-${m.id}`} onChange={(e) => this.onClick(e)}></Checkbox>
+    //                             <a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
 
-                        )}
-                    </div>
-                    <div className="maint-unassigned">
-                        <h2>unassigned/assigned to others</h2>
-                        {this.props.maintenance.filter((request) => request.isComplete === false && request.userId !== this.props.activeUser).map(m =>
-                            <div><a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
-                        )}
-                    </div>
-                    <div className="maint-complete">
-                        <h2>complete</h2>
-                        {this.props.maintenance.filter((request) => request.isComplete === true).map(m =>
-                            <div><Checkbox checked="checked"></Checkbox>
-                                <a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
+    //                     )}
+    //                 </div>
+    //                 <div className="maint-unassigned">
+    //                     <h2>unassigned/assigned to others</h2>
+    //                     {this.props.maintenance.filter((request) => request.isComplete === false && request.userId !== this.props.activeUser).map(m =>
+    //                         <div><a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
+    //                     )}
+    //                 </div>
+    //                 <div className="maint-complete">
+    //                     <h2>complete</h2>
+    //                     {this.props.maintenance.filter((request) => request.isComplete === true).map(m =>
+    //                         <div><Checkbox checked="checked"></Checkbox>
+    //                             <a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
 
-                        )}
-                    </div>
-                </div>
+    //                     )}
+    //                 </div>
+    //             </div>
 
-            </React.Fragment>
+    //         </React.Fragment>
 
-        )
-    }
+    //     )
+    // }
 
 
     render() {
@@ -159,7 +160,7 @@ export default class Maintenance extends Component {
 
                 {this.props.user.isAdmin === false ?
                     basicUser(this.state, this.onChange, this.props, this.onCheck, this.handleSubmit)
-                    : this.adminUser()}
+                    :adminUser(this.props, this.onClick)}
 
                 {CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide)}
 
