@@ -10,6 +10,8 @@ import ResourceManager from "../../modules/ResourceAPIManager"
 import CompleteMaintenance from "./CompleteMaintenance"
 import CompleteMaintenanceFragment from "./CompleteMaintenanceForm"
 
+import basicUser from "./BasicUserPage"
+
 
 export default class Maintenance extends Component {
 
@@ -40,16 +42,18 @@ export default class Maintenance extends Component {
             hazard: "",
             checked: false,
             phone: "",
-            maintId:""
+            maintId: ""
         };
         this.onChange = this.onChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.completeMaint = this.completeMaint.bind(this)
-        this.onClick = this.onClick.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.completeMaint = this.completeMaint.bind(this);
+        this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
+        this.onCheck = this.onCheck.bind(this);
     }
-    onClick(event) {
-        this.setState({ visible: true });
+    onClick(e) {
+        this.setState({ visible: true, maintId: e.target.id })
+            ;
     }
 
     onHide(event) {
@@ -61,6 +65,11 @@ export default class Maintenance extends Component {
         stateToChange[e.target.name] = e.target.value
         this.setState(stateToChange)
     }
+
+    onCheck(e) {
+        this.setState({ checked: e.checked })
+    }
+
 
     handleSubmit() {
         // create an object representing the request
@@ -89,97 +98,16 @@ export default class Maintenance extends Component {
         // get the id of the target maintenance_request object
         const maintId = parseInt(this.state.maintId.split("-")[1])
         // create a patch object from info in popup
-        const maintObject = CompleteMaintenance(this.state.description, this.state.date)
+        const maintObject = CompleteMaintenance(this.state.updatedDescription, this.state.date)
         // patch the maintenance_request with the submitted information
         this.props.patchMaint("maintenance", maintId, maintObject)
 
 
     }
 
-    basicUser() {
-        return (
-            <React.Fragment>
-
-                <div className="maint-cont">
-
-                    <div className="maint-req-form">
-                        <h2 className="maint-req-header">Report a Maintenance or Trail Issue</h2>
-                        <div>
-                            <InputText value={this.state.location} onChange={this.onChange}
-                                name="location"
-                                placeholder="Enter approx. mile mark">
-
-                            </InputText>
-                        </div>
-
-                        <div >
-                            <Dropdown
-                                className="haz-dd" value={this.state.hazard.id}
-                                name="hazard"
-                                options={this.props.hazards.map(h => h)}
-                                onChange={this.onChange}
-                                style={{ width: '200px' }}
-                                placeholder="Select a hazard type" optionLabel="type">
-                            </Dropdown>
-                        </div>
-
-                        <div>
-                            <InputTextarea placeholder="enter a brief description of the issue"
-                                rows={5} cols={30}
-                                name="description"
-                                value={this.state.description}
-                                onChange={this.onChange}
-                                autoResize={true}>
-                            </InputTextarea>
-                        </div>
-
-                        <div>
-                            <Checkbox id="contact-check"
-                                name="checked"
-                                value={this.state.checked}
-                                onChange={e => this.setState({ checked: e.checked })} checked={this.state.checked}>
-                            </Checkbox>
-                            <label htmlFor="contact-check" style={{ wordBreak: "break-word" }} >
-                                Is it ok to follow up with you about this issue if more information is needed?</label>
-                        </div>
-
-                        {this.state.checked === true ?
-                            <div><InputMask mask="999-999-9999"
-                                name="phone"
-                                value={this.state.phone}
-                                onChange={this.onChange}
-                                placeholder="enter phone number">
-                            </InputMask></div> :
-                            ""}
-
-
-                        <div><Button label="Submit"
-                            icon="pi pi-check" iconPos="right"
-                            className="p-button-raised p-button-rounded p-button-success"
-                            type="submit"
-                            onClick={this.handleSubmit}
-                        >
-
-                        </Button>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div className="maint-req-list">
-                            <h2 className="maint-req-header">Ongoing Maintenance</h2>
-                            {this.props.maintenance.map(m =>
-                                <p>mile {m.mile}--{m.description}</p>
-
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-            </React.Fragment>
-        )
-    }
 
     adminUser() {
+
         return (
             <React.Fragment>
 
@@ -188,7 +116,7 @@ export default class Maintenance extends Component {
                         <h2>assigned to me</h2>
                         {this.props.maintenance.filter((request) => request.isComplete === false && request.userId === this.props.activeUser).map(m =>
 
-                            <div><Checkbox id={`checkbox-${m.id}`}  onChange={(e) => this.setState({ visible: true, maintId:e.target.id })}></Checkbox>
+                            <div><Checkbox id={`checkbox-${m.id}`} onChange={(e) => this.onClick(e)}></Checkbox>
                                 <a href={`/maintenance/${m.id}`}> mile {m.mile}--{m.description}</a></div>
 
                         )}
@@ -211,7 +139,6 @@ export default class Maintenance extends Component {
 
             </React.Fragment>
 
-
         )
     }
 
@@ -230,7 +157,10 @@ export default class Maintenance extends Component {
         return (
             <React.Fragment>
 
-                {this.props.user.isAdmin === false ? this.basicUser() : this.adminUser()}
+                {this.props.user.isAdmin === false ?
+                    basicUser(this.state, this.onChange, this.props, this.onCheck, this.handleSubmit)
+                    : this.adminUser()}
+
                 {CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide)}
 
             </React.Fragment>

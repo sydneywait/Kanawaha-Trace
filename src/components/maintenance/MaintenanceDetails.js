@@ -40,8 +40,6 @@ export default class MaintenanceDetails extends Component {
             .then((hazard) => newState.hazard = hazard)
             .then(() => ResourceManager.getSingleItem("users", newState.userId))
             .then((assigned) => newState.assigned = assigned)
-            .then(() => ResourceManager.getSingleItem("users", newState.userId))
-            .then((user) => newState.adminName = user.name)
             .then(() => ResourceManager.getSingleItem("users", newState.submittedBy))
             .then((user) => {
                 newState.submitName = user.name
@@ -57,7 +55,8 @@ export default class MaintenanceDetails extends Component {
             activeUser: parseInt(sessionStorage.getItem("credentials")),
             dateCompleted: "",
             updatedDescription: "",
-            target: ""
+            target: "",
+            hazard:{type:"", id:""}
 
 
         };
@@ -134,6 +133,7 @@ export default class MaintenanceDetails extends Component {
                 <div className={this.state.isComplete ? "request-details-complete" : "request-details"}>
 
                     <p>mile: {" " + this.state.mile}</p>
+                    <p>Hazard: {this.state.hazard.type}</p>
                     <p> Submitted:{" "} <Moment format="MM/DD/YY">{this.state.dateSubmitted}</Moment></p>
                     {this.state.okToContact === true ? <p>Submitted by:{" " + this.state.submitName}<br></br>
                         Contact phone:{" " + this.state.phone}</p> : ""}
@@ -141,7 +141,7 @@ export default class MaintenanceDetails extends Component {
 
                     {this.state.isComplete === true ? <p>Resolution:{" " + this.state.updatedDescription}</p> : ""}
 
-                    {this.state.userId ? <p>Assigned to: {this.state.adminName}</p> : <p>unassigned</p>}
+                    {this.state.userId ? <p>Assigned to: {this.state.assigned.name}</p> : <p>unassigned</p>}
                     {this.state.isComplete ? <h3>Completed:{" "}<Moment format="MM/DD/YY">{this.state.dateCompleted}</Moment> </h3> : ""}
                     <div>
                         <Button label={this.state.userId ? "Reassign" : "Assign"}
