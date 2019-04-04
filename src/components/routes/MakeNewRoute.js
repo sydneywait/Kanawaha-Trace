@@ -9,8 +9,8 @@ const makeNewRoute=(state)=> {
     state.end !== null ? endSelected = true : endSelected = false
     // Next, set constants for working with the function
     if (startSelected === true && endSelected === true) {
-        const startId = state.start.code
-        const endId = state.end.code
+        const startId = state.start.mile
+        const endId = state.end.mile
         //  check to see that the start point and the end point are not the same
         if (startId !== endId) {
 

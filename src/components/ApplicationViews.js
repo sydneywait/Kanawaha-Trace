@@ -37,6 +37,8 @@ export default class ApplicationViews extends Component {
                         .then(features => newState.features = features)
                         .then(() => ResourceAPIManager.getAllItems("maintenance"))
                         .then(maintenance => newState.maintenance = maintenance)
+                        .then(() => ResourceAPIManager.getAllItems("waypoints"))
+                        .then(waypoints => newState.waypoints = waypoints)
                         .then(() => ResourceAPIManager.getAllItems("routes", newState.activeUser))
                         .then(routes => newState.routes = routes)
                         .then(() => ResourceAPIManager.getSingleItem("users", newState.activeUser))
@@ -144,7 +146,8 @@ export default class ApplicationViews extends Component {
                                         if (auth0Client.isAuthenticated()) {
                                                 return <Explore {...props}
                                                         activeUser={this.state.activeUser}
-                                                        addRoute={this.addResource} />
+                                                        addRoute={this.addResource}
+                                                        waypoints={this.state.waypoints} />
                                         }
                                         else {
                                                 auth0Client.signIn();

@@ -1,0 +1,18 @@
+.mapboxgl-popup {
+    max-width: 200px;
+    color: red;
+  }
+
+  .mapboxgl-popup-content {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .marker {
+    background-image: url("./small_star.jpg");
+    background-size: cover;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+  }

@@ -3,6 +3,7 @@ import "../components/KanawhaTrace.css"
 import mapboxToken from "../components/authentication/APITokens"
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import "./Map.css"
 
 
 mapboxgl.accessToken =  mapboxToken.mapbox
@@ -39,6 +40,24 @@ export default class Map extends Component {
                 zoom: map.getZoom().toFixed(2)
             });
         });
+        var el = document.createElement('div');
+  el.className = 'marker'
+// start point
+        new mapboxgl.Marker(el)
+        .setLngLat([-82.290, 38.417])
+        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+    .setHTML('<h3>Beginning</h3><p>Ohio Valley Bank</br>Barboursville, WV</p>'))
+        .addTo(map);
+
+        var bl = document.createElement('div');
+  bl.className = 'marker'
+
+// end point
+        new mapboxgl.Marker(bl)
+        .setLngLat([-81.977, 38.559])
+        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+    .setHTML('<h3>Terminus</h3><p>Tasty Blend</br>Frasiers Bottom, WV</p>'))
+        .addTo(map);
     }
 
 
