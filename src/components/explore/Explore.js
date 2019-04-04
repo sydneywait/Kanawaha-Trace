@@ -6,6 +6,7 @@ import "./Explore.css"
 // import Snackbar from '@material-ui/core/Snackbar';
 import MakeNewRoute from "../routes/MakeNewRoute"
 import SelectRoutePoints from "../routes/SelectRoutePoints"
+import Map from "../../modules/Map"
 
 
 export default class Explore extends Component {
@@ -81,9 +82,8 @@ export default class Explore extends Component {
                         <div className="exp-msg">{this.state.message}</div>
                     </div>
                     <div className="exp-right">
-                        <img src={window.location.origin + "/images/kt_map.jpg"} className="exp-map" />
+                        <Map/>
 
-                        {/* <GMap options={options} style={{ width: '100%', minHeight: '320px' }} /> */}
                     </div>
                 </div>
             </div>

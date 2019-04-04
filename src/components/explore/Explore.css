@@ -37,3 +37,10 @@ margin: 0 20px 0 20px;
     font-weight: bold;
 
 }
+
+.exp-right{
+    position: relative;
+    width: 500px;
+    height: 500px;
+
+}

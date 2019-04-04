@@ -2,26 +2,11 @@ import React, { Component } from "react";
 import "./KanawhaTrace.css"
 export default class HomePage extends Component {
 
-    constructor(props) {
-        super(props);
-        // create refs that will allow you to select dom elements
-        this.mapContainer = React.createRef();
-    }
 
-    componentDidMount(){
-
-        const someElement = this.mapContainer.current
-    }
 
 
     render() {
-        var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
-        mapboxgl.accessToken = 'pk.eyJ1Ijoic3lkbmV5cm9vIiwiYSI6ImNqczZpOGh2MDBxcGszeXRmeXZoNzA4b3UifQ.-_LEwvwTyEVOhixtZTF-lQ';
-        var map = new mapboxgl.Map({
-        container: '#mapContainer',
-        style: 'mapbox://styles/mapbox/streets-v11'
-        });
 
 
         return (
@@ -35,9 +20,7 @@ export default class HomePage extends Component {
 
         The Kanawha Trace starts at the ford crossing of the Mud River on the route of the old James and Kanawha River Turnpike. Today it is known as Merritts Creek Road near Barboursville. The Kanawha Trace runs through 3 counties in West Virginia (Cabell, Mason, Putnam county) and is located currently all on private property. The trail was built and is currently maintained by a local Boy Scout Troop 42 of the Tri-State Area Council. The trail was opened in 1962 and in 2002 we celebrated the 40th Anniversary with more than 300 hikers hiking across all 32 miles.</p>
                     </div>
-                    {/* <div className="mapContainer" ref={this.mapContainer}></div> */}
 
-                    <div id="mapContainer"></div>
                 </div>
 
             </React.Fragment>
