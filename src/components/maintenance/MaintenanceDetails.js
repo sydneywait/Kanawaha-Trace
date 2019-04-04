@@ -7,6 +7,7 @@ import AssignMaintenanceFragment from "./AssignMaintenanceForm"
 import EditMaintenanceFragment from "./EditMaintenanceForm"
 import Moment from 'react-moment';
 import DeleteConfirm from "../../modules/DeleteConfirm"
+import { Link } from "react-router-dom";
 
 
 export default class MaintenanceDetails extends Component {
@@ -203,6 +204,9 @@ export default class MaintenanceDetails extends Component {
                     </div>
 
                 </div>
+                <i class="pi pi-chevron-left"></i>
+
+            <Link className="back-to-maint" to={"/maintenance"}>Back to Maintenance List</Link>
                 <div>
                     {this.state.target === "maint-complete-btn" ?
                         CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide) : ""}

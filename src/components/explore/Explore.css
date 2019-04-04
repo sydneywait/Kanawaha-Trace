@@ -2,7 +2,7 @@
 
     margin: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
 }
 
@@ -30,10 +30,18 @@ margin-top: 20px;
 
 .exp-left{
 margin: 0 20px 0 20px;
+width: 350px;
 }
 
 .exp-msg{
     color: red;
     font-weight: bold;
+
+}
+
+.exp-right{
+    position: relative;
+    width: 500px;
+    height: 500px;
 
 }

@@ -13,9 +13,10 @@ import SelectRoutePoints from "./SelectRoutePoints"
 export default class RouteDetails extends Component {
 
     componentDidMount() {
+        let newState = {}
         ResourceManager.getSingleItem("routes", this.props.match.params.routeId)
             .then(route => {
-                this.setState({
+                newState = {
                     name: route.name,
                     userId: route.userId,
                     startId: route.startId,
@@ -27,8 +28,16 @@ export default class RouteDetails extends Component {
                     id: route.id,
                     date: route.isComplete === true ? new Date(route.dateCompleted) : "",
                     time: route.timeToComplete
-                });
-            });
+                }
+            })
+            .then(() => ResourceManager.getSingleItem("waypoints", newState.startId))
+            .then((start) => newState.start = start)
+            .then(() => ResourceManager.getSingleItem("waypoints", newState.endId))
+            .then((end) => {
+                newState.end = end
+                this.setState(newState)
+
+            })
     }
 
     constructor() {
@@ -36,10 +45,14 @@ export default class RouteDetails extends Component {
         this.state = {
             visible: false,
             activeUser: parseInt(sessionStorage.getItem("credentials")),
-            start: null,
-            end: null,
+            start: { name: "", id: "" },
+            end: { name: "", id: "" },
             target: "",
-            message: ""
+            message: "",
+            startId: "",
+            endId: "",
+
+
         };
         this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
@@ -115,6 +128,12 @@ export default class RouteDetails extends Component {
         const route = this.props.routes.find(a => a.id === parseInt(this.props.match.params.routeId)) || {}
         const routeDate = <Moment format="MM/DD/YY">{route.dateCompleted}</Moment>
 
+        const start = this.props.waypoints.find(a => a.id === this.state.startId) || { mile: "" }
+        const end = this.props.waypoints.find(a => a.id === this.state.endId) || { mile: "" }
+        const diff = start.mile - end.mile
+
+        console.log("start", start, "end", end, "diff", diff)
+
         return (<React.Fragment>
             <div className="route-card-header">
                 {(route.direction === true ?
@@ -135,7 +154,7 @@ export default class RouteDetails extends Component {
                             <p className="route-detail-text">Time to Complete: {route.timeToComplete}</p>
                         </React.Fragment> : "")}
                     <p className="route-detail-text">Elevation Gain: </p>
-                    <p className="route-detail-text">Mileage: </p>
+                    <p className="route-detail-text">Mileage: {Math.abs(diff).toFixed(2)} miles</p>
                     <p className="route-detail-text">Hazards: </p>
                     <p className="route-detail-text">Features: </p>
                 </div>
@@ -191,7 +210,7 @@ export default class RouteDetails extends Component {
                 CompleteRouteFragment(footer, this.state, this.onChange, this.onHide) : "")}
 
             {(this.state.target === "edit-route-detail" ?
-                SelectRoutePoints(footer, this.state, this.onStartChange, this.onEndChange, this.onHide ) : "")}
+                SelectRoutePoints(footer, this.state, this.props, this.onStartChange, this.onEndChange, this.onHide) : "")}
 
             {(this.state.target === "delete-route" ?
                 deleteConfirm("routes", this.state.id, this.state.userId, this.state.visible, this.onHide, this.props.deleteRoute, this.props.history) : "")}

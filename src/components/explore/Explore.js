@@ -6,6 +6,7 @@ import "./Explore.css"
 // import Snackbar from '@material-ui/core/Snackbar';
 import MakeNewRoute from "../routes/MakeNewRoute"
 import SelectRoutePoints from "../routes/SelectRoutePoints"
+import Map from "../../modules/Map"
 
 
 export default class Explore extends Component {
@@ -45,21 +46,7 @@ export default class Explore extends Component {
     render() {
         // These are used as options in the dropdown select
         // Eventually these constants will be populated with info from the database
-        const start = [
-            { name: 'Wildcat Hollow', code: '1' },
-            { name: 'Blue Sulphur Rd', code: '2' },
-            { name: 'Camp Arrowhead', code: '3' },
-            { name: 'Howells Mill', code: '4' },
-            { name: 'Canaan Lands', code: '5' }
-        ];
 
-        const end = [
-            { name: 'Wildcat Hollow', code: '1' },
-            { name: 'Blue Sulphur Rd', code: '2' },
-            { name: 'Camp Arrowhead', code: '3' },
-            { name: 'Howells Mill', code: '4' },
-            { name: 'Canaan Lands', code: '5' }
-        ];
 
         return (
 
@@ -70,20 +57,30 @@ export default class Explore extends Component {
                     <div className="exp-left">
 
                         <div className="exp-dd-cont">
-                            <Dropdown className="exp-dd" value={this.state.start} options={start} onChange={this.onStartChange} style={{ width: '200px' }} placeholder="Select a Start Point" optionLabel="name" />
-                            <Dropdown className="exp-dd" value={this.state.end} options={end} onChange={this.onEndChange} style={{ width: '200px' }} placeholder="Select an End Point" optionLabel="name" />
+                            <div><Dropdown className="exp-dd"
+                                value={this.state.start}
+                                options={this.props.waypoints.filter(h => h.isAccess === true).map(h => h)}
+                                onChange={this.onStartChange}
+                                style={{ width: '250px' }} placeholder="Select a Start Point" optionLabel="name" />
+                            </div>
+                            <div className="exp-dd-foot">{this.state.start ? 'Selected start: ' + this.state.start.name : 'No start point selected'}</div>
+
+                            <div><Dropdown className="exp-dd" value={this.state.end}
+                                options={this.props.waypoints.filter(h => h.isAccess === true).map(h => h)}
+                                onChange={this.onEndChange}
+                                style={{ width: '250px' }} placeholder="Select an End Point" optionLabel="name" /></div>
+                            <div className="exp-dd-foot">{this.state.end ? 'Selected end: ' + this.state.end.name : 'No end point selected'}</div>
+
                         </div>
 
-                        <div className="exp-dd-foot">{this.state.start ? 'Selected start: ' + this.state.start.name : 'No start point selected'}</div>
-                        <div className="exp-dd-foot">{this.state.end ? 'Selected end: ' + this.state.end.name : 'No end point selected'}</div>
+
 
                         <div><Button className="explore-dd-submit-btn" label="submit" icon="pi pi-check" iconPos="right" onClick={this.handleSubmit} /></div>
                         <div className="exp-msg">{this.state.message}</div>
                     </div>
                     <div className="exp-right">
-                        <img src={window.location.origin + "/images/kt_map.jpg"} className="exp-map" />
+                        <Map waypoints={this.props.waypoints}/>
 
-                        {/* <GMap options={options} style={{ width: '100%', minHeight: '320px' }} /> */}
                     </div>
                 </div>
             </div>
