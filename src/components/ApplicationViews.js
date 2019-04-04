@@ -176,6 +176,7 @@ export default class ApplicationViews extends Component {
                                         if (auth0Client.isAuthenticated()) {
                                                 return <RouteDetails {...props}
                                                         routes={this.state.routes}
+                                                        waypoints={this.state.waypoints}
                                                         editRoute={this.editResource}
                                                         patchRoute={this.patchResource}
                                                         deleteRoute={this.deleteResource} />
