@@ -22,10 +22,10 @@ export default class ApplicationViews extends Component {
                 maintenance: [],
                 routes: [],
                 waypoints: [],
-                admins: []
-
-
+                admins: [],
+                hazards:[],
         }
+
         componentDidMount() {
                 const newState = {}
                 newState.activeUser = parseInt(sessionStorage.getItem("credentials"))
@@ -78,20 +78,6 @@ export default class ApplicationViews extends Component {
                         }
                         )
         }
-
-        addResource2 = (resources, resourceObject) => {
-                const newState = {}
-                ResourceAPIManager.addNewItem(resources, resourceObject)
-                        .then(() => ResourceAPIManager.getAllItems(resources))
-                        .then(sss => {
-                                console.log("sss", sss)
-                                newState[resources] = sss
-                                this.setState(newState)
-                        }
-                        )
-        }
-
-
 
 
         deleteResource = (resources, resourceId, userId) => {
