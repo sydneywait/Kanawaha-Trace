@@ -79,7 +79,7 @@ export default class Explore extends Component {
                         <div className="exp-msg">{this.state.message}</div>
                     </div>
                     <div className="exp-right">
-                        <Map />
+                        <Map waypoints={this.props.waypoints}/>
 
                     </div>
                 </div>
