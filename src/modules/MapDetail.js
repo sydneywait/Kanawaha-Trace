@@ -11,16 +11,31 @@ mapboxgl.accessToken = mapboxToken.mapbox
 
 export default class MapDetail extends Component {
 
-    constructor(props: Props) {
+//     static getDerivedStateFromProps(props, state){
+// const newState ={}
+//         newState.start = props.start.map(p=>p)
+//         newState.end = props.end.map(p=>p)
+//         this.setState(newState)
+
+
+//     }
+
+    constructor(props) {
         super(props);
         this.state = {
             lng: -82.1032,
             lat: 38.50565,
-            zoom: 9.6
+            zoom: 9.6,
+            start:"",
+            end:""
         };
     }
 
-    componentDidMount() {
+    // componentDidMount() {
+componentDidMount(){
+
+
+
 
         const { lng, lat, zoom } = this.state;
 
@@ -30,6 +45,19 @@ export default class MapDetail extends Component {
             center: [lng, lat],
             zoom
         });
+        // set the bounds for the current view to only show the selected trail
+        // This will be set with the start and end points
+
+        // this.props.waypoints.find(w=>w.id===startId).map(w)
+
+        // const LngLatBounds=[[this.props.start.gps_lng||-82.290, this.props.start.gps_lat||38.417],[this.props.end.gps_lng||-81.977, this.props.end.gps_lat||38.559]]
+        //
+
+        // const LngLatBounds=this.props.start.gps_lng?[[this.props.start.gps_lng, this.props.start.gps_lat],[this.props.end.gps_lng, this.props.end.gps_lat]]:[[-82.290, 38.417],[-81.977, 38.559]]
+        // map.fitBounds(LngLatBounds, {
+        //   padding: {top: 10, bottom:25, left: 15, right: 15}
+        // });
+        console.log(this.props)
 
         map.on('move', () => {
             const { lng, lat } = map.getCenter();
@@ -41,22 +69,22 @@ export default class MapDetail extends Component {
             });
         });
 
-        // add markers to map
-        this.props.waypoints.filter(w => w.isAccess === true).map((w) => {
+        // add markers to map to show features and hazards
+        // this.props.waypoints.filter(w => w.isAccess === true).map((w) => {
 
-            // create a HTML element for each feature
-            var el = document.createElement('div');
-            el.className = 'marker';
+        //     // when querying the waypoint, match the featureId or HazardId and print to map
 
-            // make a marker for each access point and add to the map
-            new mapboxgl.Marker(el)
-                .setLngLat([w.gps_lng, w.gps_lat])
-                .setPopup(new mapboxgl.Popup({ offset: 25 })
-                    .setHTML(`<h3>${w.name}</h3><p>Mile ${w.mile}<p>`))
-                .addTo(map);
-        });
+        //     // create an HTML element for each feature
+        //     var el = document.createElement('div');
+        //     el.className = 'marker';
 
-
+        //     // make a marker for each access point and add to the map
+        //     new mapboxgl.Marker(el)
+        //         .setLngLat([w.gps_lng, w.gps_lat])
+        //         .setPopup(new mapboxgl.Popup({ offset: 25 })
+        //             .setHTML(`<h3>${w.name}</h3><p>Mile ${w.mile}<p>`))
+        //         .addTo(map);
+        // });
     }
 
 

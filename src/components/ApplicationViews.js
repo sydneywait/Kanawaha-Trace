@@ -37,7 +37,7 @@ export default class ApplicationViews extends Component {
                         .then(features => newState.features = features)
                         .then(() => ResourceAPIManager.getAllItems("maintenance"))
                         .then(maintenance => newState.maintenance = maintenance)
-                        .then(() => ResourceAPIManager.getAllItems("waypoints"))
+                        .then(() => ResourceAPIManager.getAllItems("waypoints?_embed=waypoint_features&_embed=waypoint_hazards"))
                         .then(waypoints => {
                                 // check to see if the active user has already been set.
                                 // If it has, get the user items and set to state.
@@ -59,13 +59,11 @@ export default class ApplicationViews extends Component {
                                         this.setState(newState)
                                 }
                         })
-
-
-
         }
 
+        // used by the callback module to get the current users routes and set to state
         updateResource = (resources, userId) => {
-                debugger;
+
                 const newState = {}
                 newState.activeUser = userId
                 ResourceAPIManager.getAllItems(resources, userId)
@@ -75,9 +73,11 @@ export default class ApplicationViews extends Component {
 
                         })
         }
+
+        // used by the callback module to set the current user to state
         setUser = (users, userId) => {
-                debugger;
                 const newState = {}
+                newState.activeUser = userId
                 ResourceAPIManager.getSingleItem(users, userId)
                         .then(user => {
                                 newState.user = user
@@ -192,6 +192,8 @@ export default class ApplicationViews extends Component {
                                                 return <RouteDetails {...props}
                                                         routes={this.state.routes}
                                                         waypoints={this.state.waypoints}
+                                                        hazards={this.state.hazards}
+                                                        features={this.state.features}
                                                         editRoute={this.editResource}
                                                         patchRoute={this.patchResource}
                                                         deleteRoute={this.deleteResource} />

@@ -52,7 +52,7 @@ class Callback extends Component {
           const userId=matchingUser[0].id
           sessionStorage.setItem("credentials", userId);
           this.props.updateResource("routes", userId)
-          debugger;
+
           this.props.setUser("users", userId)
 
 

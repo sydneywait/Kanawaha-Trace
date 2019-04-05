@@ -12,7 +12,7 @@ export default {
     .then(r => r.json())
   },
   getSingleItem: (items, id) => {
-    debugger;
+
     return fetch(`http://localhost:5002/${items}/${id}`)
       .then(r => r.json())
   },

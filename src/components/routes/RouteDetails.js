@@ -9,12 +9,19 @@ import MakeNewRoute from "./MakeNewRoute"
 import deleteConfirm from "../../modules/DeleteConfirm"
 import CompleteRouteFragment from "./CompleteRouteForm"
 import SelectRoutePoints from "./SelectRoutePoints"
+import MapDetail from "../../modules/MapDetail"
 
 export default class RouteDetails extends Component {
 
     componentDidMount() {
+        this.updateComponent(this.props)
+
+    }
+
+
+    updateComponent(props){
         let newState = {}
-        ResourceManager.getSingleItem("routes", this.props.match.params.routeId)
+        ResourceManager.getSingleItem("routes", props.match.params.routeId)
             .then(route => {
                 newState = {
                     name: route.name,
@@ -39,7 +46,6 @@ export default class RouteDetails extends Component {
 
             })
     }
-
     constructor() {
         super();
         this.state = {
@@ -143,8 +149,16 @@ export default class RouteDetails extends Component {
                 <span className="route-name-details-header">{route.name}</span>
             </div>
             <div className="details-body-container">
+
                 <div className="route-details-img-cont">
-                    <img src={window.location.origin + "/images/section_map.jpg"} height="400px" className="exp-map" />
+                    <MapDetail
+                    routeId={this.props.match.params.routeId}
+                    waypoints={this.props.waypoints}
+                    start={this.state.start}
+                    end={this.state.end}
+                    hazards={this.props.hazards}
+                    features={this.props.features}
+                    updateComponent={this.updateComponent}/>
                 </div>
 
                 <div className="route-text-detail-cont">
