@@ -4,6 +4,7 @@ import mapboxToken from "../components/authentication/APITokens"
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import "./Map.css"
+import ResourceManager from "../modules/ResourceAPIManager"
 
 
 mapboxgl.accessToken = mapboxToken.mapbox
@@ -11,14 +12,14 @@ mapboxgl.accessToken = mapboxToken.mapbox
 
 export default class MapDetail extends Component {
 
-//     static getDerivedStateFromProps(props, state){
-// const newState ={}
-//         newState.start = props.start.map(p=>p)
-//         newState.end = props.end.map(p=>p)
-//         this.setState(newState)
+    //     static getDerivedStateFromProps(props, state){
+    // const newState ={}
+    //         newState.start = props.start.map(p=>p)
+    //         newState.end = props.end.map(p=>p)
+    //         this.setState(newState)
 
 
-//     }
+    //     }
 
     constructor(props) {
         super(props);
@@ -26,48 +27,83 @@ export default class MapDetail extends Component {
             lng: -82.1032,
             lat: 38.50565,
             zoom: 9.6,
-            start:"",
-            end:""
+            start: "",
+            end: ""
         };
     }
 
-    // componentDidMount() {
-componentDidMount(){
+    componentDidMount(props) {
+        let newState = {}
+        let map =""
+        let LngLatBounds=[]
+        ResourceManager.getSingleItem("routes", this.props.routeId)
+            .then(route => {
+                newState = {
+
+                    startId: route.startId,
+                    endId: route.endId,
+                    direction: route.direction,
+
+                }
+            })
+            .then(() => ResourceManager.getSingleItem("waypoints", newState.startId))
+            .then((start) => {
+
+                newState.start = start
+                LngLatBounds=[[start.gps_lng, start.gps_lat]]
+
+
+
+            })
+            .then(() => ResourceManager.getSingleItem("waypoints", newState.endId))
+            .then((end) => {
+                newState.end = end
+                LngLatBounds.push([end.gps_lng, end.gps_lat])
+                console.log(LngLatBounds)
+                newState.LngLatBounds=LngLatBounds
+                map = new mapboxgl.Map({
+                    container: this.mapContainer,
+                    style: 'mapbox://styles/sydneyroo/cju1kgcmn0u041fpbg636snah',
+                    center: [lng, lat],
+                    zoom
+                });
+                map.fitBounds(LngLatBounds, {
+                    padding: {top: 10, bottom:25, left: 15, right: 15}
+                  });
+                  map.on('move', () => {
+                    const { lng, lat } = map.getCenter();
+
+                    this.setState({
+                        lng: lng.toFixed(4),
+                        lat: lat.toFixed(4),
+                        zoom: map.getZoom().toFixed(2)
+                    });
+                });
+
+                this.setState(newState)
+
+            })
 
 
 
 
         const { lng, lat, zoom } = this.state;
 
-        const map = new mapboxgl.Map({
-            container: this.mapContainer,
-            style: 'mapbox://styles/sydneyroo/cju1kgcmn0u041fpbg636snah',
-            center: [lng, lat],
-            zoom
-        });
+
         // set the bounds for the current view to only show the selected trail
         // This will be set with the start and end points
 
         // this.props.waypoints.find(w=>w.id===startId).map(w)
+        // [[-82.290, 38.417],[-81.977, 38.559]]
 
         // const LngLatBounds=[[this.props.start.gps_lng||-82.290, this.props.start.gps_lat||38.417],[this.props.end.gps_lng||-81.977, this.props.end.gps_lat||38.559]]
-        //
 
-        // const LngLatBounds=this.props.start.gps_lng?[[this.props.start.gps_lng, this.props.start.gps_lat],[this.props.end.gps_lng, this.props.end.gps_lat]]:[[-82.290, 38.417],[-81.977, 38.559]]
-        // map.fitBounds(LngLatBounds, {
-        //   padding: {top: 10, bottom:25, left: 15, right: 15}
-        // });
-        console.log(this.props)
 
-        map.on('move', () => {
-            const { lng, lat } = map.getCenter();
 
-            this.setState({
-                lng: lng.toFixed(4),
-                lat: lat.toFixed(4),
-                zoom: map.getZoom().toFixed(2)
-            });
-        });
+        console.log(LngLatBounds)
+        console.log(this.state)
+
+
 
         // add markers to map to show features and hazards
         // this.props.waypoints.filter(w => w.isAccess === true).map((w) => {

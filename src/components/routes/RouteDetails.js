@@ -97,7 +97,7 @@ export default class RouteDetails extends Component {
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
     }
 
-    // this function is called to make a new route
+    // this function is called to make a new route object based on the edit
     handleSubmit() {
         const thingReturned = MakeNewRoute(this.state)
         const message = thingReturned[0]
