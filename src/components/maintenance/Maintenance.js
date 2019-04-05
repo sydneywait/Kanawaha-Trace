@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./Maintenance.css"
 import { Button } from "primereact/button";
 import ResourceManager from "../../modules/ResourceAPIManager"
-import CompleteMaintenance from "./CompleteMaintenance"
+import CompleteMaintenance from "./CompleteMaintenancePatch"
 import CompleteMaintenanceFragment from "./CompleteMaintenanceForm"
 import basicUser from "./BasicUserPage"
 import adminUser from "./AdminUserPage"

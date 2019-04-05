@@ -47,6 +47,7 @@ export default class Explore extends Component {
         // These are used as options in the dropdown select
         // Eventually these constants will be populated with info from the database
 
+        const options=this.props.waypoints.filter(h => h.isAccess === true).map(h => h)
 
         return (
 
@@ -59,14 +60,13 @@ export default class Explore extends Component {
                         <div className="exp-dd-cont">
                             <div><Dropdown className="exp-dd"
                                 value={this.state.start}
-                                options={this.props.waypoints.filter(h => h.isAccess === true).map(h => h)}
+                                options={options}
                                 onChange={this.onStartChange}
                                 style={{ width: '250px' }} placeholder="Select a Start Point" optionLabel="name" />
                             </div>
                             <div className="exp-dd-foot">{this.state.start ? 'Selected start: ' + this.state.start.name : 'No start point selected'}</div>
-
                             <div><Dropdown className="exp-dd" value={this.state.end}
-                                options={this.props.waypoints.filter(h => h.isAccess === true).map(h => h)}
+                                options={options}
                                 onChange={this.onEndChange}
                                 style={{ width: '250px' }} placeholder="Select an End Point" optionLabel="name" /></div>
                             <div className="exp-dd-foot">{this.state.end ? 'Selected end: ' + this.state.end.name : 'No end point selected'}</div>

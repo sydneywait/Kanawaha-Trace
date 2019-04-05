@@ -1,5 +1,5 @@
 
-import { Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 import React, { Component } from "react";
 import Explore from "./explore/Explore"
 import HomePage from "./HomePage"
@@ -38,20 +38,34 @@ export default class ApplicationViews extends Component {
                         .then(() => ResourceAPIManager.getAllItems("maintenance"))
                         .then(maintenance => newState.maintenance = maintenance)
                         .then(() => ResourceAPIManager.getAllItems("waypoints"))
-                        .then(waypoints => newState.waypoints = waypoints)
-                        .then(() => ResourceAPIManager.getAllItems("routes", newState.activeUser))
-                        .then(routes => newState.routes = routes)
-                        .then(() => ResourceAPIManager.getSingleItem("users", newState.activeUser))
-                        .then(user => {
+                        .then(waypoints => {
+                                // check to see if the active user has already been set.
+                                // If it has, get the user items and set to state.
 
-                                newState.user = user
-                                this.setState(newState)
+                                newState.waypoints = waypoints
+                                if (newState.activeUser) {
 
+                                        ResourceAPIManager.getAllItems("routes", newState.activeUser)
+                                                .then(routes => newState.routes = routes)
+                                                .then(() => ResourceAPIManager.getSingleItem("users", newState.activeUser))
+                                                .then(user => {
+
+                                                        newState.user = user
+                                                        this.setState(newState)
+                                                })
+                                }
+                                // If not, just set state with non-user-specific items
+                                else {
+                                        this.setState(newState)
+                                }
                         })
+
+
 
         }
 
         updateResource = (resources, userId) => {
+                debugger;
                 const newState = {}
                 newState.activeUser = userId
                 ResourceAPIManager.getAllItems(resources, userId)
@@ -62,6 +76,7 @@ export default class ApplicationViews extends Component {
                         })
         }
         setUser = (users, userId) => {
+                debugger;
                 const newState = {}
                 ResourceAPIManager.getSingleItem(users, userId)
                         .then(user => {

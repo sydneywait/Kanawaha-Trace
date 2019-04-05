@@ -3,7 +3,7 @@ const CompleteMaintenance = (description, date) => {
     const PatchObject = {
         isComplete: true,
         updatedDescription: description,
-        date: date
+        dateCompleted: date
     }
     return PatchObject
 }

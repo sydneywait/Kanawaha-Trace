@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ResourceManager from "../../modules/ResourceAPIManager"
 import { Button } from 'primereact/button';
-import CompleteMaintenance from "./CompleteMaintenance"
+import CompleteMaintenance from "./CompleteMaintenancePatch"
 import CompleteMaintenanceFragment from "./CompleteMaintenanceForm"
 import AssignMaintenanceFragment from "./AssignMaintenanceForm"
 import EditMaintenanceFragment from "./EditMaintenanceForm"

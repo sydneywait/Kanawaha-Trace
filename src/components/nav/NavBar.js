@@ -37,7 +37,7 @@ class NavBar extends React.Component {
   };
 
   initialNav() {
-    const { classes } = this.props;
+
     return (
       <React.Fragment>
         <Tabs
@@ -56,7 +56,7 @@ class NavBar extends React.Component {
   }
 
   MainNav = () => {
-    const { classes } = this.props;
+
     return (
 
       <React.Fragment>
@@ -84,7 +84,7 @@ class NavBar extends React.Component {
     return (
       <Paper square className={classes.root}>
 
-{!auth0Client.isAuthenticated() ? this.initialNav():this.MainNav()}
+{auth0Client.isAuthenticated() ? this.MainNav():this.initialNav()}
 
       </Paper>
 
