@@ -34,8 +34,8 @@ export default class MapDetail extends Component {
 
     componentDidMount(props) {
         let newState = {}
-        let map =""
-        let LngLatBounds=[]
+        let map = ""
+        let LngLatBounds = []
         ResourceManager.getSingleItem("routes", this.props.routeId)
             .then(route => {
                 newState = {
@@ -50,7 +50,7 @@ export default class MapDetail extends Component {
             .then((start) => {
 
                 newState.start = start
-                LngLatBounds=[[start.gps_lng, start.gps_lat]]
+                LngLatBounds = [[start.gps_lng, start.gps_lat]]
 
 
 
@@ -60,17 +60,19 @@ export default class MapDetail extends Component {
                 newState.end = end
                 LngLatBounds.push([end.gps_lng, end.gps_lat])
                 console.log(LngLatBounds)
-                newState.LngLatBounds=LngLatBounds
+                newState.LngLatBounds = LngLatBounds
                 map = new mapboxgl.Map({
                     container: this.mapContainer,
-                    style: 'mapbox://styles/sydneyroo/cju1kgcmn0u041fpbg636snah',
-                    center: [lng, lat],
-                    zoom
+                    style: 'mapbox://styles/sydneyroo/cju1kgcmn0u041fpbg636snah'
+                    // center: [lng, lat],
+                    // zoom
                 });
+                // set the bounds for the current view to only show the selected trail
+                // This will be set with the start and end points
                 map.fitBounds(LngLatBounds, {
-                    padding: {top: 10, bottom:25, left: 15, right: 15}
-                  });
-                  map.on('move', () => {
+                    padding: { top: 20, bottom: 20, left: 20, right: 20 }
+                });
+                map.on('move', () => {
                     const { lng, lat } = map.getCenter();
 
                     this.setState({
@@ -90,13 +92,7 @@ export default class MapDetail extends Component {
         const { lng, lat, zoom } = this.state;
 
 
-        // set the bounds for the current view to only show the selected trail
-        // This will be set with the start and end points
 
-        // this.props.waypoints.find(w=>w.id===startId).map(w)
-        // [[-82.290, 38.417],[-81.977, 38.559]]
-
-        // const LngLatBounds=[[this.props.start.gps_lng||-82.290, this.props.start.gps_lat||38.417],[this.props.end.gps_lng||-81.977, this.props.end.gps_lat||38.559]]
 
 
 

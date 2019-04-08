@@ -14,13 +14,17 @@ import MapDetail from "../../modules/MapDetail"
 export default class RouteDetails extends Component {
 
     componentDidMount() {
+
+
+
         this.updateComponent(this.props)
 
     }
 
 
-    updateComponent(props){
+    updateComponent(props) {
         let newState = {}
+        let featureArray = []
         ResourceManager.getSingleItem("routes", props.match.params.routeId)
             .then(route => {
                 newState = {
@@ -40,11 +44,27 @@ export default class RouteDetails extends Component {
             .then(() => ResourceManager.getSingleItem("waypoints", newState.startId))
             .then((start) => newState.start = start)
             .then(() => ResourceManager.getSingleItem("waypoints", newState.endId))
-            .then((end) => {
-                newState.end = end
-                this.setState(newState)
-
+            .then((end) => newState.end = end)
+            .then(() => ResourceManager.getAllItems(`waypoint_features?waypointId_gte=${newState.startId}&waypointId_lte=${newState.endId}&_expand=waypoint&_expand=feature`))
+            .then((features) => {
+                features.forEach(feature => {
+                featureArray.push({
+                    mile: feature.waypoint.mile,
+                    type: feature.feature.type,
+                    gps_lng: feature.waypoint.gps_lng,
+                    gps_lat: feature.waypoint.gps_lat
+                })
             })
+        console.log(featureArray)
+        newState.features=featureArray
+        this.setState(newState)
+        }
+
+            )
+
+
+
+
     }
     constructor() {
         super();
@@ -57,6 +77,8 @@ export default class RouteDetails extends Component {
             message: "",
             startId: "",
             endId: "",
+            features: [{ mile: "", type: "", gps_lng: "", gps_lat: "" }],
+            hazards: [{ mile: "", type: "", gps_lng: "", gps_lat: "" }]
 
 
         };
@@ -152,13 +174,13 @@ export default class RouteDetails extends Component {
 
                 <div className="route-details-img-cont">
                     <MapDetail
-                    routeId={this.props.match.params.routeId}
-                    waypoints={this.props.waypoints}
-                    start={this.state.start}
-                    end={this.state.end}
-                    hazards={this.props.hazards}
-                    features={this.props.features}
-                    updateComponent={this.updateComponent}/>
+                        routeId={this.props.match.params.routeId}
+                        waypoints={this.props.waypoints}
+                        start={this.state.start}
+                        end={this.state.end}
+                        hazards={this.props.hazards}
+                        features={this.props.features}
+                        updateComponent={this.updateComponent} />
                 </div>
 
                 <div className="route-text-detail-cont">
@@ -170,7 +192,9 @@ export default class RouteDetails extends Component {
                     <p className="route-detail-text">Elevation Gain: </p>
                     <p className="route-detail-text">Mileage: {Math.abs(diff).toFixed(2)} miles</p>
                     <p className="route-detail-text">Hazards: </p>
-                    <p className="route-detail-text">Features: </p>
+                    <p className="route-detail-text">Features: <ul>{this.state.features.sort((a,b)=>a.mile-b.mile).map((feature)=>
+                        <li>Mile {feature.mile}: {feature.type}</li>)
+                    }</ul></p>
                 </div>
 
 
