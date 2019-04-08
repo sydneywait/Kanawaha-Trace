@@ -24,7 +24,6 @@ export default class RouteDetails extends Component {
 
     updateComponent(props) {
         let newState = {}
-        let featureArray = []
         ResourceManager.getSingleItem("routes", props.match.params.routeId)
             .then(route => {
                 newState = {
@@ -44,23 +43,12 @@ export default class RouteDetails extends Component {
             .then(() => ResourceManager.getSingleItem("waypoints", newState.startId))
             .then((start) => newState.start = start)
             .then(() => ResourceManager.getSingleItem("waypoints", newState.endId))
-            .then((end) => newState.end = end)
-            .then(() => ResourceManager.getAllItems(`waypoint_features?waypointId_gte=${newState.startId}&waypointId_lte=${newState.endId}&_expand=waypoint&_expand=feature`))
-            .then((features) => {
-                features.forEach(feature => {
-                featureArray.push({
-                    mile: feature.waypoint.mile,
-                    type: feature.feature.type,
-                    gps_lng: feature.waypoint.gps_lng,
-                    gps_lat: feature.waypoint.gps_lat
-                })
-            })
-        console.log(featureArray)
-        newState.features=featureArray
-        this.setState(newState)
-        }
-
+            .then((end) => {
+                newState.end = end
+                this.setState(newState)
+            }
             )
+
 
 
 
@@ -127,7 +115,12 @@ export default class RouteDetails extends Component {
         newRoute.id = this.state.id
 
         console.log(newRoute)
-        this.setState({ message: message })
+        this.setState(
+            {
+                message: message,
+                startId: newRoute.startId,
+                endId: newRoute.endId
+            })
         newRoute.name ? this.props.editRoute("routes", newRoute, this.state.userId) : console.log("no route")
     }
 
@@ -192,7 +185,7 @@ export default class RouteDetails extends Component {
                     <p className="route-detail-text">Elevation Gain: </p>
                     <p className="route-detail-text">Mileage: {Math.abs(diff).toFixed(2)} miles</p>
                     <p className="route-detail-text">Hazards: </p>
-                    <p className="route-detail-text">Features: <ul>{this.state.features.sort((a,b)=>a.mile-b.mile).map((feature)=>
+                    <p className="route-detail-text">Features: <ul>{this.props.featureArray.filter(feature => feature.mile >= start.mile && feature.mile <= end.mile).sort((a, b) => a.mile - b.mile).map((feature) =>
                         <li>Mile {feature.mile}: {feature.type}</li>)
                     }</ul></p>
                 </div>

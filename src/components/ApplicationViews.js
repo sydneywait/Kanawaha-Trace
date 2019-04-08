@@ -22,12 +22,15 @@ export default class ApplicationViews extends Component {
                 maintenance: [],
                 routes: [],
                 waypoints: [],
-                admins: []
+                admins: [],
+                featureArry: [],
+                hazardArray:[]
 
 
         }
         componentDidMount() {
                 const newState = {}
+                const featureArray=[]
                 newState.activeUser = parseInt(sessionStorage.getItem("credentials"))
                 ResourceAPIManager.getAdmins()
                         .then(admins => newState.admins = admins)
@@ -37,6 +40,21 @@ export default class ApplicationViews extends Component {
                         .then(features => newState.features = features)
                         .then(() => ResourceAPIManager.getAllItems("maintenance"))
                         .then(maintenance => newState.maintenance = maintenance)
+                        .then(() => ResourceAPIManager.getAllItems(`waypoint_features?_expand=waypoint&_expand=feature`))
+                        .then((features) => {
+                                features.forEach(feature => {
+                                        featureArray.push({
+                                                mile: feature.waypoint.mile,
+                                                type: feature.feature.type,
+                                                gps_lng: feature.waypoint.gps_lng,
+                                                gps_lat: feature.waypoint.gps_lat
+                                        })
+                                })
+                                console.log(featureArray)
+                                newState.featureArray = featureArray
+                        }
+
+                        )
                         .then(() => ResourceAPIManager.getAllItems("waypoints?_embed=waypoint_features&_embed=waypoint_hazards"))
                         .then(waypoints => {
                                 // check to see if the active user has already been set.
@@ -192,6 +210,7 @@ export default class ApplicationViews extends Component {
                                                 return <RouteDetails {...props}
                                                         routes={this.state.routes}
                                                         waypoints={this.state.waypoints}
+                                                        featureArray={this.state.featureArray}
                                                         hazards={this.state.hazards}
                                                         features={this.state.features}
                                                         editRoute={this.editResource}
