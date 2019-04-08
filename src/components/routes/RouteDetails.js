@@ -177,12 +177,11 @@ export default class RouteDetails extends Component {
                         </React.Fragment> : "")}
                     <p className="route-detail-text">Elevation Gain: </p>
                     <p className="route-detail-text">Mileage: {Math.abs(diff).toFixed(2)} miles</p>
-                    <p className="route-detail-text">Hazards: <ul>{this.props.hazardArray.filter(hazard => hazard.mile >= start.mile && hazard.mile <= end.mile).sort((a, b) => a.mile - b.mile).map((hazard) =>
-                        <li>Mile {hazard.mile}: {hazard.type}</li>)
+                    <p className="route-detail-text">Description: <ul>{this.props.waypoints.filter(w => w.mile >= start.mile && w.mile <= end.mile).sort((a, b) => a.mile - b.mile).map((w) =>
+                        (w.description!==""?<li>Mile {w.mile}: {w.description}</li>:""))
                     }</ul></p>
-                    <p className="route-detail-text">Features: <ul>{this.props.featureArray.filter(feature => feature.mile >= start.mile && feature.mile <= end.mile).sort((a, b) => a.mile - b.mile).map((feature) =>
-                        <li>Mile {feature.mile}: {feature.type}</li>)
-                    }</ul></p>
+
+
                 </div>
 
 

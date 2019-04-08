@@ -46,13 +46,7 @@ padding-left: 15px;
 
 }
 
-.route-text-detail-cont{
-display: flex;
-flex-direction: column;
-justify-content: center;
-border: 1px solid gray;
 
-}
 
 .details-body-container{
     display: flex;
@@ -64,11 +58,13 @@ border: 1px solid gray;
 }
 
 .route-text-detail-cont{
+    flex-direction: column;
     margin-left: 10px;
     display: flex;
     justify-content: center;
-    width: 250px;
+    width: 400px;
     padding-left: 10px;
+    border: 1px solid gray;
 }
 
 .route-card-header{
