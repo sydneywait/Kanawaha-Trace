@@ -79,22 +79,26 @@ export default class MapDetail extends Component {
 
                 this.setState(newState)
 
-                // add markers to map to show features and hazards
+                // add markers to map to show hazards
                 this.props.hazardArray.filter(h => h.mile >= newState.start.mile && h.mile <= newState.end.mile).map((h) => {
-
                     addMapMarker("marker-hazard", h, map)
                 });
+                // add markers to map to show features
                 this.props.featureArray.filter(f => f.mile >= newState.start.mile && f.mile <= newState.end.mile).map((f) => {
-
                     addMapMarker("marker-feature", f, map)
                 });
-
-
+                // add markers to map to show start and end points
                     addMapMarker("marker-ends", newState.start, map)
                     addMapMarker("marker-ends", newState.end, map)
 
-
+                    map.on('load', function() {
+                        console.log("map loaded")
+                        // the rest of the code will go in here
+                      });
+                      map.getCanvas().style.cursor = 'default'
             })
+
+
 
 
 
@@ -108,7 +112,6 @@ export default class MapDetail extends Component {
 
         console.log(LngLatBounds)
         console.log(this.state)
-
 
 
 
@@ -135,9 +138,11 @@ export default class MapDetail extends Component {
 
 
                 <div className="map">
-                    <div className=" inline-block absolute top left mt12 ml12 bg-darken75 color-white z1 py6 px12 round-full txt-s txt-bold">
+                    <div className="inline-block absolute top left mt12 ml12 bg-darken75 color-white z1 py6 px12 round-full txt-s txt-bold">
                         <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom}`}</div>
                     </div>
+                    <div className='map-overlay' id='legend'></div>
+
                     <div ref={el => this.mapContainer = el} className="absolute top right left bottom" />
                 </div>
             </React.Fragment>

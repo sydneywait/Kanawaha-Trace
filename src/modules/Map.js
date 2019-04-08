@@ -55,6 +55,7 @@ export default class Map extends Component {
                     .setHTML(`<h3>${w.name}</h3><p>Mile ${w.mile}<p>`))
                 .addTo(map);
         });
+        map.getCanvas().style.cursor = 'default'
 
 
     }
