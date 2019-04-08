@@ -31,6 +31,7 @@ export default class ApplicationViews extends Component {
         componentDidMount() {
                 const newState = {}
                 const featureArray=[]
+                const hazardArray=[]
                 newState.activeUser = parseInt(sessionStorage.getItem("credentials"))
                 ResourceAPIManager.getAdmins()
                         .then(admins => newState.admins = admins)
@@ -53,7 +54,20 @@ export default class ApplicationViews extends Component {
                                 console.log(featureArray)
                                 newState.featureArray = featureArray
                         }
-
+                        )
+                        .then(() => ResourceAPIManager.getAllItems(`waypoint_hazards?_expand=waypoint&_expand=hazard`))
+                        .then((hazards) => {
+                                hazards.forEach(hazard => {
+                                        hazardArray.push({
+                                                mile: hazard.waypoint.mile,
+                                                type: hazard.hazard.type,
+                                                gps_lng: hazard.waypoint.gps_lng,
+                                                gps_lat: hazard.waypoint.gps_lat
+                                        })
+                                })
+                                console.log(hazardArray)
+                                newState.hazardArray = hazardArray
+                        }
                         )
                         .then(() => ResourceAPIManager.getAllItems("waypoints?_embed=waypoint_features&_embed=waypoint_hazards"))
                         .then(waypoints => {
@@ -211,6 +225,7 @@ export default class ApplicationViews extends Component {
                                                         routes={this.state.routes}
                                                         waypoints={this.state.waypoints}
                                                         featureArray={this.state.featureArray}
+                                                        hazardArray={this.state.hazardArray}
                                                         hazards={this.state.hazards}
                                                         features={this.state.features}
                                                         editRoute={this.editResource}

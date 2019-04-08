@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import "./Map.css"
 import ResourceManager from "../modules/ResourceAPIManager"
+import addMapMarker from "./AddMapMarker"
 
 
 mapboxgl.accessToken = mapboxToken.mapbox
@@ -12,14 +13,6 @@ mapboxgl.accessToken = mapboxToken.mapbox
 
 export default class MapDetail extends Component {
 
-    //     static getDerivedStateFromProps(props, state){
-    // const newState ={}
-    //         newState.start = props.start.map(p=>p)
-    //         newState.end = props.end.map(p=>p)
-    //         this.setState(newState)
-
-
-    //     }
 
     constructor(props) {
         super(props);
@@ -61,16 +54,18 @@ export default class MapDetail extends Component {
                 LngLatBounds.push([end.gps_lng, end.gps_lat])
                 console.log(LngLatBounds)
                 newState.LngLatBounds = LngLatBounds
+
+                // initiate the creation of the map
                 map = new mapboxgl.Map({
                     container: this.mapContainer,
-                    style: 'mapbox://styles/sydneyroo/cju1kgcmn0u041fpbg636snah'
-                    // center: [lng, lat],
-                    // zoom
+                    style: 'mapbox://styles/sydneyroo/cju1kgcmn0u041fpbg636snah',
+                    center: [lng, lat],
+                    zoom
                 });
                 // set the bounds for the current view to only show the selected trail
                 // This will be set with the start and end points
                 map.fitBounds(LngLatBounds, {
-                    padding: { top: 20, bottom: 20, left: 20, right: 20 }
+                    padding: { top: 100, bottom: 100, left: 100, right: 100 }
                 });
                 map.on('move', () => {
                     const { lng, lat } = map.getCenter();
@@ -83,6 +78,21 @@ export default class MapDetail extends Component {
                 });
 
                 this.setState(newState)
+
+                // add markers to map to show features and hazards
+                this.props.hazardArray.filter(h => h.mile >= newState.start.mile && h.mile <= newState.end.mile).map((h) => {
+
+                    addMapMarker("marker-hazard", h, map)
+                });
+                this.props.featureArray.filter(f => f.mile >= newState.start.mile && f.mile <= newState.end.mile).map((f) => {
+
+                    addMapMarker("marker-feature", f, map)
+                });
+
+
+                    addMapMarker("marker-ends", newState.start, map)
+                    addMapMarker("marker-ends", newState.end, map)
+
 
             })
 
@@ -101,22 +111,15 @@ export default class MapDetail extends Component {
 
 
 
-        // add markers to map to show features and hazards
-        // this.props.waypoints.filter(w => w.isAccess === true).map((w) => {
+
+
+
+
+
 
         //     // when querying the waypoint, match the featureId or HazardId and print to map
 
-        //     // create an HTML element for each feature
-        //     var el = document.createElement('div');
-        //     el.className = 'marker';
 
-        //     // make a marker for each access point and add to the map
-        //     new mapboxgl.Marker(el)
-        //         .setLngLat([w.gps_lng, w.gps_lat])
-        //         .setPopup(new mapboxgl.Popup({ offset: 25 })
-        //             .setHTML(`<h3>${w.name}</h3><p>Mile ${w.mile}<p>`))
-        //         .addTo(map);
-        // });
     }
 
 

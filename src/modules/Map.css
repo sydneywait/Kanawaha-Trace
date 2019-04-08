@@ -16,3 +16,34 @@
     border-radius: 50%;
     cursor: pointer;
   }
+
+  .marker-feature{
+    background-image: url("./small_star.jpg");
+    background-size: cover;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+
+
+  }
+  .marker-hazard{
+    background-image: url("./hazard_dot.png");
+    background-size: cover;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+
+
+  }
+
+  .marker-ends{
+    background-image: url("./mapbox-icon.png");
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+
+  }

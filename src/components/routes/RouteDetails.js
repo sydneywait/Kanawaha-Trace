@@ -14,13 +14,8 @@ import MapDetail from "../../modules/MapDetail"
 export default class RouteDetails extends Component {
 
     componentDidMount() {
-
-
-
         this.updateComponent(this.props)
-
     }
-
 
     updateComponent(props) {
         let newState = {}
@@ -48,11 +43,6 @@ export default class RouteDetails extends Component {
                 this.setState(newState)
             }
             )
-
-
-
-
-
     }
     constructor() {
         super();
@@ -65,8 +55,7 @@ export default class RouteDetails extends Component {
             message: "",
             startId: "",
             endId: "",
-            features: [{ mile: "", type: "", gps_lng: "", gps_lat: "" }],
-            hazards: [{ mile: "", type: "", gps_lng: "", gps_lat: "" }]
+
 
 
         };
@@ -90,24 +79,25 @@ export default class RouteDetails extends Component {
 
     // these functions are called to hide and unhide modals
 
-    onClick(event) {
+    onClick() {
         this.setState({ visible: true });
     }
 
-    onHide(event) {
+    onHide() {
         this.setState({ visible: false });
     }
 
-    // this function is called to set the date and time completed
+    // this function is called to set or change the date and time completed
     onChange = (dateOrTime, e) => { this.setState({ [dateOrTime]: e.target.value }) }
 
     completeRoute() {
         const routeId = this.state.id
         const patchObject = CompleteRoutePatch(this.state)
+        this.setState({isComplete: patchObject.isComplete, timeToComplete:patchObject.timeToComplete, dateCompleted:patchObject.dateCompleted})
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
     }
 
-    // this function is called to make a new route object based on the edit
+    // this function is called to make a new route object based on the edit of start and end points
     handleSubmit() {
         const thingReturned = MakeNewRoute(this.state)
         const message = thingReturned[0]
@@ -127,6 +117,7 @@ export default class RouteDetails extends Component {
 
 
     render() {
+        // this is the footer for the modal that pops up when user clicks edit or complete
         const footer = (
             <div>
                 <Button type="submit" label="Submit" className="p-button-success" icon="pi pi-check"
@@ -145,7 +136,7 @@ export default class RouteDetails extends Component {
                    Using the route parameter, find the route that the
                    user clicked on by looking at the `this.props.routes`
                    collection that was passed down from ApplicationViews
-               */
+        */
         const route = this.props.routes.find(a => a.id === parseInt(this.props.match.params.routeId)) || {}
         const routeDate = <Moment format="MM/DD/YY">{route.dateCompleted}</Moment>
 
@@ -157,6 +148,7 @@ export default class RouteDetails extends Component {
 
         return (<React.Fragment>
             <div className="route-card-header">
+                {/* insert trail marker picture based on the direction of travel */}
                 {(route.direction === true ?
                     <img src={window.location.origin + "/images/west_east.jpg"} height="80px" className="route-marker" /> :
                     <img src={window.location.origin + "/images/east_west.jpg"} height="80px" className="route-marker" />
@@ -166,25 +158,28 @@ export default class RouteDetails extends Component {
             <div className="details-body-container">
 
                 <div className="route-details-img-cont">
+                    {/* this renders the map detail component */}
                     <MapDetail
                         routeId={this.props.match.params.routeId}
                         waypoints={this.props.waypoints}
                         start={this.state.start}
                         end={this.state.end}
-                        hazards={this.props.hazards}
-                        features={this.props.features}
+                        hazardArray={this.props.hazardArray}
+                        featureArray={this.props.featureArray}
                         updateComponent={this.updateComponent} />
                 </div>
-
+                {/* give information about the route such as length and any hazards or features */}
                 <div className="route-text-detail-cont">
                     {(route.isComplete === true ?
                         <React.Fragment>
-                            <p className="route-detail-text">Date Completed: {routeDate}</p>
-                            <p className="route-detail-text">Time to Complete: {route.timeToComplete}</p>
+                            <p className="route-detail-text">Date Completed: {<Moment format="MM/DD/YY">{this.state.dateCompleted}</Moment>}</p>
+                            <p className="route-detail-text">Time to Complete: {this.state.timeToComplete}</p>
                         </React.Fragment> : "")}
                     <p className="route-detail-text">Elevation Gain: </p>
                     <p className="route-detail-text">Mileage: {Math.abs(diff).toFixed(2)} miles</p>
-                    <p className="route-detail-text">Hazards: </p>
+                    <p className="route-detail-text">Hazards: <ul>{this.props.hazardArray.filter(hazard => hazard.mile >= start.mile && hazard.mile <= end.mile).sort((a, b) => a.mile - b.mile).map((hazard) =>
+                        <li>Mile {hazard.mile}: {hazard.type}</li>)
+                    }</ul></p>
                     <p className="route-detail-text">Features: <ul>{this.props.featureArray.filter(feature => feature.mile >= start.mile && feature.mile <= end.mile).sort((a, b) => a.mile - b.mile).map((feature) =>
                         <li>Mile {feature.mile}: {feature.type}</li>)
                     }</ul></p>
@@ -235,7 +230,7 @@ export default class RouteDetails extends Component {
             <Link className="back-to-routes" to={"/routes"}>Back to Route List</Link>
 
 
-
+            {/* these logic operations will engage the modal pop-ups based on which button is clicked */}
 
             {(this.state.target === "complete-route" ?
                 CompleteRouteFragment(footer, this.state, this.onChange, this.onHide) : "")}
@@ -247,13 +242,7 @@ export default class RouteDetails extends Component {
                 deleteConfirm("routes", this.state.id, this.state.userId, this.state.visible, this.onHide, this.props.deleteRoute, this.props.history) : "")}
 
 
-
-
         </React.Fragment>)
-
-
-
-
 
     }
 }
