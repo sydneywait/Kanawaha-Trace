@@ -12,7 +12,7 @@ const addMapMarker=(classname, gpsObj, map)=>{
     new mapboxgl.Marker(el)
         .setLngLat([gpsObj.gps_lng, gpsObj.gps_lat])
         .setPopup(new mapboxgl.Popup({ offset: 25 })
-            .setHTML(`<h3>${(gpsObj.type?gpsObj.type:gpsObj.name)}</h3><p>mile ${gpsObj.mile}<p>`))
+            .setHTML(`<h3>${gpsObj.name}</h3><p> ${(gpsObj.name.includes("Mile")?"":"Mile" + " "+ gpsObj.mile)}<p>`))
         .addTo(map);
 }
 

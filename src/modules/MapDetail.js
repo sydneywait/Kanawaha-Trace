@@ -79,14 +79,12 @@ export default class MapDetail extends Component {
 
                 this.setState(newState)
 
-                // add markers to map to show hazards
-                this.props.hazardArray.filter(h => h.mile >= newState.start.mile && h.mile <= newState.end.mile).map((h) => {
-                    addMapMarker("marker-hazard", h, map)
+                // add markers to map to milepoints with descriptions
+                this.props.waypoints.filter(h => h.mile > newState.start.mile && h.mile < newState.end.mile).map((h) => {
+                    addMapMarker("marker-feature", h, map)
                 });
-                // add markers to map to show features
-                this.props.featureArray.filter(f => f.mile >= newState.start.mile && f.mile <= newState.end.mile).map((f) => {
-                    addMapMarker("marker-feature", f, map)
-                });
+
+
                 // add markers to map to show start and end points
                     addMapMarker("marker-ends", newState.start, map)
                     addMapMarker("marker-ends", newState.end, map)
