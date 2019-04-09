@@ -102,7 +102,7 @@ export default class MapDetail extends Component {
                 });
 
                 // add markers to map to milepoints with descriptions
-                waypoints.filter(w => w.mile > start.mile && w.mile < end.mile).map((w) => {
+                waypoints.filter(w => w.mile > (start.mile<end.mile?start.mile:end.mile) && w.mile < (start.mile<end.mile?end.mile:start.mile)).map((w) => {
                     addMapMarker("marker-feature", w, map)
                     console.log("inside filter")
                 });
