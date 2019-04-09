@@ -173,13 +173,13 @@ export default class RouteDetails extends Component {
                 <div className="route-text-detail-cont">
                     {(route.isComplete === true ?
                         <React.Fragment>
-                            <p className="route-detail-text">Date Completed: {<Moment format="MM/DD/YY">{this.state.dateCompleted}</Moment>}</p>
-                            <p className="route-detail-text">Time to Complete: {this.state.timeToComplete}</p>
+                            <p className="route-detail-text"><span className="route-detail-subheadings">Date Completed:</span> {<Moment format="MM/DD/YY">{this.state.dateCompleted}</Moment>}</p>
+                            <p className="route-detail-text"><span className="route-detail-subheadings">Time to Complete:</span> {this.state.timeToComplete}</p>
                         </React.Fragment> : "")}
-                    <p className="route-detail-text">Elevation Gain: </p>
-                    <p className="route-detail-text">Mileage: {Math.abs(diff).toFixed(2)} miles</p>
-                    <p className="route-detail-text">Description: <ul>{this.props.waypoints.filter(w => w.mile >= start.mile && w.mile <= end.mile).sort((a, b) => a.mile - b.mile).map((w) =>
-                        (w.description!==""?<li>Mile {w.mile}: {w.description}</li>:""))
+                    <p className="route-detail-text"><span className="route-detail-subheadings">Elevation Gain:</span> </p>
+                    <p className="route-detail-text"><span className="route-detail-subheadings">Mileage:</span> {Math.abs(diff).toFixed(2)} miles</p>
+                    <p className="route-detail-text"><span className="route-detail-subheadings">Description:</span> <ul>{this.props.waypoints.filter(w => w.mile >= start.mile && w.mile <= end.mile).sort((a, b) => a.mile - b.mile).map((w) =>
+                        (w.description!==""?<li><span className="route-detail-mile">Mile {w.mile}:</span> {w.description}</li>:""))
                     }</ul></p>
 
 

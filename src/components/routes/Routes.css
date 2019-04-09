@@ -84,6 +84,15 @@ border: 1px solid gray;
 
 }
 
+.route-detail-subheadings{
+    font-weight: bold;
+}
+
+.route-detail-mile{
+    font-style: italic;
+    color: gray;
+}
+
 
 
 .details-body-container{
