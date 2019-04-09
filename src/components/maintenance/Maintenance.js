@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./Maintenance.css"
 import { Button } from "primereact/button";
 import ResourceManager from "../../modules/ResourceAPIManager"
-import CompleteMaintenance from "./CompleteMaintenance"
+import CompleteMaintenance from "./CompleteMaintenancePatch"
 import CompleteMaintenanceFragment from "./CompleteMaintenanceForm"
 import basicUser from "./BasicUserPage"
 import adminUser from "./AdminUserPage"
@@ -15,12 +15,7 @@ export default class Maintenance extends Component {
 
     }
 
-    addMaint(maintObject) {
 
-        ResourceManager.addNewItem("maintenance, maintObject")
-            .then(() => ResourceManager.getAllItems("maintenance"))
-            .then(maint => this.setState({ maintenance: maint }))
-    }
 
 
 
@@ -51,7 +46,7 @@ export default class Maintenance extends Component {
             ;
     }
 
-    onHide(event) {
+    onHide(e) {
         this.setState({ visible: false });
     }
 

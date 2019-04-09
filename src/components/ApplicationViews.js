@@ -1,5 +1,5 @@
 
-import { Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 import React, { Component } from "react";
 import Explore from "./explore/Explore"
 import HomePage from "./HomePage"
@@ -22,12 +22,14 @@ export default class ApplicationViews extends Component {
                 maintenance: [],
                 routes: [],
                 waypoints: [],
-                admins: []
+                admins: [],
+
 
 
         }
         componentDidMount() {
                 const newState = {}
+
                 newState.activeUser = parseInt(sessionStorage.getItem("credentials"))
                 ResourceAPIManager.getAdmins()
                         .then(admins => newState.admins = admins)
@@ -38,19 +40,29 @@ export default class ApplicationViews extends Component {
                         .then(() => ResourceAPIManager.getAllItems("maintenance"))
                         .then(maintenance => newState.maintenance = maintenance)
                         .then(() => ResourceAPIManager.getAllItems("waypoints"))
-                        .then(waypoints => newState.waypoints = waypoints)
-                        .then(() => ResourceAPIManager.getAllItems("routes", newState.activeUser))
-                        .then(routes => newState.routes = routes)
-                        .then(() => ResourceAPIManager.getSingleItem("users", newState.activeUser))
-                        .then(user => {
+                        .then(waypoints => {
+                                // check to see if the active user has already been set.
+                                // If it has, get the user items and set to state.
+                                newState.waypoints = waypoints
+                                if (newState.activeUser) {
 
-                                newState.user = user
-                                this.setState(newState)
+                                        ResourceAPIManager.getAllItems("routes", newState.activeUser)
+                                                .then(routes => newState.routes = routes)
+                                                .then(() => ResourceAPIManager.getSingleItem("users", newState.activeUser))
+                                                .then(user => {
 
+                                                        newState.user = user
+                                                        this.setState(newState)
+                                                })
+                                }
+                                // If not, just set state with non-user-specific items
+                                else {
+                                        this.setState(newState)
+                                }
                         })
-
         }
 
+        // used by the callback module to get the current users routes and set to state
         updateResource = (resources, userId) => {
                 const newState = {}
                 newState.activeUser = userId
@@ -61,8 +73,11 @@ export default class ApplicationViews extends Component {
 
                         })
         }
+
+        // used by the callback module to set the current user to state
         setUser = (users, userId) => {
                 const newState = {}
+                newState.activeUser = userId
                 ResourceAPIManager.getSingleItem(users, userId)
                         .then(user => {
                                 newState.user = user
@@ -80,19 +95,6 @@ export default class ApplicationViews extends Component {
                         }
                         )
         }
-
-        addResource2 = (resources, resourceObject) => {
-                const newState = {}
-                ResourceAPIManager.addNewItem(resources, resourceObject)
-                        .then(() => ResourceAPIManager.getAllItems(resources))
-                        .then(sss => {
-                                console.log("sss", sss)
-                                newState[resources] = sss
-                                this.setState(newState)
-                        }
-                        )
-        }
-
 
 
 
@@ -173,18 +175,18 @@ export default class ApplicationViews extends Component {
                                 }} />
 
                                 <Route exact path="/routes/:routeId(\d+)" render={props => {
-                                        if (auth0Client.isAuthenticated()) {
+                                        // if (auth0Client.isAuthenticated()) {
                                                 return <RouteDetails {...props}
                                                         routes={this.state.routes}
                                                         waypoints={this.state.waypoints}
                                                         editRoute={this.editResource}
                                                         patchRoute={this.patchResource}
                                                         deleteRoute={this.deleteResource} />
-                                        }
-                                        else {
-                                                auth0Client.signIn();
-                                                return null;
-                                        }
+                                        // }
+                                        // else {
+                                        //         auth0Client.signIn();
+                                        //         return null;
+                                        // }
 
                                 }} />
 

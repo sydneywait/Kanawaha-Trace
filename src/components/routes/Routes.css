@@ -5,6 +5,35 @@
     justify-content: space-around;
 
 }
+.plan-route-cont{
+display:flex;
+flex-direction:column;
+width: 300px;
+border:1px solid black;
+
+}
+.comp-route-cont{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 650px;
+
+
+}
+
+.plan-card-cont{
+    border: 1px solid black;
+
+}
+
+.comp-card-cont{
+    border: 1px solid black;
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    justify-content: space-evenly;
+}
 
 .route-img-cont{
     display:flex;
@@ -28,6 +57,11 @@
 .route-card-header, .route-cont-header{
     display:flex;
     justify-content: center;
+
+}
+
+.route-cont-header{
+    font-size:2em;
 }
 
 .route-btn-cont {
@@ -35,24 +69,31 @@ display: flex;
 flex-direction: row;
 justify-content: space-around;
 padding-top:10px;
-margin-bottom: auto;
+margin-top: auto;
 border: 1px solid gray;
+
 
 }
 
 .route-name-details-header{
-font-size: 3em;
-padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 3em;
+    padding-left: 15px;
 
 }
 
-.route-text-detail-cont{
-display: flex;
-flex-direction: column;
-justify-content: center;
-border: 1px solid gray;
-
+.route-detail-subheadings{
+    font-weight: bold;
 }
+
+.route-detail-mile{
+    font-style: italic;
+    color: gray;
+}
+
+
 
 .details-body-container{
     display: flex;
@@ -64,11 +105,13 @@ border: 1px solid gray;
 }
 
 .route-text-detail-cont{
+    flex-direction: column;
     margin-left: 10px;
     display: flex;
     justify-content: center;
-    width: 250px;
+    width: 600px;
     padding-left: 10px;
+    border: 1px solid gray;
 }
 
 .route-card-header{
@@ -85,6 +128,9 @@ border: 1px solid gray;
 }
 
 .route-details-img-cont{
+    width:500px;
+    height: 500px;
+    position: relative;
 
 }
 

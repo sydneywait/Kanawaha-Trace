@@ -2,6 +2,7 @@
 
 export default {
   getAllItems: (items, userId) => {
+
     const fetchString =(userId?`?userId=${userId}`:"")
     return fetch(`http://localhost:5002/${items}${fetchString}`)
       .then(r => r.json())
@@ -11,6 +12,7 @@ export default {
     .then(r => r.json())
   },
   getSingleItem: (items, id) => {
+
     return fetch(`http://localhost:5002/${items}/${id}`)
       .then(r => r.json())
   },

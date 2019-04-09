@@ -4,6 +4,7 @@ import mapboxToken from "../components/authentication/APITokens"
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import "./Map.css"
+import addMapMarker from "./AddMapMarker";
 
 
 mapboxgl.accessToken = mapboxToken.mapbox
@@ -44,6 +45,8 @@ export default class Map extends Component {
         // add markers to map
         this.props.waypoints.filter(w => w.isAccess === true).map((w) => {
 
+            addMapMarker("marker-feature", w, map)
+
             // create a HTML element for each feature
             var el = document.createElement('div');
             el.className = 'marker';
@@ -55,6 +58,7 @@ export default class Map extends Component {
                     .setHTML(`<h3>${w.name}</h3><p>Mile ${w.mile}<p>`))
                 .addTo(map);
         });
+        map.getCanvas().style.cursor = 'default'
 
 
     }
