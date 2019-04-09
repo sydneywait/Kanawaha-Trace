@@ -17,6 +17,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) =
                 <div>
                     <InputText value={state.location} onChange={onChange}
                         name="location"
+                        required={true}
                         placeholder="Enter approx. mile mark">
 
                     </InputText>
@@ -27,6 +28,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) =
                         className="haz-dd" value={state.hazard}
                         name="hazard"
                         options={props.hazards.map(h => h)}
+                        required={true}
                         onChange={onChange}
                         style={{ width: '200px' }}
                         placeholder="Select a hazard type" optionLabel="type">
@@ -39,7 +41,8 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) =
                         name="description"
                         value={state.description}
                         onChange={onChange}
-                        autoResize={true}>
+                        autoResize={true}
+                        required={true}>
                     </InputTextarea>
                 </div>
 {props.user.isAdmin===false?
