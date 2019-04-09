@@ -8,6 +8,7 @@ import MaintenanceRequestForm from "./MaintenanceRequestForm";
 
 
 const adminUser = (state, props, onChange, onCheck, handleSubmit, onClick) => {
+    const activeUser = parseInt(sessionStorage.getItem("credentials"))
 
     return (
         <React.Fragment>
@@ -19,7 +20,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, onClick) => {
                 <div className="maint-lists-cont">
                 <div className="maint-assigned">
                     <h2>assigned to me</h2>
-                    {props.maintenance.filter((request) => request.isComplete === false && request.userId === props.activeUser).map(m =>
+                    {props.maintenance.filter((request) => request.isComplete === false && request.userId === activeUser).map(m =>
 
                         <div><Checkbox id={`checkbox-${m.id}`} onChange={(e) => onClick(e)}></Checkbox>
 
@@ -29,7 +30,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, onClick) => {
                 </div>
                 <div className="maint-unassigned">
                     <h2>assigned to others</h2>
-                    {props.maintenance.filter((request) => request.isComplete === false && request.userId !== props.activeUser).map(m =>
+                    {props.maintenance.filter((request) => request.isComplete === false && request.userId !== activeUser).map(m =>
                         <div><Link to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
                     )}
                 </div>

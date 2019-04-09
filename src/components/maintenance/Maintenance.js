@@ -15,12 +15,7 @@ export default class Maintenance extends Component {
 
     }
 
-    addMaint(maintObject) {
 
-        ResourceManager.addNewItem("maintenance, maintObject")
-            .then(() => ResourceManager.getAllItems("maintenance"))
-            .then(maint => this.setState({ maintenance: maint }))
-    }
 
 
 
@@ -51,7 +46,7 @@ export default class Maintenance extends Component {
             ;
     }
 
-    onHide(event) {
+    onHide(e) {
         this.setState({ visible: false });
     }
 

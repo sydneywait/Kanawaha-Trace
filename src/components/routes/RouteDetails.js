@@ -112,6 +112,7 @@ export default class RouteDetails extends Component {
                 endId: newRoute.endId
             })
         newRoute.name ? this.props.editRoute("routes", newRoute, this.state.userId) : console.log("no route")
+        window.location.reload(false)
     }
 
 

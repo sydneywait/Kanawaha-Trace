@@ -23,15 +23,13 @@ export default class ApplicationViews extends Component {
                 routes: [],
                 waypoints: [],
                 admins: [],
-                featureArry: [],
-                hazardArray:[]
+
 
 
         }
         componentDidMount() {
                 const newState = {}
-                const featureArray=[]
-                const hazardArray=[]
+
                 newState.activeUser = parseInt(sessionStorage.getItem("credentials"))
                 ResourceAPIManager.getAdmins()
                         .then(admins => newState.admins = admins)
@@ -41,39 +39,10 @@ export default class ApplicationViews extends Component {
                         .then(features => newState.features = features)
                         .then(() => ResourceAPIManager.getAllItems("maintenance"))
                         .then(maintenance => newState.maintenance = maintenance)
-                        .then(() => ResourceAPIManager.getAllItems(`waypoint_features?_expand=waypoint&_expand=feature`))
-                        .then((features) => {
-                                features.forEach(feature => {
-                                        featureArray.push({
-                                                mile: feature.waypoint.mile,
-                                                type: feature.feature.type,
-                                                gps_lng: feature.waypoint.gps_lng,
-                                                gps_lat: feature.waypoint.gps_lat
-                                        })
-                                })
-                                console.log(featureArray)
-                                newState.featureArray = featureArray
-                        }
-                        )
-                        .then(() => ResourceAPIManager.getAllItems(`waypoint_hazards?_expand=waypoint&_expand=hazard`))
-                        .then((hazards) => {
-                                hazards.forEach(hazard => {
-                                        hazardArray.push({
-                                                mile: hazard.waypoint.mile,
-                                                type: hazard.hazard.type,
-                                                gps_lng: hazard.waypoint.gps_lng,
-                                                gps_lat: hazard.waypoint.gps_lat
-                                        })
-                                })
-                                console.log(hazardArray)
-                                newState.hazardArray = hazardArray
-                        }
-                        )
-                        .then(() => ResourceAPIManager.getAllItems("waypoints?_embed=waypoint_features&_embed=waypoint_hazards"))
+                        .then(() => ResourceAPIManager.getAllItems("waypoints"))
                         .then(waypoints => {
                                 // check to see if the active user has already been set.
                                 // If it has, get the user items and set to state.
-
                                 newState.waypoints = waypoints
                                 if (newState.activeUser) {
 
@@ -95,7 +64,6 @@ export default class ApplicationViews extends Component {
 
         // used by the callback module to get the current users routes and set to state
         updateResource = (resources, userId) => {
-
                 const newState = {}
                 newState.activeUser = userId
                 ResourceAPIManager.getAllItems(resources, userId)
@@ -127,19 +95,6 @@ export default class ApplicationViews extends Component {
                         }
                         )
         }
-
-        addResource2 = (resources, resourceObject) => {
-                const newState = {}
-                ResourceAPIManager.addNewItem(resources, resourceObject)
-                        .then(() => ResourceAPIManager.getAllItems(resources))
-                        .then(sss => {
-                                console.log("sss", sss)
-                                newState[resources] = sss
-                                this.setState(newState)
-                        }
-                        )
-        }
-
 
 
 
@@ -220,22 +175,18 @@ export default class ApplicationViews extends Component {
                                 }} />
 
                                 <Route exact path="/routes/:routeId(\d+)" render={props => {
-                                        if (auth0Client.isAuthenticated()) {
+                                        // if (auth0Client.isAuthenticated()) {
                                                 return <RouteDetails {...props}
                                                         routes={this.state.routes}
                                                         waypoints={this.state.waypoints}
-                                                        featureArray={this.state.featureArray}
-                                                        hazardArray={this.state.hazardArray}
-                                                        hazards={this.state.hazards}
-                                                        features={this.state.features}
                                                         editRoute={this.editResource}
                                                         patchRoute={this.patchResource}
                                                         deleteRoute={this.deleteResource} />
-                                        }
-                                        else {
-                                                auth0Client.signIn();
-                                                return null;
-                                        }
+                                        // }
+                                        // else {
+                                        //         auth0Client.signIn();
+                                        //         return null;
+                                        // }
 
                                 }} />
 

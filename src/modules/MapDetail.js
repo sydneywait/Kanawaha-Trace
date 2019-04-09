@@ -21,8 +21,35 @@ export default class MapDetail extends Component {
             lat: 38.50565,
             zoom: 9.6,
             start: "",
-            end: ""
+            end: "",
+            map: "",
+            LngLatBounds: [[0, 0], [0, 0]],
+            route: ""
+
         };
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        // const route = props.waypoints.find(r => r.id === parseInt(props.routeId)) || {}
+        // const start = props.waypoints.find(s => s.id === parseInt(route.startId))
+        // const end = props.waypoints.find(d => d.id === parseInt(route.endId))
+
+        // if (start !== state.start || end !== state.end) {
+
+        //     return {
+
+        //         route: route,
+        //         start: start,
+        //         end: end
+        //     }
+        // }
+
+
+
+        // this.props.waypoints.filter(h => h.mile > newState.start.mile && h.mile < newState.end.mile).map((h) => {
+
+
+
     }
 
     componentDidMount(props) {
@@ -39,29 +66,26 @@ export default class MapDetail extends Component {
 
                 }
             })
-            .then(() => ResourceManager.getSingleItem("waypoints", newState.startId))
-            .then((start) => {
 
+            .then(() => ResourceManager.getAllItems("waypoints"))
+            .then((waypoints) => {
+
+                const start = waypoints.find(waypoint => waypoint.id === newState.startId)
+                const end = waypoints.find(waypoint => waypoint.id === newState.endId)
                 newState.start = start
-                LngLatBounds = [[start.gps_lng, start.gps_lat]]
-
-
-
-            })
-            .then(() => ResourceManager.getSingleItem("waypoints", newState.endId))
-            .then((end) => {
                 newState.end = end
-                LngLatBounds.push([end.gps_lng, end.gps_lat])
-                console.log(LngLatBounds)
-                newState.LngLatBounds = LngLatBounds
 
-                // initiate the creation of the map
+                LngLatBounds = [[start.gps_lng, start.gps_lat], [end.gps_lng, end.gps_lat]]
+                newState.LngLatBounds = LngLatBounds
+                console.log(LngLatBounds)
+
                 map = new mapboxgl.Map({
                     container: this.mapContainer,
                     style: 'mapbox://styles/sydneyroo/cju1kgcmn0u041fpbg636snah',
                     center: [lng, lat],
                     zoom
                 });
+                newState.map=map
                 // set the bounds for the current view to only show the selected trail
                 // This will be set with the start and end points
                 map.fitBounds(LngLatBounds, {
@@ -77,57 +101,44 @@ export default class MapDetail extends Component {
                     });
                 });
 
-                this.setState(newState)
-
                 // add markers to map to milepoints with descriptions
-                this.props.waypoints.filter(h => h.mile > newState.start.mile && h.mile < newState.end.mile).map((h) => {
-                    addMapMarker("marker-feature", h, map)
+                waypoints.filter(w => w.mile > start.mile && w.mile < end.mile).map((w) => {
+                    addMapMarker("marker-feature", w, map)
+                    console.log("inside filter")
                 });
 
 
                 // add markers to map to show start and end points
-                    addMapMarker("marker-ends", newState.start, map)
-                    addMapMarker("marker-ends", newState.end, map)
+                addMapMarker("marker-ends", start, map)
+                addMapMarker("marker-ends", end, map)
 
-                    map.on('load', function() {
-                        console.log("map loaded")
-                        // the rest of the code will go in here
-                      });
-                      map.getCanvas().style.cursor = 'default'
+                this.setState(newState)
+
             })
-
-
-
-
 
 
         const { lng, lat, zoom } = this.state;
 
 
+   }
 
+    componentDidUpdate() {
+        // const gpsObj={
+        //         gps_lat:-82.1032,
+        //         gps_lng:38.50565,
+        //         name: "test",
+        //         mile: 10
 
-
-
-        console.log(LngLatBounds)
-        console.log(this.state)
-
-
-
-
-
-
-
-
-        //     // when querying the waypoint, match the featureId or HazardId and print to map
-
-
+        //     }
+        //     addMapMarker("marker-hazard", gpsObj, this.state.map)
     }
-
 
 
     render() {
 
         const { lng, lat, zoom } = this.state;
+
+
 
 
         return (
