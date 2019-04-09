@@ -148,7 +148,7 @@ export default class ApplicationViews extends Component {
                                         if (auth0Client.isAuthenticated()) {
                                                 return <Explore {...props}
                                                         activeUser={this.state.activeUser}
-                                                        addRoute={this.addResource}
+                                                        updateRoutes={this.updateResource}
                                                         waypoints={this.state.waypoints} />
                                         }
                                         else {

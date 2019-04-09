@@ -80,7 +80,16 @@ export default class Maintenance extends Component {
 
         // post it to the database
         this.props.addMaint("maintenance", maintObject)
+        const newState = {
+            description: "",
+            hazard: "",
+            location: "",
+            checked: false,
+            phone:""
+        }
+        this.setState(newState)
         this.props.history.push("/maintenance")
+
     }
 
 
