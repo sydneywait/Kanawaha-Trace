@@ -18,7 +18,12 @@ padding-left: 20px;
 
 }
 
-h1{
-    size: 3em;
+
+
+.home-page-title {
+    font-size: 3em;
+    padding-top:20px;
+    padding-bottom: 20px;
+    color: red;
 }
 

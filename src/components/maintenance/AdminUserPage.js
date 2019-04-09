@@ -19,7 +19,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, onClick) => {
                 </div>
                 <div className="maint-lists-cont">
                 <div className="maint-assigned">
-                    <h2>assigned to me</h2>
+                    <h2 className="maint-admin-col">Assigned to me</h2>
                     {props.maintenance.filter((request) => request.isComplete === false && request.userId === activeUser).map(m =>
 
                         <div><Checkbox id={`checkbox-${m.id}`} onChange={(e) => onClick(e)}></Checkbox>
@@ -29,13 +29,13 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, onClick) => {
                     )}
                 </div>
                 <div className="maint-unassigned">
-                    <h2>assigned to others</h2>
+                    <h2 className="maint-admin-col">Assigned to others</h2>
                     {props.maintenance.filter((request) => request.isComplete === false && request.userId !== activeUser).map(m =>
                         <div><Link to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
                     )}
                 </div>
                 <div className="maint-complete">
-                    <h2>complete</h2>
+                    <h2 className="maint-admin-col">Complete</h2>
                     {props.maintenance.filter((request) => request.isComplete === true).map(m =>
                         <div><Checkbox checked="checked"></Checkbox>
 

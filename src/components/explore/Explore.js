@@ -74,7 +74,7 @@ export default class Explore extends Component {
         return (
 
             <div>
-                <h2>Build A Route</h2>
+                <h2 className="exp-title">Build A Route</h2>
                 <div className="exp-cont content-section implementation">
 
                     <div className="exp-left">

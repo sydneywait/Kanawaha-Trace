@@ -19,8 +19,16 @@
 }
 
 .maint-req-header {
-
+font-size: 2em;
+padding: 15px 0 10px 0;
     border: 1px solid gray;
+}
+
+.maint-admin-col{
+    font-size: 2em;
+    padding: 10px 0 10px 0;
+display: flex;
+justify-content: center;
 }
 
 
