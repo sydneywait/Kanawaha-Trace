@@ -35,8 +35,7 @@ export default class Routes extends Component {
     }
 
     // this function is called to set the date and time completed
-    onChange = (dateOrTime, e)=>
-    { this.setState({ [dateOrTime]: e.target.value })}
+    onChange = (dateOrTime, e) => { this.setState({ [dateOrTime]: e.target.value }) }
 
     completeRoute() {
         const routeId = this.state.currentRoute.id
@@ -138,10 +137,12 @@ export default class Routes extends Component {
 
                 <div className="route-cont">
                     <div className="plan-route-cont"><h2 className="route-cont-header">Planned Routes</h2>
-                        {this.buildRouteCards(false)}
+                        <div className="plan-card-cont">{this.buildRouteCards(false)}</div>
                     </div>
-                    <div className="comp-route-cont"><h2 className="route-cont-header">Completed Routes</h2>
-                        {this.buildRouteCards(true)}
+
+                    <div className="comp-route-cont">
+                        <h2 className="route-cont-header">Completed Routes</h2>
+                        <div className="comp-card-cont">{this.buildRouteCards(true)}</div>
                     </div>
 
                 </div>

@@ -122,6 +122,10 @@ export default class MapDetail extends Component {
 
    }
 
+   testFunction(){
+       console.log("you did it!!")
+   }
+
     componentDidUpdate() {
         // const gpsObj={
         //         gps_lat:-82.1032,
