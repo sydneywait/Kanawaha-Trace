@@ -20,14 +20,13 @@ export default class MaintenanceDetails extends Component {
     componentDidMount() {
         let newState = {}
         ResourceManager.getSingleItem("maintenance", this.props.match.params.maintenanceId)
-            .then((request =>
+            .then((request => {
 
                 newState = {
                     mile: request.mile,
                     hazardId: request.hazardId,
                     submittedBy: request.submittedBy,
                     isComplete: request.isComplete,
-                    userId: request.userId,
                     okToContact: request.okToContact,
                     phone: request.phone,
                     description: request.description,
@@ -35,21 +34,33 @@ export default class MaintenanceDetails extends Component {
                     id: request.id,
                     updatedDescription: (request.isComplete === true ? request.updatedDescription : ""),
                     dateCompleted: (request.isComplete === true ? request.dateCompleted : "")
-                })
+                }
+                if (request.userId) {
+                    newState.userId = request.userId
+                }
+            }
+            )
+
             )
             // get the hazard type
             .then(() => ResourceManager.getSingleItem("hazards", newState.hazardId))
             .then((hazard) => newState.hazard = hazard)
-            // get the assigned admin
-            .then(() => ResourceManager.getSingleItem("users", newState.userId))
-            .then((assigned) => newState.assigned = assigned)
             // get the user who submitted the request
             .then(() => ResourceManager.getSingleItem("users", newState.submittedBy))
             .then((user) => {
                 newState.submitName = user.name
-                this.setState(newState)
-            }
-            )
+                // get the admin info, if one is assigned
+                if (newState.userId) {
+                    ResourceManager.getSingleItem("users", newState.userId)
+                        .then((assigned) => {
+                            newState.assigned = assigned
+                            this.setState(newState)
+                        })
+                }
+                // set state with the information
+                else { this.setState(newState) }
+
+            })
     }
 
     constructor() {
@@ -61,7 +72,8 @@ export default class MaintenanceDetails extends Component {
             updatedDescription: "",
             target: "",
             hazard: { type: "", id: "" },
-            assigned: {}
+            assigned: {},
+            warning: ""
 
 
         };
@@ -72,7 +84,10 @@ export default class MaintenanceDetails extends Component {
     }
 
     onHide() {
-        this.setState({ visible: false });
+        this.setState({
+            visible: false,
+            warning: ""
+        });
     }
 
     onChange(e) {
@@ -88,28 +103,37 @@ export default class MaintenanceDetails extends Component {
         const maintObject = CompleteMaintenance(this.state.updatedDescription, this.state.dateCompleted)
         // patch the maintenance_request with the submitted information
         this.props.patchMaint("maintenance", maintId, maintObject)
-        this.props.history.push("/maintenance")
+        this.props.history.push(`/maintenance/${this.state.id}`)
 
 
     }
 
     assignMaint() {
-        this.props.patchMaint("maintenance", this.state.id, { userId: this.state.assigned.id })
-        this.props.history.push("/maintenance")
+        // check to see if a person was selected to be assigned
+        if (this.state.assigned.id) {
+            // send a patch to the database to update the userId of the maint item
+            this.props.patchMaint("maintenance", this.state.id, { userId: this.state.assigned.id })
+            this.props.history.push(`/maintenance/${this.state.id}`)
+        }
 
 
     }
     editMaint() {
+        let editedObject = {}
         // create an object based on the edited fields
-        const editedObject = {
+        editedObject = {
 
             mile: this.state.mile,
             hazardId: this.state.hazard.id,
             description: this.state.description,
-            userId: !Array.isArray(this.state.assigned) ? this.state.assigned.id : ""
         }
-        // post the patch to the database
+        // check to see if a person was selected to be assigned
+        if (this.state.assigned.id) {
+            // add a field of userId to the object
+            editedObject.userId = this.state.assigned.id
+        }
 
+        // post the patch to the database
         this.props.patchMaint("maintenance", this.state.id, editedObject)
         this.onHide()
         this.props.history.push(`/maintenance/${this.state.id}`)
@@ -124,12 +148,29 @@ export default class MaintenanceDetails extends Component {
             <div>
                 <Button label="Submit" className="p-button-success" icon="pi pi-check"
                     onClick={() => {
-                        this.onHide()
 
-                        this.state.target === "maint-complete-btn" ? this.completeMaint() : this.onHide()
-                        this.state.target === "maint-edit-btn" ? this.editMaint() : this.onHide()
+                        if (this.state.target === "maint-complete-btn") {
+                            if (this.state.dateCompleted !== "" && this.state.updatedDescription !== "") {
+                                this.completeMaint()
+                                this.onHide()
+
+                            }
+                            else {
+
+                                this.setState({ warning: "Please complete all fields" })
+                            }
+                        }
+
+                        if (this.state.target === "maint-edit-btn") {
+                            this.editMaint()
+                            this.onHide()
+                        }
+                        if (this.state.target === "maint-assign-btn") {
+                            this.assignMaint()
+                            this.onHide()
+                        }
                         // this.state.target === "maint-del-btn" ? this.deleteMaint() : this.onHide()
-                        this.state.target === "maint-assign-btn" ? this.assignMaint() : this.onHide()
+
                     }}
                 />
             </div>
@@ -144,7 +185,7 @@ export default class MaintenanceDetails extends Component {
                     <p>Hazard: {this.state.hazard.type}</p>
                     <p> Submitted:{" "} <Moment format="MM/DD/YY">{this.state.dateSubmitted}</Moment></p>
                     <p>Submitted by:{" " + this.state.submitName}</p>
-                    {this.state.okToContact === true ?  <p>Contact phone:{" " + this.state.phone}</p> : ""}
+                    {this.state.okToContact === true ? <p>Contact phone:{" " + this.state.phone}</p> : ""}
                     <p>Description of Problem:{" " + this.state.description}</p>
 
                     {this.state.isComplete === true ? <p>Resolution:{" " + this.state.updatedDescription}</p> : ""}
