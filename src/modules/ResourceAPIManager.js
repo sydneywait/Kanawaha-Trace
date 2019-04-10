@@ -17,9 +17,11 @@ export default {
       .then(r => r.json())
   },
   deleteItem: (items, id) => {
+    debugger;
     return fetch(`http://localhost:5002/${items}/${id}`, {
       method: "DELETE"
     })
+    .then(r => r.json())
   },
   addNewItem(items, newItem) {
     return fetch(`http://localhost:5002/${items}`, {

@@ -18,17 +18,28 @@
 
 }
 
+.unassigned{
+    font-style: italic;
+}
 .maint-req-header {
-font-size: 2em;
-padding: 15px 0 10px 0;
+    font-size: 2em;
+    padding: 15px 0 10px 0;
     border: 1px solid gray;
 }
 
-.maint-admin-col{
+.maint-admin-col1, .maint-admin-col2{
     font-size: 2em;
     padding: 10px 0 10px 0;
-display: flex;
-justify-content: center;
+    display: flex;
+    justify-content: center;
+    background: grey;
+    text-align: center;
+    line-height: 30px;
+}
+
+.maint-admin-col1{
+    padding-bottom: 40px;
+
 }
 
 

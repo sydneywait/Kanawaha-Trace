@@ -2,7 +2,7 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import React from "react";
 
-const deleteConfirmation =(path, id, userId, visible, hide, deleteFunction, history)=> {
+const deleteConfirmation =(path, id, visible, hide, deleteFunction, history, userId)=> {
 
     const footer = (
         <div>

@@ -152,7 +152,7 @@ export default class Routes extends Component {
 
                 </div>
                 {(this.state.target === "delete-route" ?
-                    deleteConfirm("routes", this.state.currentRoute.id, this.state.currentRoute.userId, this.state.visible, this.onHide, this.props.deleteRoute, this.props.history) : "")}
+                    deleteConfirm("routes", this.state.currentRoute.id, this.state.visible, this.onHide, this.props.deleteRoute, this.props.history, this.state.currentRoute.userId) : "")}
 
                 {(this.state.target === "complete-route" ?
                     CompleteRouteFragment(footer, this.state, this.onChange, this.onHide) : "")}

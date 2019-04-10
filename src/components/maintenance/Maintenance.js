@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./Maintenance.css"
 import { Button } from "primereact/button";
-import ResourceManager from "../../modules/ResourceAPIManager"
 import CompleteMaintenance from "./CompleteMaintenancePatch"
 import CompleteMaintenanceFragment from "./CompleteMaintenanceForm"
 import basicUser from "./BasicUserPage"
@@ -14,12 +13,6 @@ export default class Maintenance extends Component {
 
 
     }
-
-
-
-
-
-
     constructor() {
         super();
         this.state = {
@@ -71,7 +64,6 @@ export default class Maintenance extends Component {
             hazardId: this.state.hazard.id,
             submittedBy: this.state.activeUser,
             isComplete: false,
-            userId: "",
             okToContact: this.state.checked,
             phone: this.state.phone,
             description: this.state.description,
@@ -106,15 +98,11 @@ export default class Maintenance extends Component {
 
 
     }
+
+    // error message when form is not complete
 handleError(){
     this.setState({message:"All fields must be complete before submitting this form"})
-
-
 }
-
-
-
-
 
 
     render() {
