@@ -92,6 +92,10 @@ border: 1px solid gray;
 .route-detail-mile{
     font-style: italic;
     color: gray;
+
+}
+.route-detail-bullets{
+    padding-left: 15px;
 }
 
 
@@ -106,11 +110,13 @@ border: 1px solid gray;
 }
 
 .route-text-detail-cont{
+    padding-top:10px;
     flex-direction: column;
     margin-left: 10px;
     display: flex;
-    justify-content: center;
     width: 600px;
+    height:500px;
+    overflow-y: scroll;
     padding-left: 10px;
     border: 1px solid gray;
 }

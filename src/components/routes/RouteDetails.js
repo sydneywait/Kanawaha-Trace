@@ -180,7 +180,7 @@ export default class RouteDetails extends Component {
                     <p className="route-detail-text"><span className="route-detail-subheadings">Mileage:</span> {Math.abs(diff).toFixed(2)} miles</p>
                     <p className="route-detail-text"><span className="route-detail-subheadings">Description:</span>
                     <ul>{this.props.waypoints.filter(w => w.mile >= (start.mile<end.mile?start.mile:end.mile) && w.mile <= (start.mile<end.mile?end.mile:start.mile)).sort((a, b) => a.mile - b.mile).map((w) =>
-                        (w.description!==""?<li><span className="route-detail-mile">Mile {w.mile}:</span> {w.description}</li>:""))
+                        (w.description!==""?<li className="route-detail-bullets"><span className="route-detail-mile">Mile {w.mile}:</span> {w.description}</li>:""))
                     }</ul></p>
 
 
