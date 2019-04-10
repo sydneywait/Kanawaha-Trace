@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./Maintenance.css"
 import { Button } from "primereact/button";
-import ResourceManager from "../../modules/ResourceAPIManager"
 import CompleteMaintenance from "./CompleteMaintenancePatch"
 import CompleteMaintenanceFragment from "./CompleteMaintenanceForm"
 import basicUser from "./BasicUserPage"
@@ -14,12 +13,6 @@ export default class Maintenance extends Component {
 
 
     }
-
-
-
-
-
-
     constructor() {
         super();
         this.state = {
@@ -32,7 +25,9 @@ export default class Maintenance extends Component {
             hazard: "",
             checked: false,
             phone: "",
-            maintId: ""
+            maintId: "",
+            message: "",
+            warning: ""
         };
         this.onChange = this.onChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,10 +35,11 @@ export default class Maintenance extends Component {
         this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
         this.onCheck = this.onCheck.bind(this);
+        this.handleError = this.handleError.bind(this);
     }
     onClick(e) {
         this.setState({ visible: true, maintId: e.target.id })
-            ;
+
     }
 
     onHide(e) {
@@ -69,7 +65,6 @@ export default class Maintenance extends Component {
             hazardId: this.state.hazard.id,
             submittedBy: this.state.activeUser,
             isComplete: false,
-            userId: "",
             okToContact: this.state.checked,
             phone: this.state.phone,
             description: this.state.description,
@@ -80,7 +75,17 @@ export default class Maintenance extends Component {
 
         // post it to the database
         this.props.addMaint("maintenance", maintObject)
+        const newState = {
+            description: "",
+            hazard: "",
+            location: "",
+            checked: false,
+            phone: "",
+            message: ""
+        }
+        this.setState(newState)
         this.props.history.push("/maintenance")
+
     }
 
 
@@ -91,34 +96,46 @@ export default class Maintenance extends Component {
         const maintObject = CompleteMaintenance(this.state.updatedDescription, this.state.date)
         // patch the maintenance_request with the submitted information
         this.props.patchMaint("maintenance", maintId, maintObject)
-
-
-    }
-
+        this.setState({ warning: "" })
 
 
 
-    render() {
-        const footer = (
-            <div>
-                <Button label="Submit" className="p-button-success" icon="pi pi-check"
-                    onClick={() => {
-                        this.onHide()
+
+
+}
+
+// error message when form is not complete
+handleError() {
+    this.setState({ message: "All fields must be complete before submitting this form" })
+}
+
+
+render() {
+    const footer = (
+        <div>
+            <Button label="Submit" className="p-button-success" icon="pi pi-check"
+                onClick={() => {
+                    if (this.state.updatedDescription !== "" && this.state.date !== "") {
                         this.completeMaint()
-                    }}
-                />
-            </div>
-        )
-        return (
-            <React.Fragment>
+                        this.onHide()
+                    }
+                    else{
+                        this.setState({warning:"Please complete both fields"})
+                    }
+                }}
+            />
+        </div>
+    )
+    return (
+        <React.Fragment>
 
-                {this.props.user.isAdmin === false ?
-                    basicUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit)
-                    : adminUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit, this.onClick)}
+            {this.props.user.isAdmin === false ?
+                basicUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit, this.handleError)
+                : adminUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit, this.handleError, this.onClick)}
 
-                {CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide)}
+            {CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide)}
 
-            </React.Fragment>
-        )
-    }
+        </React.Fragment>
+    )
+}
 }

@@ -7,7 +7,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputMask } from 'primereact/inputmask'
 
-const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) => {
+const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, handleError) => {
 
     return (
         <React.Fragment>
@@ -17,6 +17,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) =
                 <div>
                     <InputText value={state.location} onChange={onChange}
                         name="location"
+                        required={true}
                         placeholder="Enter approx. mile mark">
 
                     </InputText>
@@ -27,6 +28,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) =
                         className="haz-dd" value={state.hazard}
                         name="hazard"
                         options={props.hazards.map(h => h)}
+                        required={true}
                         onChange={onChange}
                         style={{ width: '200px' }}
                         placeholder="Select a hazard type" optionLabel="type">
@@ -39,7 +41,8 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) =
                         name="description"
                         value={state.description}
                         onChange={onChange}
-                        autoResize={true}>
+                        autoResize={true}
+                        required={true}>
                     </InputTextarea>
                 </div>
 {props.user.isAdmin===false?
@@ -68,11 +71,22 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) =
                     icon="pi pi-check" iconPos="right"
                     className="p-button-raised p-button-rounded p-button-success"
                     type="submit"
-                    onClick={handleSubmit}
+                    onClick={()=>{
+                        if(/^\d+(\.\d+)?$/.test(state.location)&&state.description!==""&&state.hazard!=="")
+                        {
+                            handleSubmit()
+                        }
+                        else{
+                            handleError()
+                        }
+
+                    }}
+
                 >
 
                 </Button>
                 </div>
+                <div className="error-message">{state.message}</div>
 
         </React.Fragment>
 

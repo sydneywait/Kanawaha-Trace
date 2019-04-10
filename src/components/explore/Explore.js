@@ -5,9 +5,10 @@ import "./Explore.css"
 // import { GMap } from 'primereact/gmap';
 // import Snackbar from '@material-ui/core/Snackbar';
 import MakeNewRoute from "../routes/MakeNewRoute"
+import { Link } from "react-router-dom"
 import SelectRoutePoints from "../routes/SelectRoutePoints"
 import Map from "../../modules/Map"
-
+import ResourceAPIManager from "../../modules/ResourceAPIManager"
 
 export default class Explore extends Component {
     constructor() {
@@ -38,8 +39,29 @@ export default class Explore extends Component {
     // this function is called when the submit button is clicked
     handleSubmit() {
         const newRoute = MakeNewRoute(this.state)
-        this.setState({ message: newRoute[0] })
-        newRoute[1].name ? this.props.addRoute("routes", newRoute[1], this.state.userId) : console.log("no route")
+        const newState= {
+            message:newRoute[0],
+            start:null,
+            end:null
+        }
+
+// Make sure the new route was actually created and add it to the database
+        newRoute[1].name ?
+        ResourceAPIManager.addNewItem("routes", newRoute[1], this.state.userId)
+        .then(thing=>{
+            // add the id of the new route to state so the LINK that is rendered knows where to go
+            newState.newRouteId=thing.id
+
+            // update the state in application views to ensure the user has access to all of their routes
+            this.props.updateRoutes("routes", parseInt(sessionStorage.getItem("credentials")))
+
+            // update the state in this page
+            this.setState(newState)}
+            )
+        : this.setState(newState)
+
+
+
     }
 
 
@@ -52,7 +74,7 @@ export default class Explore extends Component {
         return (
 
             <div>
-                <h2>Build A Route</h2>
+                <h2 className="exp-title">Build A Route</h2>
                 <div className="exp-cont content-section implementation">
 
                     <div className="exp-left">
@@ -77,6 +99,10 @@ export default class Explore extends Component {
 
                         <div><Button className="explore-dd-submit-btn" label="submit" icon="pi pi-check" iconPos="right" onClick={this.handleSubmit} /></div>
                         <div className="exp-msg">{this.state.message}</div>
+                        {this.state.message==="Your route was created!"?
+                        <React.Fragment><div><Link to={`/routes/${this.state.newRouteId}`}>Click to see your new Route</Link></div>
+                        <div><Link to= "/routes">Click to see all Routes</Link></div>
+                        </React.Fragment>:""}
                     </div>
                     <div className="exp-right">
                         <Map waypoints={this.props.waypoints}/>

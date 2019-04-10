@@ -93,7 +93,12 @@ export default class RouteDetails extends Component {
     completeRoute() {
         const routeId = this.state.id
         const patchObject = CompleteRoutePatch(this.state)
-        this.setState({isComplete: patchObject.isComplete, timeToComplete:patchObject.timeToComplete, dateCompleted:patchObject.dateCompleted})
+        this.setState({
+            isComplete: patchObject.isComplete,
+            timeToComplete: patchObject.timeToComplete,
+            dateCompleted: patchObject.dateCompleted,
+            message: null
+        })
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
     }
 
@@ -121,11 +126,39 @@ export default class RouteDetails extends Component {
         // this is the footer for the modal that pops up when user clicks edit or complete
         const footer = (
             <div>
-                <Button type="submit" label="Submit" className="p-button-success" icon="pi pi-check"
-                    onClick={() => {
+                <Button type="submit" id="footer-submit" label="Submit" className="p-button-success" icon="pi pi-check"
+                    onClick={(e) => {
+                        // check to see which button was clicked.
+                        if (this.state.target === "complete-route") {
+                            // Make sure form fields are filled out correctly before executing submit
 
-                        this.onHide()
-                        this.state.target === "complete-route" ? this.completeRoute() : this.handleSubmit()
+                            if (this.state.date !== ""
+                                && /^([0-1]?\d|2[0-3]):([0-5]?\d):([0-5]?\d)$/.test(this.state.time)) {
+                                this.onHide()
+                                this.completeRoute()
+                                console.log("target", e.currentTarget.id)
+                                this.setState({ target: e.currentTarget.id })
+                            }
+                            // Otherwise, set an error message according to which button was clicked
+
+                            else {
+                                this.setState({ message: "All fields must be completed correctly" })
+                            }
+                        }
+                        // check to see which button was clicked.
+                        if (this.state.target === "edit-route-detail") {
+                            // Make sure start and end point do not match before executing submit
+                            if (this.state.start.id !== this.state.end.id) {
+                                this.onHide()
+                                this.handleSubmit()
+                                this.setState({ target: e.currentTarget.id })
+                            }
+                            // Otherwise, set an error message according to which button was clicked
+                            else {
+                                this.setState({ message: "Start and end points cannot be the same!" })
+                            }
+                        }
+
                     }}
                 />
             </div>
@@ -179,9 +212,9 @@ export default class RouteDetails extends Component {
                     <p className="route-detail-text"><span className="route-detail-subheadings">Elevation Gain:</span> </p>
                     <p className="route-detail-text"><span className="route-detail-subheadings">Mileage:</span> {Math.abs(diff).toFixed(2)} miles</p>
                     <p className="route-detail-text"><span className="route-detail-subheadings">Description:</span>
-                    <ul>{this.props.waypoints.filter(w => w.mile >= (start.mile<end.mile?start.mile:end.mile) && w.mile <= (start.mile<end.mile?end.mile:start.mile)).sort((a, b) => a.mile - b.mile).map((w) =>
-                        (w.description!==""?<li><span className="route-detail-mile">Mile {w.mile}:</span> {w.description}</li>:""))
-                    }</ul></p>
+                        <ul>{this.props.waypoints.filter(w => w.mile >= (start.mile < end.mile ? start.mile : end.mile) && w.mile <= (start.mile < end.mile ? end.mile : start.mile)).sort((a, b) => a.mile - b.mile).map((w) =>
+                            (w.description !== "" ? <li className="route-detail-bullets"><span className="route-detail-mile">Mile {w.mile}:</span> {w.description}</li> : ""))
+                        }</ul></p>
 
 
                 </div>
@@ -192,7 +225,7 @@ export default class RouteDetails extends Component {
 
             <div className="route-details-btn-cont">
 
-                <Button label={route.isComplete === false ? "Complete" : "Edit"}
+                <Button label={route.isComplete === false ? "Complete" : "Edit Date/Time"}
                     icon={(route.isComplete === false ? "pi pi-check" : "pi pi-pencil")}
                     id="complete-route"
                     iconPos="right"
@@ -240,7 +273,7 @@ export default class RouteDetails extends Component {
                 SelectRoutePoints(footer, this.state, this.props, this.onStartChange, this.onEndChange, this.onHide) : "")}
 
             {(this.state.target === "delete-route" ?
-                deleteConfirm("routes", this.state.id, this.state.userId, this.state.visible, this.onHide, this.props.deleteRoute, this.props.history) : "")}
+                deleteConfirm("routes", this.state.id, this.state.visible, this.onHide, this.props.deleteRoute, this.props.history, this.state.userId) : "")}
 
 
         </React.Fragment>)

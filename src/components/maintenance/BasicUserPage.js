@@ -4,7 +4,7 @@ import MaintenanceRequestForm from "./MaintenanceRequestForm"
 
 
 
-const basicUser=(state, props, onChange, onCheck, handleSubmit)=> {
+const basicUser=(state, props, onChange, onCheck, handleSubmit, handleError)=> {
     return (
         <React.Fragment>
 
@@ -12,7 +12,7 @@ const basicUser=(state, props, onChange, onCheck, handleSubmit)=> {
 
                 <div className="maint-req-form">
 
-                    {MaintenanceRequestForm(state, props, onChange, onCheck, handleSubmit)}
+                    {MaintenanceRequestForm(state, props, onChange, onCheck, handleSubmit, handleError)}
 
                 </div>
                 <div>

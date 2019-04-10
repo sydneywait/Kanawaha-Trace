@@ -61,7 +61,8 @@ border:1px solid black;
 }
 
 .route-cont-header{
-    font-size:2em;
+    font-size:2.5em;
+    padding: 20px 0 20px 0;
 }
 
 .route-btn-cont {
@@ -91,9 +92,16 @@ border: 1px solid gray;
 .route-detail-mile{
     font-style: italic;
     color: gray;
+
+}
+.route-detail-bullets{
+    padding-left: 15px;
 }
 
-
+.error-message{
+    font-weight: bold;
+    color: red;
+}
 
 .details-body-container{
     display: flex;
@@ -105,11 +113,13 @@ border: 1px solid gray;
 }
 
 .route-text-detail-cont{
+    padding-top:10px;
     flex-direction: column;
     margin-left: 10px;
     display: flex;
-    justify-content: center;
     width: 600px;
+    height:500px;
+    overflow-y: scroll;
     padding-left: 10px;
     border: 1px solid gray;
 }

@@ -11,8 +11,8 @@ const CompleteMaintFragment = (footer, state, onChange, hide)=> {
             <Dialog header="Maintenance Request Completed:"
             visible={state.visible} style={{ width: '50vw' }}
              footer={footer} onHide={hide} >
-                <div>Date Completed:
-            <Calendar value={state.date}
+                <div>Date Completed:</div>
+            <div><Calendar value={state.date} inline={true}
             required
             monthNavigator={true}
             name="date"
@@ -22,11 +22,12 @@ const CompleteMaintFragment = (footer, state, onChange, hide)=> {
                 <div>Description of work:
             <InputTextarea required
             value={state.updatedDescription}
-
+            style={{ width: '45vw' }}
             onChange={onChange}
             name="updatedDescription"
             placeholder="describe the work completed and any pertinent details or future recommendations"  />
                 </div>
+                <div className="error-message">{state.warning}</div>
             </Dialog>
 
         </React.Fragment >
