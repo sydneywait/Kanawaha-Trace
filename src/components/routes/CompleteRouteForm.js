@@ -13,6 +13,7 @@ const CompleteRouteFragment = (footer, state, onChange, hide)=> {
                 <div className="p-inputgroup"><div>Time to Complete:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <InputMask required mask = "99:99:99" value={state.time} onChange={(e) => onChange( "time", e)} placeholder="hh:mm:ss"  /><span className="p-inputgroup-addon"><i className="pi pi-clock"></i></span></div>
                 </div>
+                <div className="error-message">{state.message}</div>
             </Dialog>
 
         </React.Fragment >
