@@ -58,7 +58,7 @@ export default class Explore extends Component {
             // update the state in this page
             this.setState(newState)}
             )
-        : console.log("no route")
+        : this.setState(newState)
 
 
 
