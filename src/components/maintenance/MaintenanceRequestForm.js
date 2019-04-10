@@ -7,7 +7,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputMask } from 'primereact/inputmask'
 
-const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) => {
+const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, handleError) => {
 
     return (
         <React.Fragment>
@@ -71,11 +71,22 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit) =
                     icon="pi pi-check" iconPos="right"
                     className="p-button-raised p-button-rounded p-button-success"
                     type="submit"
-                    onClick={handleSubmit}
+                    onClick={()=>{
+                        if(/^\d+(\.\d+)?$/.test(state.location)&&state.description!==""&&state.hazard!=="")
+                        {
+                            handleSubmit()
+                        }
+                        else{
+                            handleError()
+                        }
+
+                    }}
+
                 >
 
                 </Button>
                 </div>
+                <div className="error-message">{state.message}</div>
 
         </React.Fragment>
 

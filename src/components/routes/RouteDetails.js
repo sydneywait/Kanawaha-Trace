@@ -158,6 +158,7 @@ export default class RouteDetails extends Component {
                                 this.setState({ message: "Start and end points cannot be the same!" })
                             }
                         }
+
                     }}
                 />
             </div>

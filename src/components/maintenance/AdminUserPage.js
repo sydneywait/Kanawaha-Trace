@@ -7,7 +7,7 @@ import MaintenanceRequestForm from "./MaintenanceRequestForm";
 
 
 
-const adminUser = (state, props, onChange, onCheck, handleSubmit, onClick) => {
+const adminUser = (state, props, onChange, onCheck, handleSubmit, handleError, onClick) => {
     const activeUser = parseInt(sessionStorage.getItem("credentials"))
 
     return (
@@ -15,7 +15,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, onClick) => {
 
             <div className="maint-cont">
                 <div className="maint-req-form">
-                {MaintenanceRequestForm(state, props, onChange, onCheck, handleSubmit)}
+                {MaintenanceRequestForm(state, props, onChange, onCheck, handleSubmit, handleError)}
                 </div>
                 <div className="maint-lists-cont">
                 <div className="maint-assigned">
@@ -45,6 +45,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, onClick) => {
                     </div>
                 </div>
             </div>
+
 
         </React.Fragment>
 

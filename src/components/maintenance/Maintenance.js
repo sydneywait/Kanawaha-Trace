@@ -32,7 +32,8 @@ export default class Maintenance extends Component {
             hazard: "",
             checked: false,
             phone: "",
-            maintId: ""
+            maintId: "",
+            message:""
         };
         this.onChange = this.onChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,6 +41,7 @@ export default class Maintenance extends Component {
         this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
         this.onCheck = this.onCheck.bind(this);
+        this.handleError=this.handleError.bind(this);
     }
     onClick(e) {
         this.setState({ visible: true, maintId: e.target.id })
@@ -85,7 +87,8 @@ export default class Maintenance extends Component {
             hazard: "",
             location: "",
             checked: false,
-            phone:""
+            phone:"",
+            message:""
         }
         this.setState(newState)
         this.props.history.push("/maintenance")
@@ -103,6 +106,13 @@ export default class Maintenance extends Component {
 
 
     }
+handleError(){
+    this.setState({message:"All fields must be complete before submitting this form"})
+
+
+}
+
+
 
 
 
@@ -123,7 +133,7 @@ export default class Maintenance extends Component {
 
                 {this.props.user.isAdmin === false ?
                     basicUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit)
-                    : adminUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit, this.onClick)}
+                    : adminUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit, this.handleError, this.onClick)}
 
                 {CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide)}
 
