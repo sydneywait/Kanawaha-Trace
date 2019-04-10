@@ -125,8 +125,13 @@ export default class Routes extends Component {
             <div>
                 <Button label="Submit" className="p-button-success" icon="pi pi-check"
                     onClick={() => {
+                        if(this.state.date!==""&&/^([0-1]?\d|2[0-3]):([0-5]?\d):([0-5]?\d)$/.test(this.state.time)){
                         this.onHide()
                         this.completeRoute()
+                    }
+                    else{
+                        console.log("try again")
+                    }
                     }}
                 />
             </div>

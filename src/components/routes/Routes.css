@@ -98,7 +98,10 @@ border: 1px solid gray;
     padding-left: 15px;
 }
 
-
+.error-message{
+    font-weight: bold;
+    color: red;
+}
 
 .details-body-container{
     display: flex;

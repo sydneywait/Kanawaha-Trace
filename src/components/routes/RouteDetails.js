@@ -93,7 +93,7 @@ export default class RouteDetails extends Component {
     completeRoute() {
         const routeId = this.state.id
         const patchObject = CompleteRoutePatch(this.state)
-        this.setState({isComplete: patchObject.isComplete, timeToComplete:patchObject.timeToComplete, dateCompleted:patchObject.dateCompleted})
+        this.setState({ isComplete: patchObject.isComplete, timeToComplete: patchObject.timeToComplete, dateCompleted: patchObject.dateCompleted })
         this.props.patchRoute("routes", routeId, patchObject, this.state.activeUser)
     }
 
@@ -123,9 +123,33 @@ export default class RouteDetails extends Component {
             <div>
                 <Button type="submit" label="Submit" className="p-button-success" icon="pi pi-check"
                     onClick={() => {
+                        // check to see which button was clicked.
+                        if (this.state.target === "complete-route"
+                            // Make sure form fields are filled out correctly before executing submit
+                            && this.state.date !== ""
+                            && /^([0-1]?\d|2[0-3]):([0-5]?\d):([0-5]?\d)$/.test(this.state.time)) {
+                            this.onHide()
+                            this.completeRoute()
+                        }
+                        else{
+                            this.setState({message: "Start and end Point cannot match!"})
+                        }
 
-                        this.onHide()
-                        this.state.target === "complete-route" ? this.completeRoute() : this.handleSubmit()
+                        // check to see which button was clicked.
+                        if (this.state.target === "edit-route-detail"
+                        // Make sure start and end point do not match before executing submit
+                            && this.state.start.id !== this.state.end.id) {
+                            this.onHide()
+                            this.handleSubmit()
+                        }
+
+                        else {
+                            this.setState({message: "Start and end points cannot be the same!"})
+                            // console.log("try again")
+                        }
+
+
+
                     }}
                 />
             </div>
@@ -179,9 +203,9 @@ export default class RouteDetails extends Component {
                     <p className="route-detail-text"><span className="route-detail-subheadings">Elevation Gain:</span> </p>
                     <p className="route-detail-text"><span className="route-detail-subheadings">Mileage:</span> {Math.abs(diff).toFixed(2)} miles</p>
                     <p className="route-detail-text"><span className="route-detail-subheadings">Description:</span>
-                    <ul>{this.props.waypoints.filter(w => w.mile >= (start.mile<end.mile?start.mile:end.mile) && w.mile <= (start.mile<end.mile?end.mile:start.mile)).sort((a, b) => a.mile - b.mile).map((w) =>
-                        (w.description!==""?<li className="route-detail-bullets"><span className="route-detail-mile">Mile {w.mile}:</span> {w.description}</li>:""))
-                    }</ul></p>
+                        <ul>{this.props.waypoints.filter(w => w.mile >= (start.mile < end.mile ? start.mile : end.mile) && w.mile <= (start.mile < end.mile ? end.mile : start.mile)).sort((a, b) => a.mile - b.mile).map((w) =>
+                            (w.description !== "" ? <li className="route-detail-bullets"><span className="route-detail-mile">Mile {w.mile}:</span> {w.description}</li> : ""))
+                        }</ul></p>
 
 
                 </div>
