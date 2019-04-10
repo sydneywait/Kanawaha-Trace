@@ -130,7 +130,7 @@ render() {
         <React.Fragment>
 
             {this.props.user.isAdmin === false ?
-                basicUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit)
+                basicUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit, this.handleError)
                 : adminUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit, this.handleError, this.onClick)}
 
             {CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide)}
