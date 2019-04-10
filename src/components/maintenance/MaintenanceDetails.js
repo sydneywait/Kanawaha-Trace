@@ -108,16 +108,10 @@ export default class MaintenanceDetails extends Component {
 
     }
 
-    assignMaint() {
-        // check to see if a person was selected to be assigned
-        if (this.state.assigned.id) {
-            // send a patch to the database to update the userId of the maint item
-            this.props.patchMaint("maintenance", this.state.id, { userId: this.state.assigned.id })
-            this.props.history.push(`/maintenance/${this.state.id}`)
-        }
 
 
-    }
+
+
     editMaint() {
         let editedObject = {}
         // create an object based on the edited fields
@@ -165,11 +159,7 @@ export default class MaintenanceDetails extends Component {
                             this.editMaint()
                             this.onHide()
                         }
-                        if (this.state.target === "maint-assign-btn") {
-                            this.assignMaint()
-                            this.onHide()
-                        }
-                        // this.state.target === "maint-del-btn" ? this.deleteMaint() : this.onHide()
+
 
                     }}
                 />
@@ -194,18 +184,6 @@ export default class MaintenanceDetails extends Component {
                     {this.state.isComplete ? <h3>Completed:{" "}<Moment format="MM/DD/YY">{this.state.dateCompleted}</Moment> </h3> : ""}
                     <div>
 
-                        {this.state.isComplete ? "" :
-                            <Button label={Array.isArray(this.state.assigned) ? "Assign" : "Reassign"}
-
-                                icon="pi pi-user-plus" iconPos="right"
-                                id="maint-assign-btn"
-                                className="p-button-raised p-button-rounded p-button-warning"
-                                onClick={(e) => {
-                                    console.log("you clicked", e.currentTarget.id)
-                                    this.setState({ visible: true, target: e.currentTarget.id })
-                                }}>
-                            </Button>
-                        }
                         {this.state.isComplete === false ? <Button label="Complete"
                             icon="pi pi-check" iconPos="right"
                             id="maint-complete-btn"

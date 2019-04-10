@@ -26,7 +26,8 @@ export default class Maintenance extends Component {
             checked: false,
             phone: "",
             maintId: "",
-            message:""
+            message: "",
+            warning: ""
         };
         this.onChange = this.onChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,11 +35,11 @@ export default class Maintenance extends Component {
         this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
         this.onCheck = this.onCheck.bind(this);
-        this.handleError=this.handleError.bind(this);
+        this.handleError = this.handleError.bind(this);
     }
     onClick(e) {
         this.setState({ visible: true, maintId: e.target.id })
-            ;
+
     }
 
     onHide(e) {
@@ -79,8 +80,8 @@ export default class Maintenance extends Component {
             hazard: "",
             location: "",
             checked: false,
-            phone:"",
-            message:""
+            phone: "",
+            message: ""
         }
         this.setState(newState)
         this.props.history.push("/maintenance")
@@ -95,37 +96,46 @@ export default class Maintenance extends Component {
         const maintObject = CompleteMaintenance(this.state.updatedDescription, this.state.date)
         // patch the maintenance_request with the submitted information
         this.props.patchMaint("maintenance", maintId, maintObject)
+        this.setState({ warning: "" })
 
 
-    }
 
-    // error message when form is not complete
-handleError(){
-    this.setState({message:"All fields must be complete before submitting this form"})
+
+
+}
+
+// error message when form is not complete
+handleError() {
+    this.setState({ message: "All fields must be complete before submitting this form" })
 }
 
 
-    render() {
-        const footer = (
-            <div>
-                <Button label="Submit" className="p-button-success" icon="pi pi-check"
-                    onClick={() => {
-                        this.onHide()
+render() {
+    const footer = (
+        <div>
+            <Button label="Submit" className="p-button-success" icon="pi pi-check"
+                onClick={() => {
+                    if (this.state.updatedDescription !== "" && this.state.date !== "") {
                         this.completeMaint()
-                    }}
-                />
-            </div>
-        )
-        return (
-            <React.Fragment>
+                        this.onHide()
+                    }
+                    else{
+                        this.setState({warning:"Please complete both fields"})
+                    }
+                }}
+            />
+        </div>
+    )
+    return (
+        <React.Fragment>
 
-                {this.props.user.isAdmin === false ?
-                    basicUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit)
-                    : adminUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit, this.handleError, this.onClick)}
+            {this.props.user.isAdmin === false ?
+                basicUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit)
+                : adminUser(this.state, this.props, this.onChange, this.onCheck, this.handleSubmit, this.handleError, this.onClick)}
 
-                {CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide)}
+            {CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide)}
 
-            </React.Fragment>
-        )
-    }
+        </React.Fragment>
+    )
+}
 }
