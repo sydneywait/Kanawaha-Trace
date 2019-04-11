@@ -11,9 +11,9 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, h
 
     return (
         <React.Fragment>
+            <div className="maint-form-container">
 
-
-                <h2 className="maint-req-header">{props.user.isAdmin===true?"Create a new Ticket":"Report a Maintenance or Trail Issue"}</h2>
+                <div className="maint-req-header">{props.user.isAdmin === true ? "Create a new Ticket" : "Report any Trail Issues"}</div>
                 <div>
                     <InputText value={state.location} onChange={onChange}
                         name="location"
@@ -45,16 +45,16 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, h
                         required={true}>
                     </InputTextarea>
                 </div>
-{props.user.isAdmin===false?
-                <div>
-                    <Checkbox id="contact-check"
-                        name="checked"
-                        value={state.checked}
-                        onChange={e => onCheck(e)} checked={state.checked}>
-                    </Checkbox>
-                    <label htmlFor="contact-check" style={{ wordBreak: "break-word" }} >
-                        Is it ok to follow up with you about this issue if more information is needed?</label>
-                </div>:""}
+                {props.user.isAdmin === false ?
+                    <div>
+                        <span className= "maint-checkbox"><Checkbox id="contact-check"
+                            name="checked"
+                            value={state.checked}
+                            onChange={e => onCheck(e)} checked={state.checked}>
+                        </Checkbox></span>
+                        <label htmlFor="contact-check" style={{ wordBreak: "break-word" }} >
+                            Is it ok to follow up with you about this issue if more information is needed?</label>
+                    </div> : ""}
 
 
                 {state.checked === true ?
@@ -71,12 +71,11 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, h
                     icon="pi pi-check" iconPos="right"
                     className="p-button-raised p-button-rounded p-button-success"
                     type="submit"
-                    onClick={()=>{
-                        if(/^\d+(\.\d+)?$/.test(state.location)&&state.description!==""&&state.hazard!=="")
-                        {
+                    onClick={() => {
+                        if (/^\d+(\.\d+)?$/.test(state.location) && state.description !== "" && state.hazard !== "") {
                             handleSubmit()
                         }
-                        else{
+                        else {
                             handleError()
                         }
 
@@ -88,6 +87,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, h
                 </div>
                 <div className="error-message">{state.message}</div>
 
+            </div>
         </React.Fragment>
 
     )

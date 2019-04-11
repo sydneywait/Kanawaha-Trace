@@ -17,7 +17,7 @@ const basicUser=(state, props, onChange, onCheck, handleSubmit, handleError)=> {
                 </div>
                 <div>
                     <div className="maint-req-list">
-                        <h2 className="maint-req-header">Ongoing Maintenance</h2>
+                        <div className="maint-req-header">Ongoing Maintenance</div>
                         {props.maintenance.map(m =>
                             <p>mile {m.mile}--{m.description}</p>
 

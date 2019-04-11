@@ -1,3 +1,14 @@
+:root {
+    --card-bg-color: #f9f8fd;
+    --main-header-color: #7dce94;
+    --main-border-color: #d3cfc5;
+    --border-shadow-color: #e9e7e2;
+    --card-text-color: #3d3d3F;
+    --header-text-color: #f6f5f3;
+    --darker-green-text-color:#235c33;
+  }
+
+
 .maint-cont {
 
     display: flex;
@@ -7,37 +18,39 @@
 }
 
 .maint-req-form {
+    margin-top: 15px;
     width: 300px;
-    border: 1px solid gray;
+    border: 1px solid var(--main-border-color);
 
 
 }
 
 .maint-req-list {
-    border: 1px solid gray;
+    border: 1px solid var(--main-border-color);
+    margin-top: 15px;
+    width: 400px;
 
 }
 
 .unassigned{
     font-style: italic;
+
 }
-.maint-req-header {
-    font-size: 2em;
-    padding: 15px 0 10px 0;
-    border: 1px solid gray;
-}
+
 
 .maint-admin-col1, .maint-admin-col2{
     font-size: 2em;
     padding: 10px 0 10px 0;
     display: flex;
     justify-content: center;
-    background: grey;
+    background: var(--main-header-color);
+    color: var(--header-text-color);
     text-align: center;
     line-height: 30px;
 }
 
 .maint-admin-col1{
+
     padding-bottom: 40px;
 
 }
@@ -54,10 +67,33 @@
 }
 
 .maint-assigned, .maint-unassigned, .maint-complete{
-border: 1px solid gray;
+    border: 1px solid var(--main-border-color);
 width: 30%;
-padding: 10px;
+margin: 15px 5px 0px 5px;
 overflow-wrap: break-word;
+background: var(--card-bg-color);
+
+}
+
+.maint-card-text{
+    padding-left: 10px;
+
+}
+.maint-req-header{
+    background: var(--main-header-color);
+    color: var(--header-text-color);
+padding-top: 15px;
+padding-bottom: 20px;
+font-size: 2em;
+}
+
+.maint-form-container{
+
+    background: var(--card-bg-color);
+}
+
+.maint-checkbox{
+    margin-right: 5px;
 }
 
 
