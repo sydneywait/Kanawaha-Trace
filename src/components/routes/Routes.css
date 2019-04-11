@@ -118,7 +118,7 @@ border: 1px solid gray;
     margin-left: 10px;
     display: flex;
     width: 600px;
-    height:500px;
+    height:400px;
     overflow-y: scroll;
     padding-left: 10px;
     border: 1px solid gray;
@@ -139,7 +139,7 @@ border: 1px solid gray;
 
 .route-details-img-cont{
     width:500px;
-    height: 500px;
+    height: 400px;
     position: relative;
 
 }
