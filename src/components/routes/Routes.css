@@ -1,54 +1,68 @@
 .route-cont{
-
+margin-left: 20px;
     display:flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: left;
+
 
 }
 .plan-route-cont{
 display:flex;
 flex-direction:column;
-width: 300px;
-border:1px solid black;
+width: 315px;
+border: 1px solid #d3cfc5;
+margin-right: 20px;
+margin-top:15px;
 
 }
 .comp-route-cont{
-    border: 1px solid black;
+    border: 1px solid #d3cfc5;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    width: 650px;
+    width: 1000px;
+    margin-top:15px;
+
 
 
 }
 
 .plan-card-cont{
-    border: 1px solid black;
-
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
 }
 
 .comp-card-cont{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display:flex;
     flex-direction: row;
     flex-wrap:wrap;
     justify-content: space-evenly;
+    padding-bottom: 20px;
 }
 
 .route-img-cont{
     display:flex;
     flex-direction: row;
     justify-content: space-around;
+    /* border:1px solid red; */
+    margin-top: 5px;
 
 
 }
 
 .route-card-cont{
-    border: 1px solid gray;
+    border: 1px solid #d3cfc5;
     flex-direction: column;
     display: flex;
     width: 300px;
     margin-top:10px;
+    padding-bottom: 15px;
+    background:#f9f8fd;
+    box-shadow: 3px 3px #e9e7e2;
+
 
 
 
@@ -63,6 +77,8 @@ border:1px solid black;
 .route-cont-header{
     font-size:2.5em;
     padding: 20px 0 20px 0;
+    background: #7dce94;
+    color: #f6f5f3;
 }
 
 .route-btn-cont {
@@ -71,7 +87,7 @@ flex-direction: row;
 justify-content: space-around;
 padding-top:10px;
 margin-top: auto;
-border: 1px solid gray;
+/* border: 1px solid gray; */
 
 
 }
@@ -124,11 +140,34 @@ border: 1px solid gray;
     border: 1px solid gray;
 }
 
-.route-card-header{
+.route-details-header{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    border: 1px solid gray;
+    text-align: center;
+    /* border: 1px solid gray; */
+    margin-top: 5px;
+    background: #7dce94;
+    color: #f6f5f3;
+
+}
+.route-card-header{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    text-align: center;
+    /* border: 1px solid red; */
+    height:50px;
+    background: #7dce94;
+    color: #3d3d3F;
+
+
+
+}
+
+.route-name-header{
+    margin: auto;
+
 
 }
 

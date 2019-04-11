@@ -181,7 +181,7 @@ export default class RouteDetails extends Component {
         console.log("start", start, "end", end, "diff", diff)
 
         return (<React.Fragment>
-            <div className="route-card-header">
+            <div className="route-details-header">
                 {/* insert trail marker picture based on the direction of travel */}
                 {(route.direction === true ?
                     <img src={window.location.origin + "/images/west_east.jpg"} height="80px" className="route-marker" /> :
