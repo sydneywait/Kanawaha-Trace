@@ -81,7 +81,7 @@ export default class MapDetail extends Component {
 
                 map = new mapboxgl.Map({
                     container: this.mapContainer,
-                    style: 'mapbox://styles/sydneyroo/cju1kgcmn0u041fpbg636snah',
+                    style: 'mapbox://styles/sydneyroo/cju32seef0x4e1gmbx78sdk4e',
                     center: [lng, lat],
                     zoom
                 });
