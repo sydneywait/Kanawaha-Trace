@@ -6,7 +6,6 @@ import "./Explore.css"
 // import Snackbar from '@material-ui/core/Snackbar';
 import MakeNewRoute from "../routes/MakeNewRoute"
 import { Link } from "react-router-dom"
-import SelectRoutePoints from "../routes/SelectRoutePoints"
 import Map from "../../modules/Map"
 import ResourceAPIManager from "../../modules/ResourceAPIManager"
 
@@ -73,8 +72,8 @@ export default class Explore extends Component {
 
         return (
 
-            <div>
-                <h2 className="exp-title">Build A Route</h2>
+            <div className="exp-page-cont">
+                <div className="exp-title">Build A Route</div>
                 <div className="exp-cont content-section implementation">
 
                     <div className="exp-left">
@@ -84,21 +83,22 @@ export default class Explore extends Component {
                                 value={this.state.start}
                                 options={options}
                                 onChange={this.onStartChange}
-                                style={{ width: '250px' }} placeholder="Select a Start Point" optionLabel="name" />
+                                style={{ width: '300px' }} placeholder="Select a Start Point" optionLabel="name" />
                             </div>
                             <div className="exp-dd-foot">{this.state.start ? 'Selected start: ' + this.state.start.name : 'No start point selected'}</div>
                             <div><Dropdown className="exp-dd" value={this.state.end}
                                 options={options}
                                 onChange={this.onEndChange}
-                                style={{ width: '250px' }} placeholder="Select an End Point" optionLabel="name" /></div>
+                                style={{ width: '300px' }} placeholder="Select an End Point" optionLabel="name" /></div>
                             <div className="exp-dd-foot">{this.state.end ? 'Selected end: ' + this.state.end.name : 'No end point selected'}</div>
 
                         </div>
 
 
 
-                        <div><Button className="explore-dd-submit-btn" label="submit" icon="pi pi-check" iconPos="right" onClick={this.handleSubmit} /></div>
-                        <div className="exp-msg">{this.state.message}</div>
+                        <div className="exp-dd-submit-btn-cont"><div className="exp-dd-submit-btn"><Button className="p-button-rounded" label="submit" icon="pi pi-check" iconPos="right" onClick={this.handleSubmit} /></div>
+                        <div className="exp-msg">{this.state.message}</div></div>
+
                         {this.state.message==="Your route was created!"?
                         <React.Fragment><div><Link to={`/routes/${this.state.newRouteId}`}>Click to see your new Route</Link></div>
                         <div><Link to= "/routes">Click to see all Routes</Link></div>

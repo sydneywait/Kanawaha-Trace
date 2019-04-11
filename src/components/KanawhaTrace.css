@@ -1,4 +1,16 @@
+:root {
+    --card-bg-color: #f9f8fd;
+    --main-header-color: #7dce94;
+    --main-border-color: #d3cfc5;
+    --border-shadow-color: #e9e7e2;
+    --card-text-color: #3d3d3F;
+    --header-text-color: #f6f5f3;
+    --darker-green-text-color:#235c33;
+  }
+
 .home-container{
+    margin-left:20px;
+    margin-top: 15px;
 display:flex;
 flex: row;
 
@@ -6,13 +18,16 @@ flex: row;
 
 
 .home-sidebar{
-    background: gray;
+    background: var(--main-header-color);
     width:15%;
 
 
 
 }
 .home-body{
+    border: 1px solid var(--main-border-color);
+
+
 width:70%;
 padding-left: 20px;
 
@@ -24,6 +39,6 @@ padding-left: 20px;
     font-size: 3em;
     padding-top:20px;
     padding-bottom: 20px;
-    color: red;
+    color: var(--darker-green-text-color)
 }
 

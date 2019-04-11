@@ -1,3 +1,11 @@
+:root {
+    --card-bg-color: #f9f8fd;
+    --main-header-color: #7dce94;
+    --main-border-color: #d3cfc5;
+    --border-shadow-color: #e9e7e2;
+    --card-text-color: #3d3d3F;
+  }
+
 .route-cont{
 margin-left: 20px;
     display:flex;
@@ -10,13 +18,13 @@ margin-left: 20px;
 display:flex;
 flex-direction:column;
 width: 315px;
-border: 1px solid #d3cfc5;
+border: 1px solid var(--main-border-color);
 margin-right: 20px;
 margin-top:15px;
 
 }
 .comp-route-cont{
-    border: 1px solid #d3cfc5;
+    border: 1px solid var(--main-border-color);
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -30,7 +38,8 @@ margin-top:15px;
 .plan-card-cont{
     /* border: 1px solid red; */
     display: flex;
-    justify-content: center;
+    flex-direction:column;
+    align-self: center;
     padding-bottom: 20px;
 }
 
@@ -54,14 +63,14 @@ margin-top:15px;
 }
 
 .route-card-cont{
-    border: 1px solid #d3cfc5;
+    border: 1px solid var(--main-border-color);
     flex-direction: column;
     display: flex;
     width: 300px;
     margin-top:10px;
     padding-bottom: 15px;
-    background:#f9f8fd;
-    box-shadow: 3px 3px #e9e7e2;
+    background:var(--card-bg-color);
+    box-shadow: 3px 3px var(--border-shadow-color);
 
 
 
@@ -159,7 +168,7 @@ margin-top: auto;
     /* border: 1px solid red; */
     height:50px;
     background: #7dce94;
-    color: #3d3d3F;
+    color: var(--card-text-color);
 
 
 
