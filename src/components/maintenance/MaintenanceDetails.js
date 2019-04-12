@@ -102,6 +102,7 @@ export default class MaintenanceDetails extends Component {
         // create a patch object from info in popup
         const maintObject = CompleteMaintenance(this.state.updatedDescription, this.state.dateCompleted)
         // patch the maintenance_request with the submitted information
+        this.setState({isComplete: true})
         this.props.patchMaint("maintenance", maintId, maintObject)
         this.props.history.push(`/maintenance/${this.state.id}`)
 

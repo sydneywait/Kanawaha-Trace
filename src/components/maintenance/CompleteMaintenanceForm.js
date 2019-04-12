@@ -12,10 +12,10 @@ const CompleteMaintFragment = (footer, state, onChange, hide)=> {
             visible={state.visible} style={{ width: '50vw' }}
              footer={footer} onHide={hide} >
                 <div>Date Completed:</div>
-            <div><Calendar value={state.date} inline={true}
+            <div><Calendar value={state.dateCompleted} inline={true}
             required
             monthNavigator={true}
-            name="date"
+            name="dateCompleted"
             onChange={onChange}
             placeholder="mm/dd/yy"></Calendar>
                 </div>

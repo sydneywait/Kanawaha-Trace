@@ -19,7 +19,7 @@ display:flex;
 flex-direction:column;
 width: 315px;
 border: 1px solid var(--main-border-color);
-margin-right: 20px;
+margin-right: 50px;
 margin-top:15px;
 
 }
@@ -28,7 +28,7 @@ margin-top:15px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    width: 1000px;
+    width: 900px;
     margin-top:15px;
 
 
@@ -66,7 +66,7 @@ margin-top:15px;
     border: 1px solid var(--main-border-color);
     flex-direction: column;
     display: flex;
-    width: 300px;
+    width: 250px;
     margin-top:10px;
     padding-bottom: 15px;
     background:var(--card-bg-color);

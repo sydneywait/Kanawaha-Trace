@@ -115,6 +115,8 @@ render() {
         <div>
             <Button label="Submit" className="p-button-success" icon="pi pi-check"
                 onClick={() => {
+
+
                     if (this.state.updatedDescription !== "" && this.state.date !== "") {
                         this.completeMaint()
                         this.onHide()
