@@ -18,9 +18,11 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, h
                     <InputText value={state.location} onChange={onChange}
                         name="location"
                         required={true}
-                        placeholder="Enter approx. mile mark">
+                        label="Enter approx. mile mark"
+                        style={{ width: '50px' }}>
 
-                    </InputText>
+
+                    </InputText><span className="mile-mark"> <i class="pi pi-caret-left"></i> Enter approx. mile point</span>
                 </div>
 
                 <div >
