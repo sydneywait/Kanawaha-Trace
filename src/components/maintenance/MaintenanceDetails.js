@@ -102,7 +102,7 @@ export default class MaintenanceDetails extends Component {
         // create a patch object from info in popup
         const maintObject = CompleteMaintenance(this.state.updatedDescription, this.state.dateCompleted)
         // patch the maintenance_request with the submitted information
-        this.setState({isComplete: true})
+        this.setState({ isComplete: true })
         this.props.patchMaint("maintenance", maintId, maintObject)
         this.props.history.push(`/maintenance/${this.state.id}`)
 
@@ -169,21 +169,27 @@ export default class MaintenanceDetails extends Component {
 
         return (
             <React.Fragment>
-                <h2>Request Details</h2>
-                <div className={this.state.isComplete ? "request-details-complete" : "request-details"}>
+                <div className="maint-details-card">
+                    <div className="maint-details-header">Request Details</div>
+                    <div className={this.state.isComplete ? "request-details-complete" : "request-details"}>
 
-                    <p>mile: {" " + this.state.mile}</p>
-                    <p>Hazard: {this.state.hazard.type}</p>
-                    <p> Submitted:{" "} <Moment format="MM/DD/YY">{this.state.dateSubmitted}</Moment></p>
-                    <p>Submitted by:{" " + this.state.submitName}</p>
-                    {this.state.okToContact === true ? <p>Contact phone:{" " + this.state.phone}</p> : ""}
-                    <p>Description of Problem:{" " + this.state.description}</p>
+                        <p><span className="maint-details-subheading">mile:</span> {" " + this.state.mile}</p>
+                        <p><span className="maint-details-subheading">Hazard:</span> {this.state.hazard.type}</p>
+                        <p> <span className="maint-details-subheading">Submitted:</span>{" "} <Moment format="MM/DD/YY">{this.state.dateSubmitted}</Moment></p>
+                        <p><span className="maint-details-subheading">Submitted by:</span>{" " + this.state.submitName}</p>
+                        {this.state.okToContact === true ? <p><span className="maint-details-subheading">Contact phone:</span>{" " + this.state.phone}</p> : ""}
+                        <p><span className="maint-details-subheading">Description of Problem:</span>{" " + this.state.description}</p>
 
-                    {this.state.isComplete === true ? <p>Resolution:{" " + this.state.updatedDescription}</p> : ""}
+                        {this.state.isComplete === true ? <p>Resolution:{" " + this.state.updatedDescription}</p> : ""}
 
-                    {this.state.assigned.name ? <p>Assigned to: {this.state.assigned.name}</p> : <p>unassigned</p>}
-                    {this.state.isComplete ? <h3>Completed:{" "}<Moment format="MM/DD/YY">{this.state.dateCompleted}</Moment> </h3> : ""}
-                    <div>
+                        <p><span className="maint-details-subheading">Assigned to:</span> {this.state.assigned.name ? this.state.assigned.name : <span className="unassigned">unassigned</span>}</p>
+                        {this.state.isComplete ? <p><span className="maint-details-subheading">Completed:</span>{" "}<Moment format="MM/DD/YY">{this.state.dateCompleted}</Moment> </p> : ""}
+
+
+
+
+                    </div>
+                    <div className="maint-details-btn-cont">
 
                         {this.state.isComplete === false ? <Button label="Complete"
                             icon="pi pi-check" iconPos="right"
@@ -225,20 +231,21 @@ export default class MaintenanceDetails extends Component {
                         >
                         </Button>
                     </div>
+                    <div className="maint-details-back-cont">
+                        <i className="pi pi-chevron-left"></i>
 
-                </div>
-                <i className="pi pi-chevron-left"></i>
-
-                <Link className="back-to-maint" to={"/maintenance"}>Back to Maintenance List</Link>
-                <div>
-                    {this.state.target === "maint-complete-btn" ?
-                        CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide) : ""}
-                    {this.state.target === "maint-assign-btn" ?
-                        AssignMaintenanceFragment(footer, this.state, this.props.admins, this.onChange, this.onHide) : ""}
-                    {this.state.target === "maint-edit-btn" ?
-                        EditMaintenanceFragment(footer, this.state, this.props.admins, this.props.hazards, this.onChange, this.onHide) : ""}
-                    {this.state.target === "maint-delete-btn" ?
-                        DeleteConfirm("maintenance", this.state.id, this.state.visible, this.onHide, this.props.deleteMaint, this.props.history) : ""}
+                        <Link className="back-to-maint" to={"/maintenance"}>Back to Maintenance List</Link>
+                    </div>
+                    <div>
+                        {this.state.target === "maint-complete-btn" ?
+                            CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide) : ""}
+                        {this.state.target === "maint-assign-btn" ?
+                            AssignMaintenanceFragment(footer, this.state, this.props.admins, this.onChange, this.onHide) : ""}
+                        {this.state.target === "maint-edit-btn" ?
+                            EditMaintenanceFragment(footer, this.state, this.props.admins, this.props.hazards, this.onChange, this.onHide) : ""}
+                        {this.state.target === "maint-delete-btn" ?
+                            DeleteConfirm("maintenance", this.state.id, this.state.visible, this.onHide, this.props.deleteMaint, this.props.history) : ""}
+                    </div>
                 </div>
             </React.Fragment>
         )

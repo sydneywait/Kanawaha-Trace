@@ -28,13 +28,27 @@
 .maint-req-list {
     border: 1px solid var(--main-border-color);
     margin-top: 15px;
-    width: 400px;
+    margin-left: 80px;
+    width: 600px;
+
 
 }
 
 .unassigned{
     font-style: italic;
 
+}
+
+.basic-maint-cont{
+
+    display: flex;
+    flex-direction: row;
+    padding-left: 20px;
+
+}
+
+.maint-req-items{
+    padding: 10px 10px 10px 10px ;
 }
 
 
@@ -55,6 +69,25 @@
 
 }
 
+.maint-details-card{
+    width: 500px;
+    margin-top: 15px;
+    margin-left: 20px;
+    background: var(--card-bg-color)
+
+
+}
+.maint-details-header{
+    font-size:2.5em;
+    padding: 20px 0px 20px 0px;
+    background: var(--main-header-color);
+    color: var(--header-text-color);
+}
+
+.maint-details-subheading{
+    font-weight: bold;
+}
+
 
 .assign-maint-btn {
     padding: 100px;
@@ -62,16 +95,15 @@
 }
 
 .request-details-complete{
-
     color: red;
 }
 
 .maint-assigned, .maint-unassigned, .maint-complete{
     border: 1px solid var(--main-border-color);
-width: 30%;
-margin: 15px 5px 0px 5px;
-overflow-wrap: break-word;
-background: var(--card-bg-color);
+    width: 30%;
+    margin: 15px 5px 0px 5px;
+    overflow-wrap: break-word;
+    background: var(--card-bg-color);
 
 }
 
@@ -82,9 +114,10 @@ background: var(--card-bg-color);
 .maint-req-header{
     background: var(--main-header-color);
     color: var(--header-text-color);
-padding-top: 15px;
-padding-bottom: 20px;
-font-size: 2em;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    text-align: center;
+    font-size: 2em;
 }
 
 .maint-form-container{
@@ -105,5 +138,12 @@ font-size: 2em;
     display: flex;
     flex-direction: row;
     width:70%;
+
+}
+
+.maint-details-btn-cont{
+
+    margin-top:15px;
+    margin-bottom:15px;
 
 }

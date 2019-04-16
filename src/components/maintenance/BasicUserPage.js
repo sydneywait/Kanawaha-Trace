@@ -3,12 +3,13 @@ import "./Maintenance.css"
 import MaintenanceRequestForm from "./MaintenanceRequestForm"
 
 
-
+// This is the maintenance page that renders when the user logs in without admin credentials
 const basicUser=(state, props, onChange, onCheck, handleSubmit, handleError)=> {
     return (
-        <React.Fragment>
 
-            <div className="maint-cont">
+        <React.Fragment>
+{/* There are two columns--the maintenance request for ma nd a list of ongoing maintenance */}
+            <div className="basic-maint-cont">
 
                 <div className="maint-req-form">
 
@@ -18,10 +19,11 @@ const basicUser=(state, props, onChange, onCheck, handleSubmit, handleError)=> {
                 <div>
                     <div className="maint-req-list">
                         <div className="maint-req-header">Ongoing Maintenance</div>
-                        {props.maintenance.map(m =>
+                        <div className="maint-req-items">{props.maintenance.sort((a, b) => a.mile - b.mile).filter((m)=>m.isComplete===false).map(m =>
                             <p>mile {m.mile}--{m.description}</p>
 
                         )}
+                        </div>
                     </div>
                 </div>
             </div>

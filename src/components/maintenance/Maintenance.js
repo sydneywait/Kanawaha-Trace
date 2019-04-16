@@ -93,7 +93,7 @@ export default class Maintenance extends Component {
         // get the id of the target maintenance_request object
         const maintId = parseInt(this.state.maintId.split("-")[1])
         // create a patch object from info in popup
-        const maintObject = CompleteMaintenance(this.state.updatedDescription, this.state.date)
+        const maintObject = CompleteMaintenance(this.state.updatedDescription, this.state.dateCompleted)
         // patch the maintenance_request with the submitted information
         this.props.patchMaint("maintenance", maintId, maintObject)
         this.setState({ warning: "" })
@@ -117,7 +117,7 @@ render() {
                 onClick={() => {
 
 
-                    if (this.state.updatedDescription !== "" && this.state.date !== "") {
+                    if (this.state.updatedDescription !== "" && this.state.dateCompleted !== "") {
                         this.completeMaint()
                         this.onHide()
                     }
