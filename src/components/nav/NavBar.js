@@ -12,6 +12,8 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import LoginIcon from '@material-ui/icons/LockOpen'
 import LogoutIcon from '@material-ui/icons/PersonOutline'
 import auth0Client from "../authentication/Auth";
+import "./Nav.css"
+
 
 
 
@@ -23,6 +25,18 @@ const styles = {
 };
 
 class NavBar extends React.Component {
+
+//   componentWillMount() {
+//     ThemeManager.setPalette({
+//       // accent1Color: Colors.indigo50,
+//         primary1Color: "#474B4E",
+//         primary2Color: "#2173B3",
+//         primary3Color: "#A9D2EB",
+//         accent1Color: "#ED3B3B",
+//         accent2Color: "#ED2B2B",
+//         accent3Color: "#F58C8C"
+//     });
+//  }
   signOut = () => {
     auth0Client.signOut();
     sessionStorage.clear()
@@ -67,7 +81,7 @@ class NavBar extends React.Component {
           indicatorColor="secondary"
           textColor="secondary"
         >
-        <Tab icon={<HomeIcon />} label="HOME" to="/" component={Link} />
+        <Tab className="tab" icon={<HomeIcon className="home-icon-override"/>} label="HOME" to="/" component={Link} />
         <Tab icon={<ExploreIcon />} label="EXPLORE" to="/explore" component={Link} />
         <Tab icon={<RouteIcon />} label="MY ROUTES" to="/routes" component={Link} />
         <Tab icon={<BuildIcon />} label="MAINTENANCE" to="/maintenance" component={Link} />

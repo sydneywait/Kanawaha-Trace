@@ -15,6 +15,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, h
 
                 <div className="maint-req-header">{props.user.isAdmin === true ? "Create a new Ticket" : "Report any Trail Issues"}</div>
                 <div>
+                    {/* Enter the mile point */}
                     <InputText value={state.location} onChange={onChange}
                         name="location"
                         required={true}
@@ -26,6 +27,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, h
                 </div>
 
                 <div >
+                    {/* Select the hazard */}
                     <Dropdown
                         className="haz-dd" value={state.hazard}
                         name="hazard"
@@ -38,6 +40,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, h
                 </div>
 
                 <div>
+                    {/* Describe the issue */}
                     <InputTextarea placeholder="enter a brief description of the issue"
                         rows={5} cols={30}
                         name="description"
@@ -49,7 +52,8 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, h
                 </div>
                 {props.user.isAdmin === false ?
                     <div>
-                        <span className= "maint-checkbox"><Checkbox id="contact-check"
+                        {/* Check if they agree to be contacted */}
+                        <span className="maint-checkbox"><Checkbox id="contact-check"
                             name="checked"
                             value={state.checked}
                             onChange={e => onCheck(e)} checked={state.checked}>
@@ -58,7 +62,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, h
                             Is it ok to follow up with you about this issue if more information is needed?</label>
                     </div> : ""}
 
-
+                {/* This field will show if the user agrees to be contacted */}
                 {state.checked === true ?
                     <div><InputMask mask="999-999-9999"
                         name="phone"
@@ -74,6 +78,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, h
                     className="p-button-raised p-button-rounded p-button-success"
                     type="submit"
                     onClick={() => {
+                        // Make sure fields are filled out correctly before submitting
                         if (/^\d+(\.\d+)?$/.test(state.location) && state.description !== "" && state.hazard !== "") {
                             handleSubmit()
                         }

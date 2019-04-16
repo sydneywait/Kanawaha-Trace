@@ -18,6 +18,7 @@ const basicUser=(state, props, onChange, onCheck, handleSubmit, handleError)=> {
                 </div>
                 <div>
                     <div className="maint-req-list">
+                    {/* Ongoing maintenance sorted by mile.  Only show those that aren't complete */}
                         <div className="maint-req-header">Ongoing Maintenance</div>
                         <div className="maint-req-items">{props.maintenance.sort((a, b) => a.mile - b.mile).filter((m)=>m.isComplete===false).map(m =>
                             <p>mile {m.mile}--{m.description}</p>

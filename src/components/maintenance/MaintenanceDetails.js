@@ -12,13 +12,10 @@ import { Link } from "react-router-dom";
 
 export default class MaintenanceDetails extends Component {
 
-    state = {
-
-    }
-
 
     componentDidMount() {
         let newState = {}
+        // Get the maintenance item the user clicked on
         ResourceManager.getSingleItem("maintenance", this.props.match.params.maintenanceId)
             .then((request => {
 
@@ -35,6 +32,7 @@ export default class MaintenanceDetails extends Component {
                     updatedDescription: (request.isComplete === true ? request.updatedDescription : ""),
                     dateCompleted: (request.isComplete === true ? request.dateCompleted : "")
                 }
+                // If the maintenance is assigned to an admin, get that ID
                 if (request.userId) {
                     newState.userId = request.userId
                 }
@@ -77,12 +75,14 @@ export default class MaintenanceDetails extends Component {
 
 
         };
+
+        // bind the functions to this component
         this.onChange = this.onChange.bind(this);
         this.completeMaint = this.completeMaint.bind(this)
         this.onHide = this.onHide.bind(this);
-        // this.deleteMaint = this.deleteMaint.bind(this);
     }
 
+    // Handles the visibility of the modal
     onHide() {
         this.setState({
             visible: false,
@@ -90,12 +90,14 @@ export default class MaintenanceDetails extends Component {
         });
     }
 
+    // Handles inputs to any field
     onChange(e) {
         const stateToChange = {}
         stateToChange[e.target.name] = e.target.value
         this.setState(stateToChange)
     }
 
+    // Handles marking the maintenance request as complete
     completeMaint() {
         // get the id of the target maintenance_request object
         const maintId = this.state.id
@@ -131,6 +133,7 @@ export default class MaintenanceDetails extends Component {
         // post the patch to the database
         this.props.patchMaint("maintenance", this.state.id, editedObject)
         this.onHide()
+        // re-render the page
         this.props.history.push(`/maintenance/${this.state.id}`)
 
 
@@ -172,7 +175,7 @@ export default class MaintenanceDetails extends Component {
                 <div className="maint-details-card">
                     <div className="maint-details-header">Request Details</div>
                     <div className={this.state.isComplete ? "request-details-complete" : "request-details"}>
-
+                        {/* // Details of the maintenance request printed to the DOM */}
                         <p><span className="maint-details-subheading">mile:</span> {" " + this.state.mile}</p>
                         <p><span className="maint-details-subheading">Hazard:</span> {this.state.hazard.type}</p>
                         <p> <span className="maint-details-subheading">Submitted:</span>{" "} <Moment format="MM/DD/YY">{this.state.dateSubmitted}</Moment></p>
@@ -190,7 +193,7 @@ export default class MaintenanceDetails extends Component {
 
                     </div>
                     <div className="maint-details-btn-cont">
-
+                        {/* If maintenance is not marked as complete, it can be completed */}
                         {this.state.isComplete === false ? <Button label="Complete"
                             icon="pi pi-check" iconPos="right"
                             id="maint-complete-btn"
@@ -204,6 +207,7 @@ export default class MaintenanceDetails extends Component {
                         >
                         </Button> : ""}
 
+                        {/* If maintenance is not marked as complete, it can be edited */}
                         {this.state.isComplete === false ? <Button label="Edit"
                             icon="pi pi-pencil" iconPos="right"
                             id="maint-edit-btn"
@@ -217,7 +221,7 @@ export default class MaintenanceDetails extends Component {
                         >
                         </Button> : ""}
 
-
+                        {/* Complete or incomplete, maintenance can be deleted */}
                         <Button label="Delete"
                             icon="pi pi-times" iconPos="right"
                             id="maint-delete-btn"
@@ -237,6 +241,8 @@ export default class MaintenanceDetails extends Component {
                         <Link className="back-to-maint" to={"/maintenance"}>Back to Maintenance List</Link>
                     </div>
                     <div>
+
+                        {/* Handles which modals to show */}
                         {this.state.target === "maint-complete-btn" ?
                             CompleteMaintenanceFragment(footer, this.state, this.onChange, this.onHide) : ""}
                         {this.state.target === "maint-assign-btn" ?
