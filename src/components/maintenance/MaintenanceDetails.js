@@ -200,7 +200,7 @@ export default class MaintenanceDetails extends Component {
                             className="p-button-raised p-button-rounded p-button-success"
                             onClick={(e) => {
 
-                                console.log("you clicked", e.currentTarget.id)
+
                                 this.setState({ visible: true, target: e.currentTarget.id })
 
                             }}
@@ -214,7 +214,6 @@ export default class MaintenanceDetails extends Component {
                             className="p-button-raised p-button-rounded p-button-primary"
                             onClick={(e) => {
 
-                                console.log("you clicked", e.currentTarget.id)
                                 this.setState({ visible: true, target: e.currentTarget.id })
 
                             }}
@@ -228,7 +227,6 @@ export default class MaintenanceDetails extends Component {
                             className="p-button-raised p-button-rounded p-button-danger"
                             onClick={(e) => {
 
-                                console.log("you clicked", e.currentTarget.id)
                                 this.setState({ visible: true, target: e.currentTarget.id })
 
                             }}

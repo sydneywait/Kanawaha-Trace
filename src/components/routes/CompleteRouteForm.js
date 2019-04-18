@@ -3,6 +3,8 @@ import { Dialog } from 'primereact/dialog';
 import { InputMask } from 'primereact/inputmask';
 import { Calendar } from 'primereact/calendar';
 
+
+// This is the code for the modal pop-up that allows user to enter data for the date and time of route completion
 const CompleteRouteFragment = (footer, state, onChange, hide)=> {
     return (
         <React.Fragment>
@@ -13,6 +15,7 @@ const CompleteRouteFragment = (footer, state, onChange, hide)=> {
             <Calendar inline={true} value={state.date} required  monthNavigator={true} onChange={(e)=>onChange("date", e)} placeholder="mm/dd/yy"></Calendar></div>
                 </div>
                 <div className="p-inputgroup"><div>Time to Complete:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               {/* input mask ensures time will have consistent format in database */}
                 <InputMask required mask = "99:99:99" value={state.time}
 
                 onChange={(e) => onChange( "time", e)} placeholder="hh:mm:ss"  /><span className="p-inputgroup-addon"><i className="pi pi-clock"></i></span></div>

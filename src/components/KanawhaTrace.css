@@ -5,7 +5,12 @@
     --border-shadow-color: #e9e7e2;
     --card-text-color: #3d3d3F;
     --header-text-color: #f6f5f3;
+    --selected-color: #4682B4;
     --darker-green-text-color:#235c33;
+    --primary:#4682B4;
+    --success:#46b967;
+    --warning:#ffff66;
+    --danger:#ff4d4d;
   }
 
 .home-container{
@@ -13,6 +18,25 @@
     margin-top: 15px;
 display:flex;
 flex: row;
+
+}
+
+.p-button-success{
+    background-color: var(--success) !important
+
+}
+
+.p-button-primary{
+    background-color: var(--primary) !important
+}
+
+.p-button-danger{
+    background-color: var(--danger) !important
+
+}
+
+.p-button-warning{
+    background-color: var(--warning) !important
 
 }
 

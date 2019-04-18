@@ -81,7 +81,7 @@ class NavBar extends React.Component {
           indicatorColor="secondary"
           textColor="secondary"
         >
-        <Tab className="tab" icon={<HomeIcon className="home-icon-override"/>} label="HOME" to="/" component={Link} />
+        <Tab icon={<HomeIcon />} label="HOME" to="/" component={Link} />
         <Tab icon={<ExploreIcon />} label="EXPLORE" to="/explore" component={Link} />
         <Tab icon={<RouteIcon />} label="MY ROUTES" to="/routes" component={Link} />
         <Tab icon={<BuildIcon />} label="MAINTENANCE" to="/maintenance" component={Link} />

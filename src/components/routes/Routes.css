@@ -7,7 +7,7 @@
   }
 
 .route-cont{
-margin-left: 20px;
+    margin-left: 20px;
     display:flex;
     flex-direction: row;
     justify-content: left;
@@ -15,12 +15,12 @@ margin-left: 20px;
 
 }
 .plan-route-cont{
-display:flex;
-flex-direction:column;
-width: 315px;
-border: 1px solid var(--main-border-color);
-margin-right: 50px;
-margin-top:15px;
+    display:flex;
+    flex-direction:column;
+    width: 315px;
+    border: 1px solid var(--main-border-color);
+    margin-right: 50px;
+    margin-top:15px;
 
 }
 .comp-route-cont{
@@ -36,7 +36,6 @@ margin-top:15px;
 }
 
 .plan-card-cont{
-    /* border: 1px solid red; */
     display: flex;
     flex-direction:column;
     align-self: center;
@@ -44,7 +43,6 @@ margin-top:15px;
 }
 
 .comp-card-cont{
-    /* border: 1px solid black; */
     display:flex;
     flex-direction: row;
     flex-wrap:wrap;
@@ -56,7 +54,6 @@ margin-top:15px;
     display:flex;
     flex-direction: row;
     justify-content: space-around;
-    /* border:1px solid red; */
     margin-top: 5px;
 
 
@@ -91,11 +88,11 @@ margin-top:15px;
 }
 
 .route-btn-cont {
-display: flex;
-flex-direction: row;
-justify-content: space-around;
-padding-top:10px;
-margin-top: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top:10px;
+    margin-top: auto;
 /* border: 1px solid gray; */
 
 
@@ -154,8 +151,9 @@ margin-top: auto;
     flex-direction: row;
     justify-content: center;
     text-align: center;
-    /* border: 1px solid gray; */
-    margin-top: 5px;
+    margin: 15px 20px 0px 20px;
+
+
     background: #7dce94;
     color: #f6f5f3;
 
@@ -163,9 +161,7 @@ margin-top: auto;
 .route-card-header{
     display: flex;
     flex-direction: row;
-    /* justify-content: center; */
     text-align: center;
-    /* border: 1px solid red; */
     height:50px;
     background: #7dce94;
     color: var(--card-text-color);

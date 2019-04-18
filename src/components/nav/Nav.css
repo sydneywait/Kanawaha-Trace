@@ -9,17 +9,12 @@
     --hover-color: #B0C4DE;
   }
 
-
-
-
 /* Text Labels */
 .MuiTab-label-48{
     color:var(--label-color)
-
 }
 
 /* Indicator bar */
-
 .MuiPrivateTabIndicator-root-62{
     background-color: var(--selected-color) !important;
 
@@ -32,12 +27,9 @@
  /* Changes the color of the icon on hover */
  .MuiTab-wrapper-46:hover{
     color: var(--hover-color);
-
 }
 
-/* Changes the color of the icon when selected */
+/* Changes the color of the icon when tab is selected */
 .MuiTab-selected-43[aria-selected="true"] .MuiSvgIcon-root-53{
     color: var(--selected-color);
-
-
 }

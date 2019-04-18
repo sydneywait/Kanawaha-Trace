@@ -1,3 +1,5 @@
+// This is the object created when a route is marked as complete
+// and used to make a patch request to the database.
 const completeRoutePatch=(state)=> {
 
     const patchObject = {

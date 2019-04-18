@@ -23,13 +23,11 @@ export default class ApplicationViews extends Component {
                 routes: [],
                 waypoints: [],
                 admins: [],
-
-
-
         }
+
         componentDidMount() {
                 const newState = {}
-
+                // Get all resources and set them to state
                 newState.activeUser = parseInt(sessionStorage.getItem("credentials"))
                 ResourceAPIManager.getAdmins()
                         .then(admins => newState.admins = admins)
@@ -85,6 +83,7 @@ export default class ApplicationViews extends Component {
                         })
         }
 
+        // Used to add any resource to the database and update state
         addResource = (resources, resourceObject, userId) => {
                 const newState = {}
                 ResourceAPIManager.addNewItem(resources, resourceObject)
@@ -92,12 +91,11 @@ export default class ApplicationViews extends Component {
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
-                        }
-                        )
+                        })
         }
 
 
-
+        // Used to delete any resource from the database and update state
         deleteResource = (resources, resourceId, userId) => {
                 const newState = {}
                 ResourceAPIManager.deleteItem(resources, resourceId)
@@ -105,11 +103,10 @@ export default class ApplicationViews extends Component {
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
-                        }
-                        )
+                        })
         }
 
-
+        // used to make a patch request to the database and update state
         patchResource = (resources, resourceId, patchObject, userId) => {
                 const newState = {}
                 ResourceAPIManager.patchItem(resources, resourceId, patchObject)
@@ -117,9 +114,10 @@ export default class ApplicationViews extends Component {
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
-                        }
-                        )
+                        })
         }
+
+        // used to edit any resource and update state
         editResource = (resources, editedObject, userId) => {
                 const newState = {}
                 ResourceAPIManager.editItem(resources, editedObject)
@@ -127,8 +125,7 @@ export default class ApplicationViews extends Component {
                         .then(sss => {
                                 newState[resources] = sss
                                 this.setState(newState)
-                        }
-                        )
+                        })
         }
 
 
@@ -171,22 +168,17 @@ export default class ApplicationViews extends Component {
                                                 return null;
                                         }
 
-
                                 }} />
 
                                 <Route exact path="/routes/:routeId(\d+)" render={props => {
-                                        // if (auth0Client.isAuthenticated()) {
-                                                return <RouteDetails {...props}
-                                                        routes={this.state.routes}
-                                                        waypoints={this.state.waypoints}
-                                                        editRoute={this.editResource}
-                                                        patchRoute={this.patchResource}
-                                                        deleteRoute={this.deleteResource} />
-                                        // }
-                                        // else {
-                                        //         auth0Client.signIn();
-                                        //         return null;
-                                        // }
+
+                                        return <RouteDetails {...props}
+                                                routes={this.state.routes}
+                                                waypoints={this.state.waypoints}
+                                                editRoute={this.editResource}
+                                                patchRoute={this.patchResource}
+                                                deleteRoute={this.deleteResource} />
+
 
                                 }} />
 
@@ -219,13 +211,11 @@ export default class ApplicationViews extends Component {
                                                         patchMaint={this.patchResource}
                                                         hazards={this.state.hazards}
                                                         deleteMaint={this.deleteResource} />
-
                                         }
                                         else {
                                                 auth0Client.signIn();
                                                 return null;
                                         }
-
 
                                 }} />
 

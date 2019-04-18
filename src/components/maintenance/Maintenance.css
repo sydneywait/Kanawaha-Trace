@@ -24,6 +24,10 @@
 
 
 }
+.maint-req-form-body{
+    padding-left:20px;
+    padding-top:15px;
+}
 
 .maint-req-list {
     border: 1px solid var(--main-border-color);
@@ -78,8 +82,9 @@
 
 }
 .maint-details-header{
+
     font-size:2.5em;
-    padding: 20px 0px 20px 0px;
+    padding: 20px 0px 20px 15px;
     background: var(--main-header-color);
     color: var(--header-text-color);
 }
@@ -94,8 +99,16 @@
     background-color: red;
 }
 
+.request-details{
+
+    padding-left:20px;
+    padding-top:15px;
+}
 .request-details-complete{
     color: red;
+    padding-left:20px;
+    padding-top:15px;
+
 }
 
 .maint-assigned, .maint-unassigned, .maint-complete{
@@ -143,7 +156,7 @@
 
 .maint-details-btn-cont{
 
-    margin-top:15px;
-    margin-bottom:15px;
+    margin: 15px 0px 15px 15px;
+
 
 }
