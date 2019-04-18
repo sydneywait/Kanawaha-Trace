@@ -107,7 +107,7 @@ export default class Explore extends Component {
                         {/* Renders conditionally to give user links to their new routes and all routes */}
                         {this.state.message === "Your route was created!" ?
                             <React.Fragment><div><Link to={`/routes/${this.state.newRouteId}`}>Click to see your new Route</Link></div>
-                                <div><Link to="/routes">Click to see all Routes</Link></div>
+                                <div><Link className="link"to="/routes">Click to see all Routes</Link></div>
                             </React.Fragment> : ""}
                     </div>
                     <div className="exp-right">

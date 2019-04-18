@@ -271,7 +271,7 @@ export default class RouteDetails extends Component {
             <i class="pi pi-chevron-left"></i>
 
             {/* Link to return to the routes page */}
-            <Link className="back-to-routes" to={"/routes"}>Back to Route List</Link>
+            <Link className="link back-to-routes" to={"/routes"}>Back to Route List</Link>
 
 
             {/* these logic operations will engage the modal pop-ups based on which button is clicked */}

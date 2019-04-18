@@ -26,7 +26,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, handleError, o
 
                             <div className="maint-card-text" key={m.id} ><span className="maint-checkbox"><Checkbox id={`checkbox-${m.id}`} onChange={(e) => onClick(e)}></Checkbox></span>
 
-                                <Link to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
+                                <Link className="link" to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
 
                         )}
                     </div>
@@ -43,7 +43,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, handleError, o
                         {props.maintenance.sort((a,b)=>a.mile-b.mile).filter((request) => request.isComplete === true).map(m =>
                             <div className="maint-card-text" key={m.id} ><span className="maint-checkbox"><Checkbox checked={true}></Checkbox></span>
 
-                                <Link to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
+                                <Link  className="link"to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
 
                         )}
                     </div>

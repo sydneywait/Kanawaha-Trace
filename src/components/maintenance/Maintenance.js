@@ -95,7 +95,6 @@ export default class Maintenance extends Component {
         this.setState(newState)
         // re-render the page
         this.props.history.push("/maintenance")
-
     }
 
 
@@ -107,11 +106,6 @@ export default class Maintenance extends Component {
         // patch the maintenance_request with the submitted information
         this.props.patchMaint("maintenance", maintId, maintObject)
         this.setState({ warning: "" })
-
-
-
-
-
     }
 
     // error message when form is not complete

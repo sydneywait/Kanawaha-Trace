@@ -91,6 +91,7 @@ padding: 15px 0 15px 0;
     padding: 20px 0px 20px 15px;
     background: var(--main-header-color);
     color: var(--header-text-color);
+
 }
 
 .maint-details-subheading{
@@ -134,7 +135,8 @@ padding: 15px 0 15px 0;
     padding-top: 15px;
     padding-bottom: 20px;
     text-align: center;
-    font-size: 2em;
+    font-size: 2.5em;
+    line-height: 35px;
 }
 
 .maint-form-container{

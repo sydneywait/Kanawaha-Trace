@@ -236,7 +236,7 @@ export default class MaintenanceDetails extends Component {
                     <div className="maint-details-back-cont">
                         <i className="pi pi-chevron-left"></i>
 
-                        <Link className="back-to-maint" to={"/maintenance"}>Back to Maintenance List</Link>
+                        <Link className="link back-to-maint" to={"/maintenance"}>Back to Maintenance List</Link>
                     </div>
                     <div>
 

@@ -5,6 +5,7 @@
     --border-shadow-color: #e9e7e2;
     --card-text-color: #3d3d3F;
     --header-text-color: #f6f5f3;
+    --hover-color: #B0C4DE;
     --selected-color: #4682B4;
     --darker-green-text-color:#235c33;
     --primary:#4682B4;
@@ -13,11 +14,24 @@
     --danger:#ff4d4d;
   }
 
+  a{
+      color:var(--selected-color) !important;
+  }
+
+  a:hover{
+      color: var(--hover-color) !important;
+  }
+
+  .p-checkbox-box[aria-checked="true"]{
+    background-color: var(--primary) !important
+
+  }
+
 .home-container{
     margin-left:20px;
     margin-top: 15px;
-display:flex;
-flex: row;
+    display:flex;
+    flex: row;
 
 }
 
@@ -44,20 +58,13 @@ flex: row;
 .home-sidebar{
     background: var(--main-header-color);
     width:15%;
-
-
-
 }
 .home-body{
     border: 1px solid var(--main-border-color);
-
-
-width:70%;
-padding-left: 20px;
+    padding: 0 20px 20px 20px;
+    width:70%;
 
 }
-
-
 
 .home-page-title {
     font-size: 3em;
