@@ -61,19 +61,26 @@ padding: 15px 0 15px 0;
 
 
 .maint-admin-col1, .maint-admin-col2{
-    font-size: 2em;
-    padding: 10px 0 10px 0;
-    display: flex;
+    display:flex;
     justify-content: center;
+    font-size: 2em;
     background: var(--main-header-color);
     color: var(--header-text-color);
     text-align: center;
     line-height: 30px;
+    height:75px;
+
+}
+
+.maint-admin-col-head{
+    margin-top: auto;
+    margin-bottom: auto;
+
 }
 
 .maint-admin-col1{
 
-    padding-bottom: 40px;
+    /* padding-bottom: 40px; */
 
 }
 

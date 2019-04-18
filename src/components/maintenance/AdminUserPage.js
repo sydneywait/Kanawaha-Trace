@@ -21,7 +21,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, handleError, o
                 <div className="maint-lists-cont">
                     <div className="maint-assigned">
                     {/* Tasks assigned to me, sorted by mile */}
-                        <div className="maint-admin-col1">Assigned to me</div>
+                        <div className="maint-admin-col1"><span className="maint-admin-col-head">Assigned to me</span></div>
                         <div className="maint-card-text-cont">
                         {props.maintenance.sort((a,b)=>a.mile-b.mile).filter((request) => request.isComplete === false && request.userId === activeUser).map(m =>
 
@@ -34,7 +34,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, handleError, o
                     </div>
                     <div className="maint-unassigned">
                     {/* Tasks assigned to other people, sorted by mile */}
-                        <div className="maint-admin-col2">Assigned to others or Unassigned</div>
+                        <div className="maint-admin-col2"><span className="maint-admin-col-head">Assigned to others or Unassigned</span></div>
                         <div className="maint-card-text-cont">
                         {props.maintenance.sort((a,b)=>a.mile-b.mile).filter((request) => request.isComplete === false && request.userId !== activeUser).map(m =>
                             <div key={m.id} className={!m.userId ? "unassigned maint-card-text" : "assigned maint-card-text"}><Link className="link" to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
@@ -42,7 +42,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, handleError, o
                     </div>
                     <div className="maint-complete">
                     {/* Tasks that are complete, sorted by mile */}
-                        <div className="maint-admin-col1">Complete</div>
+                        <div className="maint-admin-col1"><span className="maint-admin-col-head">Complete</span></div>
                         <div className="maint-card-text-cont">
                         {props.maintenance.sort((a,b)=>a.mile-b.mile).filter((request) => request.isComplete === true).map(m =>
                             <div className="maint-card-text" key={m.id} ><span className="maint-checkbox"><Checkbox checked={true}></Checkbox></span>
