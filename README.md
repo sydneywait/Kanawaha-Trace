@@ -1,3 +1,28 @@
+# Welcome to the Kanawha Trace Trail Guide
+
+The Kanawha Trace Trail (also called The KT Trail) is an approximately 32-mile trail that runs from Barboursville to Frasiers Bottom WV.  The Kanawha Trace Trail guide is a web-based application that allows users of the KT Trail to plan routes, record dates and times of routes they have completed, and submit maintenance requests.  The purpose of this application is to provide current and updated information about the status of the trail, and allow users to plan and navigate with tools that are easier to understand than paper-based topographical maps.  A secondary purpose is to improve the visibility of the trail and encourage new and existing users to venture out more often.
+
+The target users are trail runners, hikers, mountain-bikers and backpackers who are interested in learning more about the features and technical aspects the KT trail.
+
+See the application online at https://kanawha-trace.herokuapp.com
+
+## Home Page
+
+## Explore
+
+## Routes
+
+## Maintenance
+
+
+
+
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
