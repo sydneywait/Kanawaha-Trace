@@ -5,6 +5,7 @@ import { Dropdown} from 'primereact/dropdown';
 
 const AssignMaintFragment = (footer, state, admins, onChange, hide)=> {
 
+    // Option to assign maintenance to an admin (modal form)
     return (
         <React.Fragment>
             <Dialog header="Assign an Admin to this Request:"

@@ -1,3 +1,4 @@
+// This function is called when a user plans a new route in the 'explore' page
 const makeNewRoute=(state)=> {
 
     let message = "";

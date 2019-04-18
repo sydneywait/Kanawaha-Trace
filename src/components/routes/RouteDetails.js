@@ -17,6 +17,8 @@ export default class RouteDetails extends Component {
         this.updateComponent(this.props)
     }
 
+    // This functions is called to update this component when any changes are made to this route
+    // It causes the page to re-render
     updateComponent(props) {
         let newState = {}
         ResourceManager.getSingleItem("routes", props.match.params.routeId)
@@ -59,6 +61,7 @@ export default class RouteDetails extends Component {
 
 
         };
+        // bind functions to this component
         this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -105,6 +108,8 @@ export default class RouteDetails extends Component {
     // this function is called to make a new route object based on the edit of start and end points
     handleSubmit() {
         const thingReturned = MakeNewRoute(this.state)
+        // If the route cannot be created, it returns an error message and an empty object
+        // If the route is created, it returns and object and an empty error message
         const message = thingReturned[0]
         const newRoute = thingReturned[1]
         newRoute.id = this.state.id
@@ -116,7 +121,9 @@ export default class RouteDetails extends Component {
                 startId: newRoute.startId,
                 endId: newRoute.endId
             })
+        // Check if the route was created.  If so, edit the route
         newRoute.name ? this.props.editRoute("routes", newRoute, this.state.userId) : console.log("no route")
+        // Used to cause the map to mount again.  Map is built when the map component mounts (not render)
         window.location.reload(false)
     }
 
@@ -136,7 +143,6 @@ export default class RouteDetails extends Component {
                                 && /^([0-1]?\d|2[0-3]):([0-5]?\d):([0-5]?\d)$/.test(this.state.time)) {
                                 this.onHide()
                                 this.completeRoute()
-                                console.log("target", e.currentTarget.id)
                                 this.setState({ target: e.currentTarget.id })
                             }
                             // Otherwise, set an error message according to which button was clicked
@@ -171,17 +177,17 @@ export default class RouteDetails extends Component {
                    user clicked on by looking at the `this.props.routes`
                    collection that was passed down from ApplicationViews
         */
+        //    Find the route that matches this route
         const route = this.props.routes.find(a => a.id === parseInt(this.props.match.params.routeId)) || {}
-        const routeDate = <Moment format="MM/DD/YY">{route.dateCompleted}</Moment>
 
+        // Find the start and end points and calculate the mileage difference
         const start = this.props.waypoints.find(a => a.id === this.state.startId) || { mile: "" }
         const end = this.props.waypoints.find(a => a.id === this.state.endId) || { mile: "" }
         const diff = start.mile - end.mile
 
-        console.log("start", start, "end", end, "diff", diff)
 
         return (<React.Fragment>
-            <div className="route-card-header">
+            <div className="route-details-header">
                 {/* insert trail marker picture based on the direction of travel */}
                 {(route.direction === true ?
                     <img src={window.location.origin + "/images/west_east.jpg"} height="80px" className="route-marker" /> :
@@ -198,8 +204,6 @@ export default class RouteDetails extends Component {
                         waypoints={this.props.waypoints}
                         start={this.state.start}
                         end={this.state.end}
-                        hazardArray={this.props.hazardArray}
-                        featureArray={this.props.featureArray}
                         updateComponent={this.updateComponent} />
                 </div>
                 {/* give information about the route such as length and any hazards or features */}
@@ -209,7 +213,7 @@ export default class RouteDetails extends Component {
                             <p className="route-detail-text"><span className="route-detail-subheadings">Date Completed:</span> {<Moment format="MM/DD/YY">{this.state.dateCompleted}</Moment>}</p>
                             <p className="route-detail-text"><span className="route-detail-subheadings">Time to Complete:</span> {this.state.timeToComplete}</p>
                         </React.Fragment> : "")}
-                    <p className="route-detail-text"><span className="route-detail-subheadings">Elevation Gain:</span> </p>
+                    {/* <p className="route-detail-text"><span className="route-detail-subheadings">Elevation Gain:</span> </p> */}
                     <p className="route-detail-text"><span className="route-detail-subheadings">Mileage:</span> {Math.abs(diff).toFixed(2)} miles</p>
                     <p className="route-detail-text"><span className="route-detail-subheadings">Description:</span>
                         <ul>{this.props.waypoints.filter(w => w.mile >= (start.mile < end.mile ? start.mile : end.mile) && w.mile <= (start.mile < end.mile ? end.mile : start.mile)).sort((a, b) => a.mile - b.mile).map((w) =>
@@ -224,7 +228,9 @@ export default class RouteDetails extends Component {
 
 
             <div className="route-details-btn-cont">
-
+                {/* Render the buttons conditionally if route is complete or not */}
+                {/* If route is not complete, user can mark as complete */}
+                {/* If route is complete, user can edit the date/time completed */}
                 <Button label={route.isComplete === false ? "Complete" : "Edit Date/Time"}
                     icon={(route.isComplete === false ? "pi pi-check" : "pi pi-pencil")}
                     id="complete-route"
@@ -236,6 +242,9 @@ export default class RouteDetails extends Component {
                         target: e.currentTarget.id,
                     })} />
 
+                {/* Render the buttons conditionally if route is complete or not */}
+                {/* If route is not complete, user can edit start and end points */}
+                {/* If route is complete, user cannot edit start and end points, only date and time (see above) */}
 
                 {route.isComplete === false ? <Button label="Edit" icon="pi pi-pencil"
                     id="edit-route-detail"
@@ -261,7 +270,8 @@ export default class RouteDetails extends Component {
 
             <i class="pi pi-chevron-left"></i>
 
-            <Link className="back-to-routes" to={"/routes"}>Back to Route List</Link>
+            {/* Link to return to the routes page */}
+            <Link className="link back-to-routes" to={"/routes"}>Back to Route List</Link>
 
 
             {/* these logic operations will engage the modal pop-ups based on which button is clicked */}

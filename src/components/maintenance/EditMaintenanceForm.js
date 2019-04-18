@@ -1,9 +1,10 @@
-// this module creates the react fragment modal that will be used to assign an admin to a request
 import React from "react";
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import {InputText} from 'primereact/inputtext'
 import {InputTextarea} from 'primereact/inputtextarea'
+
+// this module creates the react fragment modal that will be used to assign an admin to a request
 
 const EditMaintFragment = (footer, state, admins, hazards, onChange, hide) => {
 
@@ -17,6 +18,7 @@ const EditMaintFragment = (footer, state, admins, hazards, onChange, hide) => {
                 footer={footer} onHide={hide} >
 
                 <div>
+                    {/* review the mile point  */}
                     <InputText value={state.mile} onChange={onChange}
                         name="mile"
                         value={state.mile}
@@ -25,6 +27,7 @@ const EditMaintFragment = (footer, state, admins, hazards, onChange, hide) => {
                     </InputText>
                 </div>
                 <div >
+                    {/* Select or change the hazard */}
                     <Dropdown
                         className="haz-dd" value={state.hazard}
                         name="hazard"
@@ -36,6 +39,7 @@ const EditMaintFragment = (footer, state, admins, hazards, onChange, hide) => {
                 </div>
 
                 <div>
+                    {/* Edit or update the description of the hazard */}
                     <InputTextarea placeholder="enter a brief description of the issue"
                         rows={5} cols={30}
                         name="description"
@@ -44,6 +48,7 @@ const EditMaintFragment = (footer, state, admins, hazards, onChange, hide) => {
                         autoResize={true}>
                     </InputTextarea>
                 </div>
+                {/* Assign it to an administrator */}
                 <div>Assign:
                 <Dropdown
                         name="assigned"

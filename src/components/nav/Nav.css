@@ -1,0 +1,42 @@
+:root {
+    --card-bg-color: #f9f8fd;
+    --main-header-color: #7dce94;
+    --main-border-color: #d3cfc5;
+    --border-shadow-color: #e9e7e2;
+    --label-color: #3d3d3F;
+    --selected-color: #4682B4;
+    --ripple-color: #6495ED;
+    --hover-color: #a3c2db;
+  }
+
+/* Text Labels */
+.MuiTab-label-48{
+    color:var(--label-color)
+}
+
+/* Indicator bar */
+.MuiPrivateTabIndicator-root-62{
+    background-color: var(--selected-color) !important;
+
+}
+/* Changes the ripple color */
+.MuiTouchRipple-root-65{
+    color: var(--ripple-color) !important;
+ }
+
+ .MuiButtonBase-root-50[aria-selected="false"] .MuiSvgIcon-root-53{
+    color:var(--main-border-color) ;
+ }
+
+ /* Changes the color of the icon on hover */
+ .MuiButtonBase-root-50[aria-selected="false"] .MuiTab-wrapper-46:hover .MuiSvgIcon-root-53{
+    color: var(--hover-color) !important;
+}
+
+
+/* Changes the color of the icon when tab is selected */
+.MuiTab-selected-43[aria-selected="true"] .MuiSvgIcon-root-53{
+    color: var(--selected-color) !important;
+}
+
+

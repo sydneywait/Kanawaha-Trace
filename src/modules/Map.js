@@ -27,7 +27,7 @@ export default class Map extends Component {
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: 'mapbox://styles/sydneyroo/cju1kgcmn0u041fpbg636snah',
+            style: 'mapbox://styles/sydneyroo/cju32seef0x4e1gmbx78sdk4e',
             center: [lng, lat],
             zoom
         });
@@ -45,18 +45,8 @@ export default class Map extends Component {
         // add markers to map
         this.props.waypoints.filter(w => w.isAccess === true).map((w) => {
 
-            addMapMarker("marker-feature", w, map)
+            addMapMarker("marker-ends", w, map)
 
-            // create a HTML element for each feature
-            var el = document.createElement('div');
-            el.className = 'marker';
-
-            // make a marker for each access point and add to the map
-            new mapboxgl.Marker(el)
-                .setLngLat([w.gps_lng, w.gps_lat])
-                .setPopup(new mapboxgl.Popup({ offset: 25 })
-                    .setHTML(`<h3>${w.name}</h3><p>Mile ${w.mile}<p>`))
-                .addTo(map);
         });
         map.getCanvas().style.cursor = 'default'
 

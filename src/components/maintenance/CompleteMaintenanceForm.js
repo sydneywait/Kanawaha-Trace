@@ -4,7 +4,7 @@ import {InputTextarea} from 'primereact/inputtextarea';
 import { Calendar } from 'primereact/calendar';
 
 
-
+// Dialog modal to mark a maintenance request as complete
 const CompleteMaintFragment = (footer, state, onChange, hide)=> {
     return (
         <React.Fragment>
@@ -12,10 +12,10 @@ const CompleteMaintFragment = (footer, state, onChange, hide)=> {
             visible={state.visible} style={{ width: '50vw' }}
              footer={footer} onHide={hide} >
                 <div>Date Completed:</div>
-            <div><Calendar value={state.date} inline={true}
+            <div><Calendar value={state.dateCompleted} inline={true}
             required
             monthNavigator={true}
-            name="date"
+            name="dateCompleted"
             onChange={onChange}
             placeholder="mm/dd/yy"></Calendar>
                 </div>

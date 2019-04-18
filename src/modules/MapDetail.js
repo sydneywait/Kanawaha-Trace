@@ -16,6 +16,7 @@ export default class MapDetail extends Component {
 
     constructor(props) {
         super(props);
+        // Set an initial longitude and latitude for the center of the map
         this.state = {
             lng: -82.1032,
             lat: 38.50565,
@@ -29,33 +30,13 @@ export default class MapDetail extends Component {
         };
     }
 
-    static getDerivedStateFromProps(props, state) {
-        // const route = props.waypoints.find(r => r.id === parseInt(props.routeId)) || {}
-        // const start = props.waypoints.find(s => s.id === parseInt(route.startId))
-        // const end = props.waypoints.find(d => d.id === parseInt(route.endId))
 
-        // if (start !== state.start || end !== state.end) {
-
-        //     return {
-
-        //         route: route,
-        //         start: start,
-        //         end: end
-        //     }
-        // }
-
-
-
-        // this.props.waypoints.filter(h => h.mile > newState.start.mile && h.mile < newState.end.mile).map((h) => {
-
-
-
-    }
 
     componentDidMount(props) {
         let newState = {}
         let map = ""
         let LngLatBounds = []
+        // Get the route details for the current route
         ResourceManager.getSingleItem("routes", this.props.routeId)
             .then(route => {
                 newState = {
@@ -69,25 +50,24 @@ export default class MapDetail extends Component {
 
             .then(() => ResourceManager.getAllItems("waypoints"))
             .then((waypoints) => {
-
+                // Match the start and end points to get the gps coordinates
                 const start = waypoints.find(waypoint => waypoint.id === newState.startId)
                 const end = waypoints.find(waypoint => waypoint.id === newState.endId)
                 newState.start = start
                 newState.end = end
-
+                // Set the longitude and latitude bounds based on the start and end points
                 LngLatBounds = [[start.gps_lng, start.gps_lat], [end.gps_lng, end.gps_lat]]
                 newState.LngLatBounds = LngLatBounds
-                console.log(LngLatBounds)
-
+                // Link to the map on mapbox
                 map = new mapboxgl.Map({
                     container: this.mapContainer,
-                    style: 'mapbox://styles/sydneyroo/cju1kgcmn0u041fpbg636snah',
+                    style: 'mapbox://styles/sydneyroo/cju32seef0x4e1gmbx78sdk4e',
                     center: [lng, lat],
                     zoom
                 });
-                newState.map=map
+                // Set the map to state to use after component mounts?
+                newState.map = map
                 // set the bounds for the current view to only show the selected trail
-                // This will be set with the start and end points
                 map.fitBounds(LngLatBounds, {
                     padding: { top: 100, bottom: 100, left: 100, right: 100 }
                 });
@@ -102,9 +82,8 @@ export default class MapDetail extends Component {
                 });
 
                 // add markers to map to milepoints with descriptions
-                waypoints.filter(w => w.mile > (start.mile<end.mile?start.mile:end.mile) && w.mile < (start.mile<end.mile?end.mile:start.mile)).map((w) => {
+                waypoints.filter(w => w.mile > (start.mile < end.mile ? start.mile : end.mile) && w.mile < (start.mile < end.mile ? end.mile : start.mile)).map((w) => {
                     addMapMarker("marker-feature", w, map)
-                    console.log("inside filter")
                 });
 
 
@@ -113,6 +92,8 @@ export default class MapDetail extends Component {
                 addMapMarker("marker-ends", end, map)
 
                 this.setState(newState)
+                map.getCanvas().style.cursor = 'default'
+
 
             })
 
@@ -120,22 +101,8 @@ export default class MapDetail extends Component {
         const { lng, lat, zoom } = this.state;
 
 
-   }
-
-   testFunction(){
-       console.log("you did it!!")
-   }
-
-    componentDidUpdate() {
-        // const gpsObj={
-        //         gps_lat:-82.1032,
-        //         gps_lng:38.50565,
-        //         name: "test",
-        //         mile: 10
-
-        //     }
-        //     addMapMarker("marker-hazard", gpsObj, this.state.map)
     }
+
 
 
     render() {
@@ -151,11 +118,12 @@ export default class MapDetail extends Component {
 
 
                 <div className="map">
+                {/* Add a legend to the map that shows the coordinates and zoom level */}
                     <div className="inline-block absolute top left mt12 ml12 bg-darken75 color-white z1 py6 px12 round-full txt-s txt-bold">
                         <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom}`}</div>
                     </div>
                     <div className='map-overlay' id='legend'></div>
-
+                    {/* render the map in the selected container in the DOM */}
                     <div ref={el => this.mapContainer = el} className="absolute top right left bottom" />
                 </div>
             </React.Fragment>

@@ -8,7 +8,7 @@ const addMapMarker=(classname, gpsObj, map)=>{
     var el = document.createElement('div');
     el.className = classname;
 
-    // make a marker for each access point and add to the map
+    // make a marker for each access point or feature and add to the map
     new mapboxgl.Marker(el)
         .setLngLat([gpsObj.gps_lng, gpsObj.gps_lat])
         .setPopup(new mapboxgl.Popup({ offset: 25 })
