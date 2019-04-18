@@ -183,7 +183,7 @@ export default class MaintenanceDetails extends Component {
                         {this.state.okToContact === true ? <p><span className="maint-details-subheading">Contact phone:</span>{" " + this.state.phone}</p> : ""}
                         <p><span className="maint-details-subheading">Description of Problem:</span>{" " + this.state.description}</p>
 
-                        {this.state.isComplete === true ? <p>Resolution:{" " + this.state.updatedDescription}</p> : ""}
+                        {this.state.isComplete === true ? <p><span className="maint-details-subheading">Resolution:</span>{" " + this.state.updatedDescription}</p> : ""}
 
                         <p><span className="maint-details-subheading">Assigned to:</span> {this.state.assigned.name ? this.state.assigned.name : <span className="unassigned">unassigned</span>}</p>
                         {this.state.isComplete ? <p><span className="maint-details-subheading">Completed:</span>{" "}<Moment format="MM/DD/YY">{this.state.dateCompleted}</Moment> </p> : ""}

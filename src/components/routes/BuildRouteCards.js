@@ -35,12 +35,12 @@ const buildRouteCards = (status, props, reverseRoute, onClick) => {
                         </div>
                         {/* Conditionally render date and time if route is complete */}
                         {(route.isComplete === true ?
-                            <div className="route-text-cont">
+                            <div className="route-card-text-cont">
                                 <div className="date-time">Date Completed: {<Moment format="MM/DD/YY">
                                     {route.dateCompleted}</Moment>}</div>
                                 <div className="date-time">Time to Complete: {route.timeToComplete}</div></div>
                             :
-                            <div className="route-text-cont">
+                            <div className="route-card-text-cont">
                             </div>)}
 
                         {/* Conditionally render reverse button if route is not complete */}

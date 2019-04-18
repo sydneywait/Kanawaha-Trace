@@ -20,9 +20,9 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, handleError, o
                 </div>
                 <div className="maint-lists-cont">
                     <div className="maint-assigned">
-                    {/* Tasks assigned to me */}
+                    {/* Tasks assigned to me, sorted by mile */}
                         <div className="maint-admin-col1">Assigned to me</div>
-                        {props.maintenance.filter((request) => request.isComplete === false && request.userId === activeUser).map(m =>
+                        {props.maintenance.sort((a,b)=>a.mile-b.mile).filter((request) => request.isComplete === false && request.userId === activeUser).map(m =>
 
                             <div className="maint-card-text" key={m.id} ><span className="maint-checkbox"><Checkbox id={`checkbox-${m.id}`} onChange={(e) => onClick(e)}></Checkbox></span>
 
@@ -31,16 +31,16 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, handleError, o
                         )}
                     </div>
                     <div className="maint-unassigned">
-                    {/* Tasks assigned to other people */}
+                    {/* Tasks assigned to other people, sorted by mile */}
                         <div className="maint-admin-col2">Assigned to others or Unassigned</div>
-                        {props.maintenance.filter((request) => request.isComplete === false && request.userId !== activeUser).map(m =>
+                        {props.maintenance.sort((a,b)=>a.mile-b.mile).filter((request) => request.isComplete === false && request.userId !== activeUser).map(m =>
                             <div key={m.id} className={!m.userId ? "unassigned maint-card-text" : "assigned maint-card-text"}><Link to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
                         )}
                     </div>
                     <div className="maint-complete">
-                    {/* Tasks that are complete */}
+                    {/* Tasks that are complete, sorted by mile */}
                         <div className="maint-admin-col1">Complete</div>
-                        {props.maintenance.filter((request) => request.isComplete === true).map(m =>
+                        {props.maintenance.sort((a,b)=>a.mile-b.mile).filter((request) => request.isComplete === true).map(m =>
                             <div className="maint-card-text" key={m.id} ><span className="maint-checkbox"><Checkbox checked={true}></Checkbox></span>
 
                                 <Link to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>

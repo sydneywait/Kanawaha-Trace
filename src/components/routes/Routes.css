@@ -4,6 +4,7 @@
     --main-border-color: #d3cfc5;
     --border-shadow-color: #e9e7e2;
     --card-text-color: #3d3d3F;
+    --header-text-color: #f6f5f3;
   }
 
 .route-cont{
@@ -69,8 +70,9 @@
     background:var(--card-bg-color);
     box-shadow: 3px 3px var(--border-shadow-color);
 
-
-
+}
+.route-card-text-cont{
+    padding: 5px 5px 0px 10px;
 
 }
 
@@ -83,8 +85,8 @@
 .route-cont-header{
     font-size:2.5em;
     padding: 20px 0 20px 0;
-    background: #7dce94;
-    color: #f6f5f3;
+    background:var(--main-header-color);
+    color: var(--header-text-color);
 }
 
 .route-btn-cont {
@@ -143,7 +145,7 @@
     height:400px;
     overflow-y: scroll;
     padding-left: 15px;
-    border: 1px solid gray;
+    border: 1px solid var(--main-border-color)
 }
 
 .route-details-header{
@@ -152,10 +154,8 @@
     justify-content: center;
     text-align: center;
     margin: 15px 20px 0px 20px;
-
-
-    background: #7dce94;
-    color: #f6f5f3;
+    background: var(--main-header-color);
+    color: var(--header-text-color);
 
 }
 .route-card-header{
@@ -163,29 +163,22 @@
     flex-direction: row;
     text-align: center;
     height:50px;
-    background: #7dce94;
+    background: var(--main-header-color);
     color: var(--card-text-color);
-
-
-
 }
 
 .route-name-header{
-    margin: auto;
-
-
+    margin: auto 5px auto 5px;
 }
 
 .route-marker{
     align-self: center;
-
 }
 
 .route-details-img-cont{
     width:500px;
     height: 400px;
     position: relative;
-
 }
 
 .route-details-btn-cont{

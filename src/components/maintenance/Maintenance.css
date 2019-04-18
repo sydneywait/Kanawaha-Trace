@@ -29,6 +29,10 @@
     padding-top:15px;
 }
 
+.maint-req-form-btn-cont{
+padding: 15px 0 15px 0;
+}
+
 .maint-req-list {
     border: 1px solid var(--main-border-color);
     margin-top: 15px;
