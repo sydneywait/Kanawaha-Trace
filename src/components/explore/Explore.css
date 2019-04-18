@@ -23,7 +23,8 @@
     margin-left:20px;
     border: 1px solid var(--main-border-color);
     margin-top: 15px;
-    width: 80vw;
+    width: 85%;
+    background-color: var(--card-bg-color);
 }
 
 .exp-dd-cont{
@@ -67,7 +68,7 @@
 
 .exp-left{
     margin: 0 20px 0 20px;
-    width: 350px;
+    width: 450px;
 }
 
 .exp-msg{
@@ -80,8 +81,16 @@
 }
 
 .exp-right{
+    margin-top:15px;
     position: relative;
-    width: 500px;
+    width: 600px;
+    height: 500px;
+
+}
+
+.map-container{
+
+    width: 600px;
     height: 500px;
 
 }

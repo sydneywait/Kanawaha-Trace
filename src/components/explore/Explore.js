@@ -112,7 +112,7 @@ export default class Explore extends Component {
                     </div>
                     <div className="exp-right">
                     {/* call the map component to render the map */}
-                        <Map waypoints={this.props.waypoints} />
+                        <Map className="map-container" waypoints={this.props.waypoints} />
 
                     </div>
                 </div>
