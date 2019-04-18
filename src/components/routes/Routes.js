@@ -6,6 +6,7 @@ import CompleteRoutePatch from "./CompleteRoutePatch"
 import CompleteRouteFragment from "./CompleteRouteForm"
 import ReverseRoutePatch from "./ReverseRoutePatch"
 import deleteConfirm from "../../modules/DeleteConfirm"
+import buildRouteCards from "./BuildRouteCards"
 
 
 
@@ -27,11 +28,17 @@ export default class Routes extends Component {
         // Bind functions to this component
         this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
+        this.reverseRoute=this.reverseRoute.bind(this);
     }
 
     // These functions handle the visibility of the modal/pop-ups
-    onClick(event) {
-        this.setState({ visible: true });
+    onClick(e, route) {
+        this.setState({
+            visible: true,
+            currentRoute: route,
+            target: e.currentTarget.id
+        })
+
     }
 
     onHide(event) {
@@ -62,84 +69,7 @@ export default class Routes extends Component {
     }
 
 
-    // Function used to build the route cards for each view (completed/not completed)
-    buildRouteCards(status) {
-        return (
-            <React.Fragment>
-
-                {
-                    // conditionally create the route cards based on status (isComplete = true or false)
-                    this.props.routes.filter((route) => route.isComplete === status).map((route) =>
-
-                        <div className="route-card-cont">
-                            <div className="route-card-header">
-                                <h4 className="route-name-header">{route.name}</h4>
-                            </div>
-                            <div className="route-img-cont">
-                                {/* Insert the trail marker based on the trail direction */}
-                                {(route.direction === true ?
-                                    <img src={window.location.origin + "/images/west_east.jpg"} height="100px" className="exp-map" /> :
-                                    <img src={window.location.origin + "/images/east_west.jpg"} height="100px" className="exp-map" />
-                                )}
-                                {/* Insert a placeholder map that shows a section of trail */}
-                                <img src={window.location.origin + "/images/section_map.jpg"} height="100px" className="exp-map" />
-                            </div>
-                            {/* Conditionally render date and time if route is complete */}
-                            {(route.isComplete === true ?
-                                <div className="route-text-cont">
-                                    <div className="date-time">Date Completed: {<Moment format="MM/DD/YY">
-                                        {route.dateCompleted}</Moment>}</div>
-                                    <div className="date-time">Time to Complete: {route.timeToComplete}</div></div>
-                                :
-                                <div className="route-text-cont">
-                                    </div>)}
-
-                            {/* Conditionally render reverse button if route is not complete */}
-                            {(route.isComplete === false ?
-                                <div className="route-btn-cont">
-                                    <Button label="Reverse"
-                                        icon="pi pi-refresh" iconPos="right"
-                                        className="p-button-raised p-button-rounded p-button-warning"
-                                        onClick={() => {
-                                            this.reverseRoute(route)
-                                        }} />
-
-                                    {/* Conditionally render complete button if route is not complete */}
-                                    <Button label="Complete" icon="pi pi-check"
-                                        id="complete-route"
-                                        iconPos="right"
-                                        className="p-button-raised p-button-rounded p-button-success"
-                                        onClick={(e) => this.setState({
-                                            visible: true,
-                                            currentRoute: route,
-                                            target: e.currentTarget.id
-                                        })} />
-                                </div> : "")}
-
-                            <div className="route-btn-cont">
-                                {/* Render details button and delete button regardless of complete or not complete */}
-                                <Button label="Details" icon="pi pi-pencil"
-                                    iconPos="right"
-                                    className="p-button-raised p-button-rounded p-button-primary"
-                                    onClick={() => { this.props.history.push(`/routes/${route.id}`) }} />
-                                <Button label="Delete"
-                                    id="delete-route"
-                                    icon="pi pi-trash" iconPos="right"
-                                    className="p-button-raised p-button-rounded p-button-danger"
-                                    onClick={(e) => this.setState({
-                                        visible: true,
-                                        currentRoute: route,
-                                        target: e.currentTarget.id
-                                    })} />
-                            </div>
-                        </div>
-                    )}
-
-            </React.Fragment>
-        )
-    }
-
-    render() {
+       render() {
         // This footer is used for the modal popup to mark route complete
         const footer = (
             <div>
@@ -163,12 +93,12 @@ export default class Routes extends Component {
                 {/* Build two columns (sections) for planned and completed routes */}
                 <div className="route-cont">
                     <div className="plan-route-cont"><h2 className="route-cont-header">Planned Routes</h2>
-                        <div className="plan-card-cont">{this.buildRouteCards(false)}</div>
+                        <div className="plan-card-cont">{buildRouteCards(false, this.props, this.reverseRoute, this.onClick)}</div>
                     </div>
 
                     <div className="comp-route-cont">
                         <h2 className="route-cont-header">Completed Routes</h2>
-                        <div className="comp-card-cont">{this.buildRouteCards(true)}</div>
+                        <div className="comp-card-cont">{buildRouteCards(true,this.props, this.reverseRoute, this.onClick)}</div>
                     </div>
 
                 </div>
