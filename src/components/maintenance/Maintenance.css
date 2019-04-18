@@ -129,6 +129,11 @@ padding: 15px 0 15px 0;
     padding-left: 10px;
 
 }
+
+.maint-card-text-cont{
+    padding-top: 10px;
+
+}
 .maint-req-header{
     background: var(--main-header-color);
     color: var(--header-text-color);
