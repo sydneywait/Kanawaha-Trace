@@ -37,7 +37,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, handleError, o
                         <div className="maint-admin-col2">Assigned to others or Unassigned</div>
                         <div className="maint-card-text-cont">
                         {props.maintenance.sort((a,b)=>a.mile-b.mile).filter((request) => request.isComplete === false && request.userId !== activeUser).map(m =>
-                            <div key={m.id} className={!m.userId ? "unassigned maint-card-text" : "assigned maint-card-text"}><Link to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
+                            <div key={m.id} className={!m.userId ? "unassigned maint-card-text" : "assigned maint-card-text"}><Link className="link" to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
                         )}</div>
                     </div>
                     <div className="maint-complete">

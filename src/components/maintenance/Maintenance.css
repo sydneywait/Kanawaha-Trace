@@ -126,12 +126,12 @@ padding: 15px 0 15px 0;
 }
 
 .maint-card-text{
-    padding-left: 10px;
-
+    margin-bottom: 5px;
 }
 
 .maint-card-text-cont{
     padding-top: 10px;
+    padding-left: 10px;
 
 }
 .maint-req-header{
