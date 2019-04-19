@@ -15,7 +15,7 @@ Users begin their experience with the Home Page, which gives them a little backg
 When a user logs in, they can view the Explore page to see a map of the entire KT with blue markers showing access points.  Clicking on the markers will show a popup on the map that gives details about the point, such as the name and mile point.
 
 Using the dropdowns on the left, users can select a start and end point for their route.  Once both are selected, they can hit 'submit' and the route will be created.
-http://recordit.co/qLTq3eSmiP
+![Explore Demo](http://g.recordit.co/qLTq3eSmiP.gif)
 
 Two links will appear below the submit button that allow the user to go directly to the details of the newly created route, or navigate to a page to view all of their routes.
 
