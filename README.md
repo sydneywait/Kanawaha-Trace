@@ -21,12 +21,21 @@ Two links will appear below the submit button that allow the user to go directly
 
 ## Routes
 
-Routes on the 'Routes' page are separated into two categories--planned and completed.  Newly created routes will show up in the planned column.  The route card includes the name of the route (based on the start and end points) a trail marker which shows the direction of travel on the trail and corresponds to the trail markings that a user would see on trees and signs on the actual KT trail. White-yellow-white indicates they are travelling north-east (in the direction of increasing mile markers), and yellow-white-yellow indicates they are travelling south-west (in the direction of decreasing mile markers). Users may click on the affordance to change the direction of the route should they decide they want to travel in the opposite direction.  The name and trail marker will update accordingly.
+Routes on the 'Routes' page are separated into two categories--planned and completed.  Newly created routes will show up in the planned column.  The route card includes the name of the route (based on the start and end points) a trail marker which shows the direction of travel on the trail and corresponds to the trail markings that a user would see on trees and signs on the actual KT trail. White-yellow-white indicates they are travelling north-east (in the direction of increasing mile markers), and yellow-white-yellow indicates they are travelling south-west (in the direction of decreasing mile markers).
+![Reverse Demo](http://g.recordit.co/vo29lufMGH.gif)
+Users may click on the affordance to change the direction of the route should they decide they want to travel in the opposite direction.  The name and trail marker will update accordingly.
 
-
+![Complete Demo](http://g.recordit.co/d54AhyD4eU.gif)
 Users may click on the 'complete' button if they want to mark a route as completed.  A form will pop up that allows them to submit the date they completed the route as well as how long it took them to complete (in the time format hh:mm:ss).
 
+
+
 ### Route Details
+From the 'Routes' page, users may click on the 'details' button of any of the routes to go to a detailed view of that route.
+![Route Details](./public/images/readme/route_details.jpg)
+
+![Edit Route Demo](http://g.recordit.co/n9qneyq9qE.gif)
+
 Users may click on the 'edit' button to change the start and end points of the route.  A form will pop up with dropdown-selects to allow them to make this change.  Clicking submit will update the route on their page.
 ## Maintenance
 
