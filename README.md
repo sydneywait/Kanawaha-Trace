@@ -6,13 +6,13 @@ The target users are trail runners, hikers, mountain-bikers and backpackers who 
 
 See the application online at https://kanawha-trace.herokuapp.com
 
-## Home Page
+## HOME
 
 ![Explore Demo](./public/images/readme/home.jpg)
 
 Users begin their experience with the Home Page, which gives them a little background and history of the Kanawha Trace.  From here, they must log-in or register to utilize all the features of this application.
 
-## Explore
+## EXPLORE
 
 When a user logs in, they can view the Explore page to see a map of the entire KT with blue markers showing access points.  Clicking on the markers will show a popup on the map that gives details about the point, such as the name and mile point.  The user may also zoom and pan the map with their mouse, as desired.
 
@@ -21,7 +21,7 @@ Using the dropdowns on the left, users can select a start and end point for thei
 
 Two links will appear below the submit button that allow the user to go directly to the details of the newly created route, or navigate to a page to view all of their routes.
 
-## Routes
+## ROUTES
 
 Routes on the 'Routes' page are separated into two categories--planned and completed.  Newly created routes will show up in the planned column.  The route card includes the name of the route (based on the start and end points) a trail marker which shows the direction of travel on the trail and corresponds to the trail markings that a user would see on trees and signs on the actual KT trail. White-yellow-white indicates they are travelling north-east (in the direction of increasing mile markers), and yellow-white-yellow indicates they are travelling south-west (in the direction of decreasing mile markers).
 
@@ -51,7 +51,7 @@ A user can delete a route from either the 'Routes' page or the details view.  A 
 
 ![Delete Route Demo](http://g.recordit.co/l5BrV7nvD5.gif)
 
-## Maintenance
+## MAINTENANCE
 Another feature of this application allows users to submit reports of issues on the trail that require maintenance or other interventions.  From the 'Maintenance' tab, users can see ongoing requests (sorted by mile) or submit one of their own.  There is an affordance to allow the user to be contacted about the request should further information be required.
 ![Maintenance Request](http://g.recordit.co/zEULs3VX2B.gif)
 
@@ -63,7 +63,7 @@ If the user logs in with administrative credentials, the admin view looks a litt
 Clicking on the name of the request will allow the admin user to view more details about the request, such as when it was submitted or to whom it is assigned.  Clicking on the 'edit' button will allow the admin user to make clarifications to the description or assign the task to another admin.  Clicking on the 'complete' button will allow the admin user to mark the task as 'complete' and provide a description of what work was done.  The task may also be marked as complete from the 'Maintenance' page by clicking on the empty checkbox next to the task.  This activates a form that allows the user to submit the date completed and any pertinent details or recommendations for this maintenance task.  Maintenance items can also be deleted by administrators from the details view.  A dialog will pop up asking the admin user to confirm the delete request before processing it.
 
 
-## Technical Notes
+## TECHNICAL NOTES
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -108,10 +108,9 @@ You must also run the following command in a separate command prompt to initiate
 The following is an entity relationship diagram for the database
 ![ERD Diagram](./public/images/readme/ERD_Diagram.jpg)
 
-### Module Map
 
 ## Author
-This module was built by Sydney Wait [Github](https://github.com/sydneywait)
+This module was built by Sydney Wait --see more on [Github](https://github.com/sydneywait)
 
 ## Acknowledgements
 I would like to acknowledge Chris Kyle and Robert Wilson for their help in mapping the trail and use of the Kanawha Trace Guidebook.
