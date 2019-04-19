@@ -37,11 +37,12 @@ Users may click on the 'complete' button if they want to mark a route as complet
 
 
 ### Route Details
+![Route Details](./public/images/readme/route_details.jpg)
 From the 'Routes' page, users can click on the 'details' button of any of the routes to go to a page with more information about that route.  A map will populate the left side of the page with a zoomed-in view of that section of trail defined by the selected start and end points.  There will also be a descriptive list in the right-hand column which gives details about the total mileage (and the date and time completed for completed routes) as well as features and hazards to look for along the route.  The corresponding waypoints for these features and hazards are also shown on the map.
 
 ![Route Features](http://g.recordit.co/SR65sFaDSz.gif)
 
-Clicking on any of the green dots between the start and end points on the map will show a popup with the name of the waypoint and the mileage. The user can also zoom and pan the map with their mouse, as desired.  Refreshing the page will bring them back to the original view.
+Clicking on any of the green dots between the start and end points on the map will show a popup with the name of the waypoint and the mileage. The user can also zoom and pan the map with their mouse, as desired.  Refreshing the page will return the map to the original view.
 
 ### Editing Routes
 ![Edit Route Demo](http://g.recordit.co/n9qneyq9qE.gif)
