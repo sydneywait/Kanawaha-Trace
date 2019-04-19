@@ -1,101 +1,915 @@
 {
-    "users": [
-      {
-        "name": "Sydney",
-        "username": "sydneyroo",
-        "email": "sydneyroo@yahoo.com",
-        "password": "sydneyroo"
-      }
-    ],
-    "routes": [],
-    "sections": [],
-    "hazards": [
-      {
-        "type": "dangerous animal",
-        "id": 1
-      },
-      {
-        "type": "creek crossing",
-        "id": 2
-      },
-      {
-        "type": "fallen tree",
-        "id": 3
-      },
-      {
-        "type": "slip/erosion",
-        "id": 4
-      },
-      {
-        "type": "electric fence",
-        "id": 5
-      },
-      {
-        "type": "barbed wire",
-        "id": 6
-      },
-      {
-        "type": "fence crossing",
-        "id": 7
-      }
-    ],
-    "features": [
-      {
-        "type": "bridge",
-        "id": 1
-      },
-      {
-        "type": "trailhead",
-        "id": 2
-      },
-      {
-        "type": "rock formation",
-        "id": 3
-      },
-      {
-        "type": "camping",
-        "id": 4
-      },
-      {
-        "type": "potable water",
-        "id": 5
-      },
-      {
-        "type": "parking",
-        "id": 6
-      }
-    ],
-    "waypoint-features": [],
-    "waypoint-hazards": [],
-    "maintenance-requests": [],
-    "surfaces": [
-      {
-        "surface": "asphalt road",
-        "id": 1
-      },
-      {
-        "surface": "gravel road",
-        "id": 2
-      },
-      {
-        "surface": "trail",
-        "id": 3
-      },
-      {
-        "surface": "road-trail transition",
-        "id": 4
-      },
-      {
-        "surface": "creekbed",
-        "id": 5
-      }
-    ],
-    "waypoints": [
-      {
-        "mile": 0,
-        "elevation": 100,
-        "surfaceId": 1,
-        "id": 1
-      }
-    ]
-  }
+  "users": [],
+  "routes": [],
+  "hazards": [
+    {
+      "type": "dangerous animal",
+      "id": 1
+    },
+    {
+      "type": "bridge",
+      "id": 2
+    },
+    {
+      "type": "fallen tree",
+      "id": 3
+    },
+    {
+      "type": "slip/erosion",
+      "id": 4
+    },
+    {
+      "type": "creek crossing",
+      "id": 5
+    },
+    {
+      "type": "other",
+      "id": 6
+    }
+  ],
+  "maintenance": [],
+  "surfaces": [
+    {
+      "surface": "asphalt road",
+      "id": 1
+    },
+    {
+      "surface": "gravel road",
+      "id": 2
+    },
+    {
+      "surface": "trail",
+      "id": 3
+    },
+    {
+      "surface": "road-trail transition",
+      "id": 4
+    },
+    {
+      "surface": "creekbed",
+      "id": 5
+    }
+  ],
+  "waypoints": [
+    {
+      "mile": 0,
+      "name": "Mile 0 - Merrits Creek Trailhead",
+      "description": "Beginning of trail--look for marker across from WesBanco",
+      "surfaceId": 1,
+      "gps_lng": -82.29,
+      "gps_lat": 38.417,
+      "isAccess": true,
+      "id": 1
+    },
+    {
+      "mile": 1,
+      "name": "Mile 1",
+      "description": "",
+      "surfaceId": 1,
+      "gps_lng": -82.275,
+      "gps_lat": 38.422,
+      "isAccess": false,
+      "id": 2
+    },
+    {
+      "mile": 1.3,
+      "name": "Wildcat Rd",
+      "description": "Trail heads uphill from Wildcat Rd",
+      "surfaceId": 1,
+      "gps_lng": -82.271,
+      "gps_lat": 38.427,
+      "isAccess": true,
+      "id": 3
+    },
+    {
+      "mile": 1.51,
+      "name": "Trail Registration",
+      "description": "Large Kanawha Trace sign with registration box (not currently monitored)",
+      "surfaceId": 3,
+      "gps_lng": -82.271,
+      "gps_lat": 38.427,
+      "isAccess": false,
+      "id": 4
+    },
+    {
+      "mile": 2.59,
+      "name": "Stream/Drainage area",
+      "description": "Erosion and trail slippage",
+      "surfaceId": 3,
+      "gps_lng": -82.266,
+      "gps_lat": 38.438,
+      "isAccess": false,
+      "id": 5
+    },
+    {
+      "mile": 3,
+      "name": "Mile 3",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.262,
+      "gps_lat": 38.44,
+      "isAccess": false,
+      "id": 6
+    },
+    {
+      "mile": 4,
+      "name": "Mile 4",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.254,
+      "gps_lat": 38.44,
+      "isAccess": false,
+      "id": 7
+    },
+    {
+      "mile": 4.73,
+      "name": "Blue Sulphur Rd",
+      "description": "Trail crosses Blue Sulphur Rd",
+      "surfaceId": 1,
+      "gps_lng": -82.246,
+      "gps_lat": 38.441,
+      "isAccess": true,
+      "id": 8
+    },
+    {
+      "mile": 5,
+      "name": "Mile 5",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.242,
+      "gps_lat": 38.441,
+      "isAccess": false,
+      "id": 9
+    },
+    {
+      "mile": 5.16,
+      "name": "Little Cabell Creek",
+      "description": "Bridge over Cabell Creek",
+      "surfaceId": 3,
+      "gps_lng": -82.241,
+      "gps_lat": 38.442,
+      "isAccess": false,
+      "id": 10
+    },
+    {
+      "mile": 5.37,
+      "name": "Laurel Branch",
+      "description": "Shaded stream and waterfall area",
+      "surfaceId": 3,
+      "gps_lng": -82.237,
+      "gps_lat": 38.44,
+      "isAccess": false,
+      "id": 11
+    },
+    {
+      "mile": 5.58,
+      "name": "Williams Shelter",
+      "description": "Camping, potable water and campfires allowed at Williams Shelter.  Primitive toilet nearby",
+      "surfaceId": 3,
+      "gps_lng": -82.236,
+      "gps_lat": 38.443,
+      "isAccess": true,
+      "id": 12
+    },
+    {
+      "mile": 6,
+      "name": "Mile 6",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.237,
+      "gps_lat": 38.448,
+      "isAccess": false,
+      "id": 13
+    },
+    {
+      "mile": 6.04,
+      "name": "Old Baldy Trail",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.237,
+      "gps_lat": 38.451,
+      "isAccess": false,
+      "id": 14
+    },
+    {
+      "mile": 6.9,
+      "name": "Fat Man's Misery",
+      "description": "Squeeze between the rocks at Fatman's misery.  Trail is really washed out in this section",
+      "surfaceId": 3,
+      "gps_lng": -82.235,
+      "gps_lat": 38.45,
+      "isAccess": false,
+      "id": 15
+    },
+    {
+      "mile": 7,
+      "name": "Mile 7",
+      "description": "Small footbridge",
+      "surfaceId": 3,
+      "gps_lng": -82.234,
+      "gps_lat": 38.458,
+      "isAccess": false,
+      "id": 16
+    },
+    {
+      "mile": 7.69,
+      "name": "Big Cabell Creek",
+      "description": "Bridge over Big Cabell Creek.  Trail Intersects with a gravel road and the Adahi and Cabell Creek trails",
+      "surfaceId": 3,
+      "gps_lng": -82.231,
+      "gps_lat": 38.463,
+      "isAccess": true,
+      "id": 17
+    },
+    {
+      "mile": 8,
+      "name": "Mile 8-Big Cabell Creek Rd",
+      "description": "",
+      "surfaceId": 2,
+      "gps_lng": -82.225,
+      "gps_lat": 38.466,
+      "isAccess": false,
+      "id": 18
+    },
+    {
+      "mile": 8.66,
+      "name": "transition to trail",
+      "description": "",
+      "surfaceId": 2,
+      "gps_lng": -82.227,
+      "gps_lat": 38.471,
+      "isAccess": false,
+      "id": 19
+    },
+    {
+      "mile": 9,
+      "name": "Mile 9-Gnome home",
+      "description": "Check out the interesting rock formations and caves.  See if you can spot the gnome!",
+      "surfaceId": 3,
+      "gps_lng": -82.219,
+      "gps_lat": 38.473,
+      "isAccess": false,
+      "id": 20
+    },
+    {
+      "mile": 9.42,
+      "name": "Edmond's Branch Rd (Howell's Mill Rd)",
+      "description": "Trail crosses Howell's Mill (Edmond's Branch) Rd",
+      "surfaceId": 1,
+      "gps_lng": -82.215,
+      "gps_lat": 38.473,
+      "isAccess": true,
+      "id": 21
+    },
+    {
+      "mile": 9.52,
+      "name": "Waterfall",
+      "description": "Cool off in this spectacular cave section with a year-round waterfall",
+      "surfaceId": 3,
+      "gps_lng": -82.213,
+      "gps_lat": 38.472,
+      "isAccess": false,
+      "id": 22
+    },
+    {
+      "mile": 9.59,
+      "name": "Wilson Woods",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.212,
+      "gps_lat": 38.472,
+      "isAccess": false,
+      "id": 23
+    },
+    {
+      "mile": 9.74,
+      "name": "Eagle's Nest",
+      "description": "The Eagle's nest allows for camping, campfires and potable water from a cistern.  Primitive toilet also available",
+      "surfaceId": 3,
+      "gps_lng": -82.211,
+      "gps_lat": 38.473,
+      "isAccess": false,
+      "id": 24
+    },
+    {
+      "mile": 10,
+      "name": "Mile 10",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.208,
+      "gps_lat": 38.473,
+      "isAccess": false,
+      "id": 25
+    },
+    {
+      "mile": 10.34,
+      "name": "Canaan Lands--Jericho Rd",
+      "description": "Trail intersects and follows Jericho Rd in the Canaan Lands housing development",
+      "surfaceId": 1,
+      "gps_lng": -82.206,
+      "gps_lat": 38.473,
+      "isAccess": false,
+      "id": 26
+    },
+    {
+      "mile": 10.6,
+      "name": "Ricky Bess Gate",
+      "description": "Cross the chained gate ",
+      "surfaceId": 2,
+      "gps_lng": -82.201,
+      "gps_lat": 38.473,
+      "isAccess": false,
+      "id": 27
+    },
+    {
+      "mile": 11,
+      "name": "Mile 11",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.194,
+      "gps_lat": 38.472,
+      "isAccess": false,
+      "id": 28
+    },
+    {
+      "mile": 11.42,
+      "name": "McComas Footbridge",
+      "description": "",
+      "surfaceId": 1,
+      "gps_lng": -82.189,
+      "gps_lat": 38.47,
+      "isAccess": false,
+      "id": 29
+    },
+    {
+      "mile": 12,
+      "name": "Left Fork Cooper's Ridge",
+      "description": "",
+      "surfaceId": 2,
+      "gps_lng": -82.186,
+      "gps_lat": 38.478,
+      "isAccess": true,
+      "id": 30
+    },
+    {
+      "mile": 11.89,
+      "name": "Gobbler Knob",
+      "description": "Gobbler Knob is the highest point on the trail at 1016 ft",
+      "surfaceId": 1,
+      "gps_lng": -82.186,
+      "gps_lat": 38.477,
+      "isAccess": false,
+      "id": 31
+    },
+    {
+      "mile": 12.49,
+      "name": "Road Transition",
+      "description": "",
+      "surfaceId": 2,
+      "gps_lng": -82.183,
+      "gps_lat": 38.482,
+      "isAccess": false,
+      "id": 32
+    },
+    {
+      "mile": 12.73,
+      "name": "Bull in the Field",
+      "description": "Beware the bull and the electric fence.",
+      "surfaceId": 3,
+      "gps_lng": -82.181,
+      "gps_lat": 38.487,
+      "isAccess": false,
+      "id": 33
+    },
+    {
+      "mile": 12.83,
+      "name": "stile",
+      "description": "Cross the barbed wire using the stile",
+      "surfaceId": 3,
+      "gps_lng": -82.184,
+      "gps_lat": 38.488,
+      "isAccess": false,
+      "id": 34
+    },
+    {
+      "mile": 13,
+      "name": "Mile 13",
+      "description": "Creek crossing is usually ankle deep.  It's a good place to cool off in the summer months",
+      "surfaceId": 3,
+      "gps_lng": -82.185,
+      "gps_lat": 38.488,
+      "isAccess": false,
+      "id": 35
+    },
+    {
+      "mile": 13.05,
+      "name": "stile",
+      "description": "Cross the barbed wire using the stile",
+      "surfaceId": 3,
+      "gps_lng": -82.185,
+      "gps_lat": 38.488,
+      "isAccess": false,
+      "id": 36
+    },
+    {
+      "mile": 13.11,
+      "name": "stile",
+      "description": "Cross the barbed wire using the stile",
+      "surfaceId": 3,
+      "gps_lng": -82.185,
+      "gps_lat": 38.488,
+      "isAccess": false,
+      "id": 37
+    },
+    {
+      "mile": 13.17,
+      "name": "Hammer Hollow Rd (Brian creek Rd)",
+      "description": "Trail intersects and follows Hammer Hollow Rd",
+      "surfaceId": 3,
+      "gps_lng": -82.188,
+      "gps_lat": 38.489,
+      "isAccess": false,
+      "id": 38
+    },
+    {
+      "mile": 14,
+      "name": "Mile 14-Power lines",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.191,
+      "gps_lat": 38.499,
+      "isAccess": false,
+      "id": 39
+    },
+    {
+      "mile": 14.12,
+      "name": "Gate",
+      "description": "Crossing through a field with miniature horses.  Be sure to latch the gate on either side",
+      "surfaceId": 3,
+      "gps_lng": -82.193,
+      "gps_lat": 38.506,
+      "isAccess": false,
+      "id": 40
+    },
+    {
+      "mile": 14.5,
+      "name": "Barker's Ridge Rd",
+      "description": "Trail intersects and follows Barker's Ridge Rd",
+      "surfaceId": 1,
+      "gps_lng": -82.19,
+      "gps_lat": 38.506,
+      "isAccess": true,
+      "id": 41
+    },
+    {
+      "mile": 14.7,
+      "name": "Electric fence",
+      "description": "Beware the electric fence as you carefully cross it",
+      "surfaceId": 3,
+      "gps_lng": -82.19,
+      "gps_lat": 38.508,
+      "isAccess": false,
+      "id": 42
+    },
+    {
+      "mile": 15,
+      "name": "Mile 15-Jenkin's Branch",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.187,
+      "gps_lat": 38.508,
+      "isAccess": false,
+      "id": 43
+    },
+    {
+      "mile": 15.18,
+      "name": "Large Tulip Poplar",
+      "description": "Look for an enormous Tulip Poplar tree--the largest on the trail",
+      "surfaceId": 3,
+      "gps_lng": -82.186,
+      "gps_lat": 38.508,
+      "isAccess": false,
+      "id": 44
+    },
+    {
+      "mile": 15.4,
+      "name": "footbridges",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.182,
+      "gps_lat": 38.508,
+      "isAccess": false,
+      "id": 45
+    },
+    {
+      "mile": 15.83,
+      "name": "Gate",
+      "description": "Cross the gate by climbing over or going through if unlocked",
+      "surfaceId": 3,
+      "gps_lng": -82.174,
+      "gps_lat": 38.509,
+      "isAccess": false,
+      "id": 46
+    },
+    {
+      "mile": 16,
+      "name": "Mile 16-Jenkin's Branch",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.171,
+      "gps_lat": 38.509,
+      "isAccess": false,
+      "id": 47
+    },
+    {
+      "mile": 16.34,
+      "name": "3 fence crossings",
+      "description": "You'll have three fence crossings via stile in short succession",
+      "surfaceId": 3,
+      "gps_lng": -82.166,
+      "gps_lat": 38.51,
+      "isAccess": false,
+      "id": 48
+    },
+    {
+      "mile": 16.69,
+      "name": "Gate",
+      "description": "Be sure to close the gate as you go through",
+      "surfaceId": 3,
+      "gps_lng": -82.158,
+      "gps_lat": 38.512,
+      "isAccess": false,
+      "id": 49
+    },
+    {
+      "mile": 17,
+      "name": "Mile 17-Jenkins Branch",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.155,
+      "gps_lat": 38.514,
+      "isAccess": false,
+      "id": 50
+    },
+    {
+      "mile": 17.2,
+      "name": "Swann Rd (left fork Barker's Ridge",
+      "description": "Trail intersects with Swann Rd",
+      "surfaceId": 1,
+      "gps_lng": -82.148,
+      "gps_lat": 38.516,
+      "isAccess": false,
+      "id": 51
+    },
+    {
+      "mile": 17.52,
+      "name": "Jenkins Creek Rd",
+      "description": "Swann Rd intersects with Jenkin's Creek Rd",
+      "surfaceId": 1,
+      "gps_lng": -82.143,
+      "gps_lat": 38.516,
+      "isAccess": true,
+      "id": 52
+    },
+    {
+      "mile": 18,
+      "name": "Mile 18 - Jenkin's Creek Rd",
+      "description": "",
+      "surfaceId": 1,
+      "gps_lng": -82.143,
+      "gps_lat": 38.52,
+      "isAccess": false,
+      "id": 53
+    },
+    {
+      "mile": 18.46,
+      "name": "back to trail",
+      "description": "Trail intersects with Jenkin's Creek Rd",
+      "surfaceId": 3,
+      "gps_lng": -82.14,
+      "gps_lat": 38.528,
+      "isAccess": false,
+      "id": 54
+    },
+    {
+      "mile": 19,
+      "name": "Mile 19",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.136,
+      "gps_lat": 38.53,
+      "isAccess": false,
+      "id": 55
+    },
+    {
+      "mile": 19.11,
+      "name": "Cabell-Mason county line",
+      "description": "Cabell-Mason county line",
+      "surfaceId": 3,
+      "gps_lng": -82.133,
+      "gps_lat": 38.53,
+      "isAccess": false,
+      "id": 56
+    },
+    {
+      "mile": 19.36,
+      "name": "Blake Rd (Dry Ridge Rd)",
+      "description": "",
+      "surfaceId": 1,
+      "gps_lng": -82.13,
+      "gps_lat": 38.531,
+      "isAccess": true,
+      "id": 57
+    },
+    {
+      "mile": 19.87,
+      "name": "Black Jack",
+      "description": "Black Jack Schoolhouse is a restored one-room schoolhouse. Camping available when not during hunting season",
+      "surfaceId": 3,
+      "gps_lng": -82.124,
+      "gps_lat": 38.536,
+      "isAccess": false,
+      "id": 58
+    },
+    {
+      "mile": 20,
+      "name": "Mile 20",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.124,
+      "gps_lat": 38.536,
+      "isAccess": false,
+      "id": 59
+    },
+    {
+      "mile": 20.85,
+      "name": "Bear Hollow Creek",
+      "description": "Marvel at the suspension bridge over Bear Hollow Creek",
+      "surfaceId": 3,
+      "gps_lng": -82.119,
+      "gps_lat": 38.54,
+      "isAccess": false,
+      "id": 60
+    },
+    {
+      "mile": 21,
+      "name": "Mile 21",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.119,
+      "gps_lat": 38.54,
+      "isAccess": false,
+      "id": 61
+    },
+    {
+      "mile": 21.1,
+      "name": "Running in stream to 21.35",
+      "description": "You'll have a short jaunt in the creek",
+      "surfaceId": 5,
+      "gps_lng": -82.119,
+      "gps_lat": 38.541,
+      "isAccess": false,
+      "id": 62
+    },
+    {
+      "mile": 21.63,
+      "name": "Whitten Ridge Rd ",
+      "description": "Trail intersects with Whitten Ridge Rd",
+      "surfaceId": 1,
+      "gps_lng": -82.117,
+      "gps_lat": 38.549,
+      "isAccess": false,
+      "id": 63
+    },
+    {
+      "mile": 22,
+      "name": "Mile 22 - Whitten Ridge Rd ",
+      "description": "",
+      "surfaceId": 1,
+      "gps_lng": -82.12,
+      "gps_lat": 38.553,
+      "isAccess": false,
+      "id": 64
+    },
+    {
+      "mile": 22.45,
+      "name": "Guyan creek Rd",
+      "description": "Whitten Ridge Rd intersects with Guyan Creek Rd",
+      "surfaceId": 1,
+      "gps_lng": -82.121,
+      "gps_lat": 38.559,
+      "isAccess": false,
+      "id": 65
+    },
+    {
+      "mile": 23,
+      "name": "Mile 23 - Meadow Hollow Road",
+      "description": "Guyan Creek Rd intersects with Meadow Hollow Rd",
+      "surfaceId": 2,
+      "gps_lng": -82.115,
+      "gps_lat": 38.56,
+      "isAccess": false,
+      "id": 66
+    },
+    {
+      "mile": 24,
+      "name": "Mile 24 - Meadow Hollow Road",
+      "description": "",
+      "surfaceId": 2,
+      "gps_lng": -82.101,
+      "gps_lat": 38.562,
+      "isAccess": false,
+      "id": 67
+    },
+    {
+      "mile": 25,
+      "name": "Mile 25 - Zid Camp Road",
+      "description": "Meadow Hollow Rd intersects with Zid Camp Rd",
+      "surfaceId": 2,
+      "gps_lng": -82.085,
+      "gps_lat": 38.564,
+      "isAccess": false,
+      "id": 68
+    },
+    {
+      "mile": 25.8,
+      "name": "Ashton Upland Rd",
+      "description": "Zid Camp Rd intersects with Ashton Upland Rd",
+      "surfaceId": 1,
+      "gps_lng": -82.072,
+      "gps_lat": 38.565,
+      "isAccess": false,
+      "id": 69
+    },
+    {
+      "mile": 25.94,
+      "name": "Mt. Zion Church",
+      "description": "Mt Zion Church",
+      "surfaceId": 1,
+      "gps_lng": -82.061,
+      "gps_lat": 38.565,
+      "isAccess": true,
+      "id": 70
+    },
+    {
+      "mile": 26,
+      "name": "Mile 26 - Kanawha Rd/ Mt Zion Rd",
+      "description": "Kanawha Rd/ Mt Zion Rd",
+      "surfaceId": 1,
+      "gps_lng": -82.069,
+      "gps_lat": 38.562,
+      "isAccess": false,
+      "id": 71
+    },
+    {
+      "mile": 26.4,
+      "name": "Mason Putnam County line",
+      "description": "Mason-Putnam county line",
+      "surfaceId": 1,
+      "gps_lng": -82.062,
+      "gps_lat": 38.565,
+      "isAccess": false,
+      "id": 72
+    },
+    {
+      "mile": 27,
+      "name": "Mile 27",
+      "description": "",
+      "surfaceId": 1,
+      "gps_lng": -82.05,
+      "gps_lat": 38.566,
+      "isAccess": false,
+      "id": 73
+    },
+    {
+      "mile": 27.16,
+      "name": "Lookout Point",
+      "description": "Scenic view at Lookout Point",
+      "surfaceId": 3,
+      "gps_lng": -82.046,
+      "gps_lat": 38.568,
+      "isAccess": false,
+      "id": 74
+    },
+    {
+      "mile": 27.44,
+      "name": "Evergreen Rd",
+      "description": "Trail intersects with Evergree Rd",
+      "surfaceId": 1,
+      "gps_lng": -82.045,
+      "gps_lat": 38.567,
+      "isAccess": false,
+      "id": 75
+    },
+    {
+      "mile": 27.96,
+      "name": "power lines",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.037,
+      "gps_lat": 38.563,
+      "isAccess": false,
+      "id": 76
+    },
+    {
+      "mile": 27.96,
+      "name": "Barnett Branch Rd (Stave Branch Rd)",
+      "description": "Trail crosses Stave Branch Rd",
+      "surfaceId": 3,
+      "gps_lng": -82.038,
+      "gps_lat": 38.564,
+      "isAccess": false,
+      "id": 77
+    },
+    {
+      "mile": 29,
+      "name": "Mile 29",
+      "description": "",
+      "surfaceId": 3,
+      "gps_lng": -82.024,
+      "gps_lat": 38.558,
+      "isAccess": false,
+      "id": 78
+    },
+    {
+      "mile": 29.2,
+      "name": "Bridge",
+      "description": "Bridge",
+      "surfaceId": 3,
+      "gps_lng": -82.022,
+      "gps_lat": 38.559,
+      "isAccess": false,
+      "id": 79
+    },
+    {
+      "mile": 29.45,
+      "name": "Bridge",
+      "description": "Bridge",
+      "surfaceId": 3,
+      "gps_lng": -82.021,
+      "gps_lat": 38.559,
+      "isAccess": false,
+      "id": 80
+    },
+    {
+      "mile": 29.6,
+      "name": "Hell's Staircase",
+      "description": "Hell's Staircase",
+      "surfaceId": 3,
+      "gps_lng": -82.019,
+      "gps_lat": 38.559,
+      "isAccess": false,
+      "id": 81
+    },
+    {
+      "mile": 30.42,
+      "name": "Rt 35 Tunnel",
+      "description": "Tunnel under Route 35",
+      "surfaceId": 3,
+      "gps_lng": -82.011,
+      "gps_lat": 38.562,
+      "isAccess": false,
+      "id": 82
+    },
+    {
+      "mile": 31,
+      "name": "Mile 31",
+      "description": "Watch for electric and barbed wire on either side of trail",
+      "surfaceId": 3,
+      "gps_lng": -82.003,
+      "gps_lat": 38.566,
+      "isAccess": false,
+      "id": 83
+    },
+    {
+      "mile": 31.31,
+      "name": "Stave Branch Road",
+      "description": "Trail intersects with Stave Branch Rd",
+      "surfaceId": 1,
+      "gps_lng": -82.002,
+      "gps_lat": 38.568,
+      "isAccess": true,
+      "id": 84
+    },
+    {
+      "mile": 31.91,
+      "name": "Old US Route 35 (WV Route 817)",
+      "description": "Stave Branch Rd intersects with Old US 35",
+      "surfaceId": 1,
+      "gps_lng": -81.991,
+      "gps_lat": 38.571,
+      "isAccess": false,
+      "id": 85
+    },
+    {
+      "mile": 32.16,
+      "name": "Tasty Blend, Frazier's Bottom",
+      "description": "Tasty Blend, Frazier's Bottom",
+      "surfaceId": 1,
+      "gps_lng": -81.977,
+      "gps_lat": 38.559,
+      "isAccess": true,
+      "id": 86
+    }
+  ]
+}
