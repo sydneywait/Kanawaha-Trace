@@ -22,24 +22,38 @@ Two links will appear below the submit button that allow the user to go directly
 ## Routes
 
 Routes on the 'Routes' page are separated into two categories--planned and completed.  Newly created routes will show up in the planned column.  The route card includes the name of the route (based on the start and end points) a trail marker which shows the direction of travel on the trail and corresponds to the trail markings that a user would see on trees and signs on the actual KT trail. White-yellow-white indicates they are travelling north-east (in the direction of increasing mile markers), and yellow-white-yellow indicates they are travelling south-west (in the direction of decreasing mile markers).
+
 ![Reverse Demo](http://g.recordit.co/vo29lufMGH.gif)
+
 Users may click on the affordance to change the direction of the route should they decide they want to travel in the opposite direction.  The name and trail marker will update accordingly.
 
 ![Complete Demo](http://g.recordit.co/d54AhyD4eU.gif)
 Users may click on the 'complete' button if they want to mark a route as completed.  A form will pop up that allows them to submit the date they completed the route as well as how long it took them to complete (in the time format hh:mm:ss).
 
 
-
 ### Route Details
 From the 'Routes' page, users may click on the 'details' button of any of the routes to go to a detailed view of that route.
-![Route Details](./public/images/readme/route_details.jpg)
 
 ![Edit Route Demo](http://g.recordit.co/n9qneyq9qE.gif)
 
 Users may click on the 'edit' button to change the start and end points of the route.  A form will pop up with dropdown-selects to allow them to make this change.  Clicking submit will update the route on their page.
+
+Once a route is marked as complete, the user may edit the date and time of that route, but may no longer edit the start and end points.
+
+A user can delete a route from either the 'Routes' page or the details view.  A dialog will pop up asking them to confirm before deleting the route.
+
+![Delete Route Demo](http://g.recordit.co/l5BrV7nvD5.gif)
+
 ## Maintenance
+Another feature of this application allows users to submit reports of issues on the trail that require maintenance or other interventions.  From the 'Maintenance' tab, users can see ongoing requests (sorted by mile) or submit one of their own.  There is an affordance to allow the user to be contacted about the request should further information be required.
+![Maintenance Request](http://g.recordit.co/zEULs3VX2B.gif)
+
+If the user logs in with administrative credentials, the admin view looks a little different.  They not only have the ability to create a maintenance request, but they can assign the request to themselves or others, add additional details, mark the request as "complete", or delete maintenance requests.
+![Admin View](http://g.recordit.co/nJFWkPUpW3.gif)
 
 ### Maintenance Details
+Clicking on the name of the request will allow the user to view more details about the request, such as when it was submitted or to whom it is assigned.  Clicking on the 'edit' button will allow the user to make clarifications to the description or assign the task to another admin.  Clicking on the 'complete' button will allow the user to mark the task as 'complete' and provide a description of what work was done.  The task may also be marked as complete from the 'Maintenance' page by clicking on the empty checkbox next to the task.  This brings up a form that allows the user to submit the date completed and any pertinent details or recommendations.
+
 
 
 
@@ -64,57 +78,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
