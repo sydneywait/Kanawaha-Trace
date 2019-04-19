@@ -41,7 +41,7 @@ const makeNewRoute=(state)=> {
          message= "You must choose a start and end point"
     }
     const thingToReturn = [message, newRoute]
-    console.log("thing returned from Make New Route", thingToReturn)
+
 
     return(thingToReturn)
 }
