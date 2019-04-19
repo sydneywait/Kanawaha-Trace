@@ -2,7 +2,7 @@
 
 The Kanawha Trace Trail (also known as The KT Trail) is an approximately 32-mile trail that runs from Barboursville to Fraziers Bottom in West Virginia.  The Kanawha Trace Trail guide is a web-based application that allows users of the KT Trail to plan routes, record dates and times of routes they have completed, and submit maintenance requests.  The purpose of this application is to provide current and updated information about the status of the trail, and allow users to plan and navigate with tools that are easier to understand than paper-based topographical maps.  A secondary purpose is to improve the visibility of the trail and encourage new and existing users to venture out more often.
 
-The target users are trail runners, hikers, mountain-bikers and backpackers who are interested in learning more about the features and technical aspects of the KT trail.
+The target users are trail-runners, hikers, mountain-bikers and backpackers who are interested in learning more about the features and technical aspects of the KT trail.
 
 See the application online at https://kanawha-trace.herokuapp.com
 
@@ -23,12 +23,12 @@ Two links will appear below the submit button that allow the user to go directly
 
 ## ROUTES
 
-Routes on the 'Routes' page are separated into two categories--planned and completed.  Newly created routes will show up in the planned column.  The route card includes the name of the route (based on the start and end points) a trail marker which shows the direction of travel on the trail and corresponds to the trail markings that a user would see on trees and signs on the actual KT trail. White-yellow-white indicates they are travelling north-east (in the direction of increasing mile markers), and yellow-white-yellow indicates they are travelling south-west (in the direction of decreasing mile markers).
+Routes on the 'Routes' page are separated into two categories--planned and completed.  Newly created routes will show up in the planned column.  The route card includes the name of the route (based on the start and end points) and a trail marker which shows the direction of travel on the trail and corresponds to the trail markings that a user would see on trees and signs on the actual KT trail. White-yellow-white indicates they are traveling north-east (in the direction of increasing mile markers), and yellow-white-yellow indicates they are traveling south-west (in the direction of decreasing mile markers).
 
 ### Reversing Routes
 ![Reverse Demo](http://g.recordit.co/vo29lufMGH.gif)
 
-Users may click on the affordance to change the direction of the route should they decide they want to travel in the opposite direction.  The name and trail marker will update accordingly.
+Users may click on the affordance to change the direction of the route. The name and trail marker will update accordingly.
 
 ### Completing Routes
 
@@ -37,7 +37,11 @@ Users may click on the 'complete' button if they want to mark a route as complet
 
 
 ### Route Details
-From the 'Routes' page, users can click on the 'details' button of any of the routes to go to a page with more information about that route.  A map will populate the left side of the page with a zoomed-in view of that section of trail defined by the selected start and end points.  There will also be a descriptive list in the right-hand column which gives details about the total mileage (and the date and time completed for completed routes) as well as features and hazards to look for along the route.  The corresponding waypoints for these features and hazards are also shown on the map.  Clicking on any of the green dots between the start and end points on the map will show a popup with the name of the waypoint and the mileage. The user can also zoom and pan the map with their mouse, as desired.  Refreshing the page will bring them back to the original view.
+From the 'Routes' page, users can click on the 'details' button of any of the routes to go to a page with more information about that route.  A map will populate the left side of the page with a zoomed-in view of that section of trail defined by the selected start and end points.  There will also be a descriptive list in the right-hand column which gives details about the total mileage (and the date and time completed for completed routes) as well as features and hazards to look for along the route.  The corresponding waypoints for these features and hazards are also shown on the map.
+
+![Route Features](http://g.recordit.co/SR65sFaDSz.gif)
+
+Clicking on any of the green dots between the start and end points on the map will show a popup with the name of the waypoint and the mileage. The user can also zoom and pan the map with their mouse, as desired.  Refreshing the page will bring them back to the original view.
 
 ### Editing Routes
 ![Edit Route Demo](http://g.recordit.co/n9qneyq9qE.gif)
@@ -82,10 +86,10 @@ npm install mapbox-gl
 ```
 
 Additionally, you will need to obtain an API key from mapbox, and an auth key from AuthO.  These will need to be inserted into files
-```~/src/modules/APITokens.js```
+```~/src/components/authentication/APITokens.js```
 and
 ```~/src/components/authentication/AuthConfig.js```
-Examples are given in the same directories on which to base your file.
+Examples are given in the authentication directory on which to base your file.
 
 Copy the boilerplate code from
 ```~/api/boilerplate.json ```
