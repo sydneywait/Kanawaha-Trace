@@ -114,7 +114,7 @@ export default class RouteDetails extends Component {
         const newRoute = thingReturned[1]
         newRoute.id = this.state.id
 
-        console.log(newRoute)
+
         this.setState(
             {
                 message: message,

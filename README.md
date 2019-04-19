@@ -76,6 +76,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Fork the directory from https://github.com/sydneywait/Kanawaha-Trace to your own local repository.
 
+I used node modules from [Material-UI](https://material-ui.com/), [Prime React](https://www.primefaces.org/primereact/#/) for styling, and [moment](https://www.npmjs.com/package/react-moment) for handling time stamps.
+
 You will need to install the following to run the program locally:
 
 ```
@@ -88,7 +90,7 @@ npm install primeicons --save
 npm install mapbox-gl
 ```
 
-Additionally, you will need to obtain an API key from mapbox, and an auth key from AuthO.  These will need to be inserted into files
+Additionally, you will need to obtain an API key from [mapbox](https://www.mapbox.com/), and an auth key from [Auth0](https://auth0.com/).  These will need to be inserted into files
 ```~/src/components/authentication/APITokens.js```
 and
 ```~/src/components/authentication/AuthConfig.js```
