@@ -72,7 +72,9 @@ Clicking on the name of the request will allow the admin user to view more detai
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### Required node modules
+### Using this APP
+
+Fork the directory from https://github.com/sydneywait/Kanawaha-Trace to your own local repository.
 
 You will need to install the following to run the program locally:
 
