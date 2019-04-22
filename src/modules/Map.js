@@ -17,8 +17,16 @@ export default class Map extends Component {
         this.state = {
             lng: -82.1032,
             lat: 38.50565,
-            zoom: 9.6
+            zoom: 9.6,
+            searchTerm:""
         };
+
+    this.onChange=this.onChange.bind(this);
+    }
+
+    onChange(e) {
+
+        this.setState({ searchTerm: e.value });
     }
 
     componentDidMount() {
@@ -52,6 +60,14 @@ export default class Map extends Component {
 
 
     }
+
+
+
+    searchWaypoints(){
+        this.props.waypoints.filter(w=>)
+
+
+}
 
 
 
