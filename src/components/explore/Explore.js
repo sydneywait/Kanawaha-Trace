@@ -8,6 +8,8 @@ import MakeNewRoute from "../routes/MakeNewRoute"
 import { Link } from "react-router-dom"
 import Map from "../../modules/Map"
 import ResourceAPIManager from "../../modules/ResourceAPIManager"
+import { InputText } from 'primereact/inputtext';
+
 
 export default class Explore extends Component {
     constructor() {
@@ -17,7 +19,9 @@ export default class Explore extends Component {
             end: null,
             message: "",
             userId: parseInt(sessionStorage.getItem("credentials")),
-            mileage: ""
+            mileage: "",
+            searchTerm: "",
+            search: ""
 
         };
         // Bind functions to this component
@@ -25,9 +29,14 @@ export default class Explore extends Component {
         this.onEndChange = this.onEndChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.calculateMileage = this.calculateMileage.bind(this);
-
+        this.onChange = this.onChange.bind(this)
     }
 
+    // This function is used to handle input to the search box
+    onChange(e) {
+
+        this.setState({ search: e.target.value });
+    }
     // these functions are called as the dropdown select changes
     onStartChange(e) {
 
@@ -46,7 +55,7 @@ export default class Explore extends Component {
             let mileage = Math.abs(start.mile - end.mile).toFixed(2)
             this.setState({ mileage: mileage })
         }
-        else{
+        else {
 
         }
 
@@ -97,7 +106,19 @@ export default class Explore extends Component {
                 <div className="exp-cont content-section implementation">
 
                     <div className="exp-left">
+                    {/* render a searchbar to look for features on the map */}
+                    <div className="map-search">
+                            <div className="p-inputgroup">
+                                <InputText id="map-search" style={{ width: "300px" }}
+                                    value={this.state.search}
+                                    onChange={this.onChange}
+                                    placeholder="search for features on the map" />
+                                <Button icon="pi pi-search" className="p-button-primary feature-search-btn"
+                                    onClick={(e) => this.setState({ searchTerm: this.state.search })} />
+                            </div>
+                        </div>
                         <div className="exp-dd-cont">
+                        Select a start and end point:
                             {/* dropdown for start points */}
                             <div><Dropdown className="exp-dd"
                                 value={this.state.start}
@@ -113,7 +134,7 @@ export default class Explore extends Component {
                                 onChange={this.onEndChange}
                                 style={{ width: '300px' }} placeholder="Select an End Point" optionLabel="name" /></div>
                             <div className="exp-dd-foot">{this.state.end ? 'Selected end: ' + this.state.end.name : 'No end point selected'}</div>
-                            <div className="exp-mileage">{(this.state.mileage? `Selected route is ${this.state.mileage} miles`:"")}</div>
+                            <div className="exp-mileage">{(this.state.mileage ? `Selected route is ${this.state.mileage} miles` : "")}</div>
                         </div>
 
 
@@ -121,6 +142,8 @@ export default class Explore extends Component {
                         <div className="exp-dd-submit-btn-cont"><div className="exp-dd-submit-btn"><Button className="p-button-rounded" label="submit" icon="pi pi-check" iconPos="right" onClick={this.handleSubmit} /></div>
                             {/* Optional error message if route cannot be created */}
                             <div className="exp-msg">{this.state.message}</div></div>
+
+
 
                         {/* Renders conditionally to give user links to their new routes and all routes */}
                         {this.state.message === "Your route was created!" ?
@@ -130,7 +153,7 @@ export default class Explore extends Component {
                     </div>
                     <div className="exp-right">
                         {/* call the map component to render the map */}
-                        <Map className="map-container" waypoints={this.props.waypoints} />
+                        <Map className="map-cont" waypoints={this.props.waypoints} searchTerm={this.state.searchTerm} />
 
                     </div>
                 </div>

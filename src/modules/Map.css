@@ -16,12 +16,15 @@
     border-radius: 50%;
     cursor: pointer;
   }
+  .map-search{
+    padding-bottom:50px;
+  }
 
   .marker-feature{
     background-image: url("./markers/feature_dot.png");
     background-size: cover;
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     cursor: pointer;
 
@@ -35,6 +38,16 @@
     border-radius: 50%;
     cursor: pointer;
 
+
+  }
+
+  .marker-star{
+    background-image: url("./markers/red_star.png");
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
 
   }
 
