@@ -167,6 +167,16 @@
     color: var(--card-text-color);
 }
 
+.searchBar {
+    text-align:center;
+    margin: 5px 0 5px 0;
+}
+
+.searchComp{
+    text-align: left;
+    margin-left: 25px;
+    }
+
 .route-name-header{
     margin: auto 5px auto 5px;
 }

@@ -19,7 +19,7 @@ const buildRouteCards = (status, props, filteredRoutes, reverseRoute, onClick) =
                     return a>b ? -1 : a<b ? 1 : 0
                 })
                .map((route) =>
-                    <div className="route-card-cont">
+                    <div className="route-card-cont" key={route.id}>
                         <div className="route-card-header">
                             <h4 className="route-name-header">{route.name}</h4>
                         </div>

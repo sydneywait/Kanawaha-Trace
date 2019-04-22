@@ -76,7 +76,8 @@ export default class Routes extends Component {
     render() {
 
         let filteredCompRoutes = this.props.routes.filter((route) => {
-            return route.name.toLowerCase().indexOf(this.state.searchComp.toLowerCase()) !== -1|| route.dateCompleted.indexOf(this.state.searchComp) !== -1
+
+            return route.name.toLowerCase().indexOf(this.state.searchComp.toLowerCase()) !== -1||route.dateCompleted.indexOf(this.state.searchComp) !== -1
         })
         let filteredPlanRoutes = this.props.routes.filter((route) => {
             return route.name.toLowerCase().indexOf(this.state.searchPlan.toLowerCase()) !== -1
