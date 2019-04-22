@@ -16,23 +16,41 @@ export default class Explore extends Component {
             start: null,
             end: null,
             message: "",
-            userId: parseInt(sessionStorage.getItem("credentials"))
+            userId: parseInt(sessionStorage.getItem("credentials")),
+            mileage: ""
 
         };
         // Bind functions to this component
         this.onStartChange = this.onStartChange.bind(this);
         this.onEndChange = this.onEndChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.calculateMileage = this.calculateMileage.bind(this);
 
     }
 
     // these functions are called as the dropdown select changes
     onStartChange(e) {
+
         this.setState({ start: e.value });
+        this.calculateMileage(e.value, this.state.end)
     }
 
     onEndChange(e) {
         this.setState({ end: e.value });
+        this.calculateMileage(this.state.start, e.value)
+    }
+
+    calculateMileage(start, end) {
+        if (start !== null && end !== null) {
+
+            let mileage = Math.abs(start.mile - end.mile).toFixed(2)
+            this.setState({ mileage: mileage })
+        }
+        else{
+
+        }
+
+
     }
 
     // this function is called when the submit button is clicked
@@ -95,7 +113,7 @@ export default class Explore extends Component {
                                 onChange={this.onEndChange}
                                 style={{ width: '300px' }} placeholder="Select an End Point" optionLabel="name" /></div>
                             <div className="exp-dd-foot">{this.state.end ? 'Selected end: ' + this.state.end.name : 'No end point selected'}</div>
-
+                            <div className="exp-mileage">{(this.state.mileage? `Selected route is ${this.state.mileage} miles`:"")}</div>
                         </div>
 
 
@@ -107,11 +125,11 @@ export default class Explore extends Component {
                         {/* Renders conditionally to give user links to their new routes and all routes */}
                         {this.state.message === "Your route was created!" ?
                             <React.Fragment><div><Link to={`/routes/${this.state.newRouteId}`}>Click to see your new Route</Link></div>
-                                <div><Link className="link"to="/routes">Click to see all Routes</Link></div>
+                                <div><Link className="link" to="/routes">Click to see all Routes</Link></div>
                             </React.Fragment> : ""}
                     </div>
                     <div className="exp-right">
-                    {/* call the map component to render the map */}
+                        {/* call the map component to render the map */}
                         <Map className="map-container" waypoints={this.props.waypoints} />
 
                     </div>

@@ -49,6 +49,14 @@
 
 }
 
+.exp-mileage{
+    margin-top:15px;
+    font-weight: bold;
+    color: var(--darker-green-text-color);
+    font-style: italic;
+
+}
+
 .exp-dd-submit-btn-cont{
     display: flex;
     flex-direction: row;
