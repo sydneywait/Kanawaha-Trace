@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Moment from 'react-moment';
+import { InputText } from 'primereact/inputtext';
 import "./Routes.css"
 import { Button } from 'primereact/button';
 import CompleteRoutePatch from "./CompleteRoutePatch"
@@ -7,6 +8,7 @@ import CompleteRouteFragment from "./CompleteRouteForm"
 import ReverseRoutePatch from "./ReverseRoutePatch"
 import deleteConfirm from "../../modules/DeleteConfirm"
 import buildRouteCards from "./BuildRouteCards"
+import RouteSearchBar from "./RouteSearchBar"
 
 
 
@@ -22,13 +24,15 @@ export default class Routes extends Component {
             date: "",
             time: "",
             currentRoute: {},
-            target: ""
+            target: "",
+            searchComp: "",
+            searchPlan: ""
         };
 
         // Bind functions to this component
         this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
-        this.reverseRoute=this.reverseRoute.bind(this);
+        this.reverseRoute = this.reverseRoute.bind(this);
     }
 
     // These functions handle the visibility of the modal/pop-ups
@@ -46,7 +50,7 @@ export default class Routes extends Component {
     }
 
     // this function is called to set the date and time completed
-    onChange = (dateOrTime, e) => { this.setState({ [dateOrTime]: e.target.value }) }
+    onChange = (valueParam, e) => { this.setState({ [valueParam]: e.target.value }) }
 
     // This function is used to mark the route as complete
     completeRoute() {
@@ -69,7 +73,17 @@ export default class Routes extends Component {
     }
 
 
-       render() {
+    render() {
+
+        let filteredCompRoutes = this.props.routes.filter((route) => {
+
+            return route.name.toLowerCase().indexOf(this.state.searchComp.toLowerCase()) !== -1||route.dateCompleted.indexOf(this.state.searchComp) !== -1
+        })
+        let filteredPlanRoutes = this.props.routes.filter((route) => {
+            return route.name.toLowerCase().indexOf(this.state.searchPlan.toLowerCase()) !== -1
+        })
+        console.log("comp", filteredCompRoutes)
+        console.log("plan", filteredPlanRoutes)
         // This footer is used for the modal popup to mark route complete
         const footer = (
             <div>
@@ -93,12 +107,25 @@ export default class Routes extends Component {
                 {/* Build two columns (sections) for planned and completed routes */}
                 <div className="route-cont">
                     <div className="plan-route-cont"><h2 className="route-cont-header">Planned Routes</h2>
-                        <div className="plan-card-cont">{buildRouteCards(false, this.props, this.reverseRoute, this.onClick)}</div>
+                        {/* Insert search bar */}
+
+
+                        <div className="searchBar">
+                            {RouteSearchBar(this.state.searchPlan, "searchPlan", this.onChange)}
+                        </div>
+                        {/* Build the route cards for planned routes */}
+                        <div className="plan-card-cont">{buildRouteCards(false, this.props, filteredPlanRoutes, this.reverseRoute, this.onClick)}</div>
                     </div>
 
                     <div className="comp-route-cont">
                         <h2 className="route-cont-header">Completed Routes</h2>
-                        <div className="comp-card-cont">{buildRouteCards(true,this.props, this.reverseRoute, this.onClick)}</div>
+                        {/* Insert search bar */}
+                        <div className="searchBar">
+                            {RouteSearchBar(this.state.searchComp, "searchComp", this.onChange)}
+                        </div>
+
+                        {/* Build the route cards for completed routes */}
+                        <div className="comp-card-cont">{buildRouteCards(true, this.props, filteredCompRoutes, this.reverseRoute, this.onClick)}</div>
                     </div>
 
                 </div>

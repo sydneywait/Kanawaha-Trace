@@ -5,14 +5,13 @@ import { Button } from 'primereact/button';
 
 
 // Function used to build the route cards for each view (completed/not completed)
-const buildRouteCards = (status, props, reverseRoute, onClick) => {
+const buildRouteCards = (status, props, filteredRoutes, reverseRoute, onClick) => {
     return (
         <React.Fragment>
-
             {
                 // conditionally create the route cards based on status (isComplete = true or false)
                 // find cards that match the current status
-                props.routes.filter((route) => route.isComplete === status)
+                filteredRoutes.filter((route) => route.isComplete === status)
                 // Sort by date--most recent to oldest
                 .sort((a, b)=> {
                     a = new Date(a.dateCompleted);
@@ -20,7 +19,7 @@ const buildRouteCards = (status, props, reverseRoute, onClick) => {
                     return a>b ? -1 : a<b ? 1 : 0
                 })
                .map((route) =>
-                    <div className="route-card-cont">
+                    <div className="route-card-cont" key={route.id}>
                         <div className="route-card-header">
                             <h4 className="route-name-header">{route.name}</h4>
                         </div>

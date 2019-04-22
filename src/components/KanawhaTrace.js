@@ -14,7 +14,9 @@ import auth0Client from "./authentication/Auth";
       await auth0Client.silentAuth();
       this.forceUpdate();
     } catch (err) {
-      if (err.error !== 'login_required')
+      if (err.error !== 'login_required'){
+
+      }
     }
   }
 render() {
