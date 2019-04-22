@@ -36,6 +36,10 @@
 
 }
 
+.home-page-intro{
+margin-bottom: 1em;
+}
+
 .p-button-success{
     background-color: var(--success) !important
 
