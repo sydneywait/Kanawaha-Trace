@@ -82,8 +82,7 @@ export default class Routes extends Component {
         let filteredPlanRoutes = this.props.routes.filter((route) => {
             return route.name.toLowerCase().indexOf(this.state.searchPlan.toLowerCase()) !== -1
         })
-        console.log("comp", filteredCompRoutes)
-        console.log("plan", filteredPlanRoutes)
+
         // This footer is used for the modal popup to mark route complete
         const footer = (
             <div>
