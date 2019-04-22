@@ -28,24 +28,24 @@
 }
 
 .exp-dd-cont{
-    margin-top:10px;
-    margin: 10px;
     display: flex;
     flex-direction: column;
 
 }
 
 .exp-dd{
-    margin-top: 20px;
-    margin-bottom: 20px;
-    background: red;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+
 }
 
 .exp-dd-foot{
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 15px;
     font-style: italic;
     color: var(--card-text-color);
+
 
 }
 
@@ -56,6 +56,14 @@
     font-style: italic;
 
 }
+.p-inputgroup{
+}
+
+.map-search{
+    margin-top:15px;
+
+
+}
 
 .exp-dd-submit-btn-cont{
     display: flex;
@@ -63,14 +71,12 @@
 }
 .exp-dd-submit-btn{
     margin: 15px 0 15px 0;
-    border: red;
 }
 
 .exp-cont{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-
 }
 
 
