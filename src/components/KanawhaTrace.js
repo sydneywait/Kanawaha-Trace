@@ -22,7 +22,7 @@ import auth0Client from "./authentication/Auth";
 render() {
     return (
       <React.Fragment>
-        <NavBar/>
+        <NavBar history={this.props.history}/>
         <ApplicationViews />
       </React.Fragment>
     );

@@ -7,6 +7,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import HomeIcon from '@material-ui/icons/Home';
 import BuildIcon from '@material-ui/icons/Build';
+import SettingsIcon from '@material-ui/icons/Settings';
+
 import RouteIcon from '@material-ui/icons/Terrain';
 import ExploreIcon from '@material-ui/icons/Explore';
 import LoginIcon from '@material-ui/icons/LockOpen'
@@ -26,17 +28,8 @@ const styles = {
 
 class NavBar extends React.Component {
 
-//   componentWillMount() {
-//     ThemeManager.setPalette({
-//       // accent1Color: Colors.indigo50,
-//         primary1Color: "#474B4E",
-//         primary2Color: "#2173B3",
-//         primary3Color: "#A9D2EB",
-//         accent1Color: "#ED3B3B",
-//         accent2Color: "#ED2B2B",
-//         accent3Color: "#F58C8C"
-//     });
-//  }
+
+
   signOut = () => {
     auth0Client.signOut();
     sessionStorage.clear()

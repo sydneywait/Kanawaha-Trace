@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import React, { Component } from "react";
 import Explore from "./explore/Explore"
 import HomePage from "./HomePage"
+import Admin from "./admin/Admin"
 import Routes from "./routes/Routes"
 import RouteDetails from "./routes/RouteDetails"
 import Maintenance from "./maintenance/Maintenance"
@@ -13,6 +14,7 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import ResourceAPIManager from "../modules/ResourceAPIManager"
+
 
 export default class ApplicationViews extends Component {
 
@@ -216,6 +218,22 @@ export default class ApplicationViews extends Component {
                                                 auth0Client.signIn();
                                                 return null;
                                         }
+
+                                }} />
+
+                                <Route exact path="/admin" render={props => {
+                                        if (auth0Client.isAuthenticated()) {
+                                                return <Admin {...props}
+                                                        user={this.state.user}
+                                                        patchUser ={this.state.patchResource}
+
+                                                />
+                                        }
+                                        else {
+                                                auth0Client.signIn();
+                                                return null;
+                                        }
+
 
                                 }} />
 

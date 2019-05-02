@@ -50,10 +50,14 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, handleError, o
                                 <Link  className="link"to={`/maintenance/${m.id}`}>mile {m.mile}--{m.description}</Link></div>
 
                         )}
+
                         </div>
                     </div>
+
                 </div>
             </div>
+
+            {props.user.isSuperAdmin===true?<Link classname="link" to={'/admin'}>Click to go to the admin settings page</Link>:""}
 
 
         </React.Fragment>
