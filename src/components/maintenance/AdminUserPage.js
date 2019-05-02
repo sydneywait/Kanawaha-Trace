@@ -57,7 +57,7 @@ const adminUser = (state, props, onChange, onCheck, handleSubmit, handleError, o
                 </div>
             </div>
 
-            {props.user.isSuperAdmin===true?<Link classname="link" to={'/admin'}>Click to go to the admin settings page</Link>:""}
+            {props.user.isSuperAdmin===true?<Link className="link" to={'/admin'}>Click to go to the admin settings page</Link>:""}
 
 
         </React.Fragment>
