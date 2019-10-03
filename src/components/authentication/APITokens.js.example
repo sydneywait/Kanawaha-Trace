@@ -1,3 +1,4 @@
 export default {
-    mapbox: '{Enter your API Key Here}'
+    mapbox: '{Enter your API Key Here}',
+    mapboxStyle: '{Enter your map template style here}'
 }
