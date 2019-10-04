@@ -215,10 +215,10 @@ export default class RouteDetails extends Component {
                         </React.Fragment> : "")}
                     {/* <p className="route-detail-text"><span className="route-detail-subheadings">Elevation Gain:</span> </p> */}
                     <p className="route-detail-text"><span className="route-detail-subheadings">Mileage:</span> {Math.abs(diff).toFixed(2)} miles</p>
-                    <p className="route-detail-text"><span className="route-detail-subheadings">Description:</span>
+                    <div className="route-detail-text"><span className="route-detail-subheadings">Description:</span>
                         <ul>{this.props.waypoints.filter(w => w.mile >= (start.mile < end.mile ? start.mile : end.mile) && w.mile <= (start.mile < end.mile ? end.mile : start.mile)).sort((a, b) => a.mile - b.mile).map((w) =>
                             (w.description !== "" ? <li className="route-detail-bullets"><span className="route-detail-mile">Mile {w.mile}:</span> {w.description}</li> : ""))
-                        }</ul></p>
+                        }</ul></div>
 
 
                 </div>
@@ -268,7 +268,7 @@ export default class RouteDetails extends Component {
                     }} />
             </div>
 
-            <i class="pi pi-chevron-left"></i>
+            <i className="pi pi-chevron-left"></i>
 
             {/* Link to return to the routes page */}
             <Link className="link back-to-routes" to={"/routes"}>Back to Route List</Link>
