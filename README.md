@@ -88,11 +88,12 @@ npm install @material-ui/core
 npm install primereact --save
 npm install primeicons --save
 npm install mapbox-gl
+npm install -g json-server
 ```
 
-Additionally, you will need to obtain an API key from [mapbox](https://www.mapbox.com/), and an auth key from [Auth0](https://auth0.com/).  These will need to be inserted into files
+Additionally, you will need to obtain an API key and create at least a basic template map from [mapbox](https://www.mapbox.com/). These values go in 
 ```~/src/components/authentication/APITokens.js```
-and
+and an auth key from [Auth0](https://auth0.com/).  This will need to be inserted into
 ```~/src/components/authentication/AuthConfig.js```
 Examples are given in the authentication directory on which to base your file.
 
