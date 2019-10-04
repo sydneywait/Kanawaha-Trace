@@ -37,7 +37,7 @@ export default class Map extends Component {
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: 'mapbox://styles/sydneyroo/cju32seef0x4e1gmbx78sdk4e',
+            style: `mapbox://styles/${mapboxToken.mapboxStyle}`,
             center: [lng, lat],
             zoom
         });
@@ -82,7 +82,7 @@ export default class Map extends Component {
             this.props.waypoints.filter((waypoint) => {
                 return waypoint.description.toLowerCase().indexOf(this.props.searchTerm.toLowerCase()) !== -1
             }).map((w) => {
-                console.log(w)
+                //console.log(w)
                 // add the marker to the map, and set the marker array to state so they can be targeted
                 // and removed when a new search is performed later
                 markers.push(addMapMarker("marker-star", w, this.state.map, this.props.searchTerm))

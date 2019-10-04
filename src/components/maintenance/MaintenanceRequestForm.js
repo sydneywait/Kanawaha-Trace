@@ -24,7 +24,7 @@ const MaintenanceRequestForm = (state, props, onChange, onCheck, handleSubmit, h
                             style={{ width: '50px' }}>
 
 
-                        </InputText><span className="mile-mark"> <i class="pi pi-caret-left"></i> Enter approx. mile point</span>
+                        </InputText><span className="mile-mark"> <i className="pi pi-caret-left"></i> Enter approx. mile point</span>
                     </div>
 
                     <div className="maint-req-form-input">
